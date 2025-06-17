@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="990.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrSystemCollege">
+   <children>
+      <AnchorPane prefHeight="600.0" prefWidth="285.0" styleClass="left-form" stylesheets="@../style.css">
+         <children>
+            <ImageView fitHeight="199.0" fitWidth="180.0" layoutX="53.0" layoutY="196.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/Imagen_de_WhatsApp_2025-05-17_a_las_13.43.28_72d543c8-removebg-preview.png" />
+               </image></ImageView>
+            <Label layoutX="72.0" layoutY="386.0" text="The Forest">
+               <font>
+                  <Font name="Cooper Black" size="26.0" />
+               </font></Label>
+            <Label layoutX="43.0" layoutY="425.0" text="College System">
+               <font>
+                  <Font name="Cooper Black" size="26.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="41.0" fitWidth="49.0" layoutX="118.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/handshake-solid.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="76.0" layoutY="104.0" text="¡Bienvenido">
+               <font>
+                  <Font name="Cambria Bold Italic" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="80.0" layoutY="146.0" text="Al Sistema!">
+               <font>
+                  <Font name="Cambria Bold Italic" size="25.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="39.0" fitWidth="32.0" layoutX="61.0" layoutY="518.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/right-from-bracket-solid.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnCerrarSesion" layoutX="97.0" layoutY="516.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="126.0" styleClass="botonCerrarSesion" stylesheets="@../style.css" text="Cerrar Sesión" textAlignment="CENTER" onAction="#cerrarSesion">
+               <font>
+                  <Font name="Impact" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="285.0" prefHeight="600.0" prefWidth="704.0" styleClass="right-form" stylesheets="@../style.css">
+         <children>
+            <MenuBar fx:id="menuBar" layoutY="1.0" prefHeight="26.0" prefWidth="667.0">
+               <menus>
+                  <Menu fx:id="MenuGestionPersonas" mnemonicParsing="false" text="Gestión de Personas">
+                     <graphic>
+                        <ImageView fitHeight="16" fitWidth="16">
+                           <image>
+                              <Image url="@../../icons/group_681494.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <items>
+                        <MenuItem fx:id="menuRegistrarAlumno" mnemonicParsing="false" onAction="#formularioAlumno" text="Gestionar Alumnos">
+                           <graphic>
+                              <ImageView fitHeight="16" fitWidth="16">
+                                 <image>
+                                    <Image url="@../../icons/graduation-cap-solid__1_-removebg-preview.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem fx:id="menuRegistrarDocente" mnemonicParsing="false" onAction="#formularioProfesor" text="Gestionar Profesores">
+                           <graphic>
+                              <ImageView fitHeight="16" fitWidth="16">
+                                 <image>
+                                    <Image url="@../../icons/chalkboard-user-solid.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem fx:id="menuRegistrarTrabajador" mnemonicParsing="false" onAction="#formularioTrabajador" text="Gestionar Trabajadores">
+                           <graphic>
+                              <ImageView fitHeight="16" fitWidth="16">
+                                 <image>
+                                    <Image url="@../../icons/user-tie-solid.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem fx:id="menuRegistrarPadreFamilia" mnemonicParsing="false" onAction="#formularioApoderado" text="Gestionar Apoderados">
+                           <graphic>
+                              <ImageView fitHeight="16" fitWidth="16">
+                                 <image>
+                                    <Image url="@../../icons/parent-removebg-preview.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                     </items>
+                  </Menu>
+
+                  <Menu fx:id="menuMatricula" mnemonicParsing="false" text="Matrículas">
+                     <graphic>
+                        <ImageView fitHeight="16" fitWidth="16">
+                           <image>
+                              <Image url="@../../icons/academic_9523836.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <items>
+                        <MenuItem fx:id="menuMatricularAlumno" mnemonicParsing="false" onAction="#formularioMatricula" text="Matricular Alumno">
+                           <graphic>
+                              <ImageView fitHeight="16" fitWidth="16">
+                                 <image>
+                                    <Image url="@../../icons/address-card-solid.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                     </items>
+                  </Menu>
+
+                  <Menu mnemonicParsing="false" text="Notas">
+                     <graphic>
+                        <ImageView fitHeight="16" fitWidth="16">
+                           <image>
+                              <Image url="@../../icons/plus-minus_13314493.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#formularioNotas" text="Gestionar Notas">
+                           <graphic>
+                              <ImageView fitHeight="16" fitWidth="16">
+                                 <image>
+                                    <Image url="@../../icons/list-ol-solid.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                     </items>
+                  </Menu>
+
+                  <Menu mnemonicParsing="false" text="Pagos">
+                     <graphic>
+                        <ImageView fitHeight="16" fitWidth="16">
+                           <image>
+                              <Image url="@../../icons/stack_16809246.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#formularioPagos" text="Cobranza de Pensiones">
+                           <graphic>
+                              <ImageView fitHeight="16" fitWidth="16">
+                                 <image>
+                                    <Image url="@../../icons/money-bill-1-wave-solid.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                     </items>
+                  </Menu>
+
+                  <Menu mnemonicParsing="false" text="Reportes">
+                     <graphic>
+                        <ImageView fitHeight="16" fitWidth="16">
+                           <image>
+                              <Image url="@../../icons/report_4738736.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#formularioReporteGeneral" text="Reporte del Colegio">
+                           <graphic>
+                              <ImageView fitHeight="16" fitWidth="16">
+                                 <image>
+                                    <Image url="@../../icons/qualification_17316028.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#formularioReportePensiones" text="Reporte de Pensiones">
+                           <graphic>
+                              <ImageView fitHeight="16" fitWidth="16">
+                                 <image>
+                                    <Image url="@../../icons/retirement_11080400.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+            <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="684.0" layoutY="5.0">
+               <image>
+                  <Image url="@../../icons/cross_14875490.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnCerrar" layoutX="676.0" layoutY="1.0" mnemonicParsing="false" onAction="#cerrarVentana" prefHeight="26.0" prefWidth="32.0" stylesheets="@../style.css" />
+            <AnchorPane fx:id="AnchorPanePrincipal" layoutY="23.0" prefHeight="572.0" prefWidth="681.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>

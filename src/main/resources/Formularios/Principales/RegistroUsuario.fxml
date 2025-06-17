@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrRegistroUsuario">
+   <stylesheets>
+      <URL value="@../InicioSesion.css" />
+   </stylesheets>
+   <children>
+      <AnchorPane fx:id="inicioSesionfmr" prefHeight="600.0" prefWidth="900.0">
+         <children>
+            <AnchorPane prefHeight="600.0" prefWidth="450.0" styleClass="left-form" stylesheets="@../InicioSesion.css" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ImageView fitHeight="272.0" fitWidth="268.0" layoutX="91.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../icons/Imagen_de_WhatsApp_2025-05-17_a_las_13.43.28_72d543c8-removebg-preview.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="133.0" layoutY="368.0" text="The Forest" textAlignment="CENTER">
+                     <font>
+                        <Font name="Cooper Black" size="34.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="110.0" layoutY="417.0" text="College System" textAlignment="CENTER">
+                     <font>
+                        <Font name="Cooper Black" size="30.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
+            <AnchorPane layoutX="353.0" prefHeight="600.0" prefWidth="450.0" styleClass="right-form" stylesheets="@../InicioSesion.css" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <ImageView fitHeight="57.0" fitWidth="57.0" layoutX="197.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../icons/nuevo-usuario.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="158.0" layoutY="89.0" prefHeight="30.0" prefWidth="134.0" text="¡Bienvenido!">
+                     <font>
+                        <Font name="Tahoma Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="cajaApellidoPaterno" layoutX="100.0" layoutY="259.0" prefHeight="30.0" prefWidth="250.0" promptText="ApellidoPaterno">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextField>
+                  <Button fx:id="btnRegistrarse" layoutX="144.0" layoutY="533.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="162.0" stylesheets="@../InicioSesion.css" text="Registrarse">
+                     <font>
+                        <Font name="Eras Bold ITC" size="17.0" />
+                     </font></Button>
+                  <TextField fx:id="cajaApellidoMaterno" layoutX="100.0" layoutY="307.0" prefHeight="30.0" prefWidth="250.0" promptText="ApellidoMaterno">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="cajaPrimerNombre" layoutX="100.0" layoutY="168.0" prefHeight="30.0" prefWidth="250.0" promptText="PrimerNombre">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="cajaDNI" layoutX="100.0" layoutY="128.0" prefHeight="30.0" prefWidth="250.0" promptText="DNI">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="cajaSegundoNombre" layoutX="100.0" layoutY="212.0" prefHeight="30.0" prefWidth="250.0" promptText="SegundoNombre">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <PasswordField fx:id="cajaContraseña" layoutX="100.0" layoutY="482.0" prefHeight="30.0" prefWidth="250.0" promptText="Contraseña">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </PasswordField>
+                  <TextField fx:id="cajaGenero" layoutX="100.0" layoutY="393.0" prefHeight="30.0" prefWidth="250.0" promptText="Género">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="cajaNombreUsuario" layoutX="100.0" layoutY="438.0" prefHeight="30.0" prefWidth="250.0" promptText="NombreUsuario">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <ImageView fitHeight="21.0" fitWidth="21.0" layoutX="427.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../icons/cross_14875490.png" />
+                     </image></ImageView>
+                  <Button fx:id="btnCerrar" layoutX="421.0" layoutY="1.0" mnemonicParsing="false" onAction="#cerrarVentana" prefHeight="26.0" prefWidth="29.0" stylesheets="@../style.css" />
+                  <DatePicker fx:id="fechaNacimiento" layoutX="100.0" layoutY="350.0" prefHeight="30.0" prefWidth="250.0" promptText="FechaNacimiento" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="572.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrReporteGeneral">
+   <children>
+      <AnchorPane layoutX="20.0" layoutY="14.0" prefHeight="97.0" prefWidth="160.0" styleClass="layout" stylesheets="@../InicioSesion.css">
+         <children>
+            <ImageView fitHeight="50.0" fitWidth="48.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/varios-usuarios.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="26.0" layoutY="68.0" text="Total de Alumnos">
+               <font>
+                  <Font name="Britannic Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" layoutX="110.0" layoutY="22.0" prefHeight="32.0" prefWidth="22.0" text="0">
+               <font>
+                  <Font name="Britannic Bold" size="30.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <AnchorPane layoutX="188.0" layoutY="14.0" prefHeight="98.0" prefWidth="160.0" styleClass="layout" stylesheets="@../InicioSesion.css">
+         <children>
+            <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="20.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/profesor.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="20.0" layoutY="68.0" text="Total de Profesores">
+               <font>
+                  <Font name="Britannic Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" layoutX="103.0" layoutY="22.0" prefHeight="32.0" prefWidth="22.0" text="0">
+               <font>
+                  <Font name="Britannic Bold" size="30.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <AnchorPane layoutX="360.0" layoutY="14.0" prefHeight="98.0" prefWidth="160.0" styleClass="layout" stylesheets="@../InicioSesion.css">
+         <children>
+            <ImageView fitHeight="55.0" fitWidth="48.0" layoutX="25.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/trabajo-en-equipo.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="12.0" layoutY="76.0" text="Total de Trabajadores">
+               <font>
+                  <Font name="Britannic Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" layoutX="107.0" layoutY="24.0" prefHeight="32.0" prefWidth="22.0" text="0">
+               <font>
+                  <Font name="Britannic Bold" size="30.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <AnchorPane layoutX="528.0" layoutY="14.0" prefHeight="98.0" prefWidth="160.0" styleClass="layout" stylesheets="@../InicioSesion.css">
+         <children>
+            <ImageView fitHeight="55.0" fitWidth="59.0" layoutX="25.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/padre-e-hijo.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="17.0" layoutY="76.0" text="Total de Apoderados">
+               <font>
+                  <Font name="Britannic Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" layoutX="107.0" layoutY="27.0" prefHeight="32.0" prefWidth="22.0" text="0">
+               <font>
+                  <Font name="Britannic Bold" size="30.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <AnchorPane layoutX="20.0" layoutY="126.0" prefHeight="419.0" prefWidth="380.0" styleClass="anchor-pane" stylesheets="@../style.css">
+         <children>
+            <BarChart layoutX="-41.0" layoutY="-7.0" prefHeight="433.6" prefWidth="499.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </BarChart>
+            <Label layoutX="126.0" layoutY="11.0" text="Grafico de alumnos:">
+               <font>
+                  <Font name="Cambria Bold" size="14.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <AnchorPane layoutX="412.0" layoutY="127.0" prefHeight="367.0" prefWidth="276.0" styleClass="anchor-pane" stylesheets="@../style.css">
+         <children>
+            <BarChart layoutX="40.0" layoutY="57.0" prefHeight="310.0" prefWidth="240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </BarChart>
+            <Label layoutX="67.0" layoutY="11.0" text="Grafico de profesores:">
+               <font>
+                  <Font name="Cambria Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Button fx:id="btnExportarPDF" layoutX="439.0" layoutY="514.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="121.0" stylesheets="@../tabla.css" text="Exportar PDF" />
+      <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="412.0" layoutY="517.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../icons/pdf.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnExportarPDF1" layoutX="598.0" layoutY="514.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" stylesheets="@../tabla.css" text="Actualizar" />
+      <ImageView fitHeight="25.0" fitWidth="22.0" layoutX="570.0" layoutY="519.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../icons/historia.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

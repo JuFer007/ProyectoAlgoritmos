@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="572.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrProfesor">
+    <children>
+        <TextField fx:id="cajaBusqueda" layoutX="37.0" layoutY="14.0" prefHeight="30.0" prefWidth="440.0" promptText="Búsqueda.." styleClass="buscar" stylesheets="@../tabla.css" />
+        <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="14.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../icons/simbolo-de-interfaz-de-lupa-de-busqueda.png" />
+            </image>
+        </ImageView>
+        <TableView fx:id="tablaProfesores" layoutX="14.0" layoutY="54.0" prefHeight="177.0" prefWidth="680.0" stylesheets="@../tabla.css">
+            <columns>
+                <TableColumn prefWidth="75.0" text="Código" />
+                <TableColumn prefWidth="99.2" text="DNI" />
+                <TableColumn prefWidth="91.2" text="Nombre" />
+                <TableColumn prefWidth="120.8" text="Apellido Paterno" />
+                <TableColumn prefWidth="130.8" text="Apellido Materno" />
+                <TableColumn prefWidth="70.4" text="Edad" />
+                <TableColumn prefWidth="89.6" text="Género" />
+            </columns>
+            <styleClass>
+                <String fx:value="column-header-background" />
+                <String fx:value="table-view" />
+            </styleClass>
+        </TableView>
+
+        <AnchorPane layoutX="14.0" layoutY="246.0" prefHeight="274.0" prefWidth="680.0" styleClass="anchor-pane" stylesheets="@../style.css">
+            <children>
+                <Label layoutX="18.0" layoutY="14.0" text="Agregar o modificar alumno:">
+                    <font>
+                        <Font name="Cambria Bold" size="15.0" />
+                    </font>
+                </Label>
+                <Label layoutX="26.0" layoutY="68.0" text="DNI:">
+                    <font>
+                        <Font name="Arial Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label layoutX="26.0" layoutY="102.0" text="Primer Nombre:">
+                    <font>
+                        <Font name="Arial Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label layoutX="26.0" layoutY="138.0" text="Segundo Nombre:">
+                    <font>
+                        <Font name="Arial Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label layoutX="28.0" layoutY="177.0" text="Apellido Paterno:">
+                    <font>
+                        <Font name="Arial Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label layoutX="27.0" layoutY="213.0" text="Apellido Materno:">
+                    <font>
+                        <Font name="Arial Bold" size="12.0" />
+                    </font>
+                </Label>
+
+                <TextField fx:id="cajaDNI" layoutX="143.0" layoutY="63.0" prefHeight="26.0" prefWidth="175.0" />
+                <TextField fx:id="cajaPrimerNombre" layoutX="143.0" layoutY="97.0" prefHeight="26.0" prefWidth="175.0" />
+                <TextField fx:id="cajaSegundoNombre" layoutX="143.0" layoutY="133.0" prefHeight="26.0" prefWidth="175.0" />
+                <TextField fx:id="cajaApellidoPaterno" layoutX="143.0" layoutY="172.0" prefHeight="26.0" prefWidth="174.0" />
+                <TextField fx:id="cajaApellidoMaterno" layoutX="143.0" layoutY="208.0" prefHeight="26.0" prefWidth="175.0" />
+
+                <Label layoutX="355.0" layoutY="138.0" text="Fecha Nacimiento:">
+                    <font>
+                        <Font name="Arial Bold" size="12.0" />
+                    </font>
+                </Label>
+                <DatePicker fx:id="cajaFechaNacimiento" layoutX="470.0" layoutY="133.0" prefHeight="26.0" prefWidth="157.0" />
+
+                <Label layoutX="355.0" layoutY="68.0" text="Especialidad:">
+                    <font>
+                        <Font name="Arial Bold" size="12.0" />
+                    </font>
+                </Label>
+                <ComboBox fx:id="comboEpecialidad" layoutX="472.0" layoutY="67.0" prefHeight="26.0" prefWidth="100.0" />
+
+                <Label layoutX="355.0" layoutY="102.0" text="Grado Académico:">
+                    <font>
+                        <Font name="Arial Bold" size="12.0" />
+                    </font>
+                </Label>
+                <ComboBox fx:id="comboGradoAcademico" layoutX="472.0" layoutY="101.0" prefHeight="26.0" prefWidth="100.0" />
+
+                <Button fx:id="btnNuevo" layoutX="424.0" layoutY="181.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" stylesheets="@../tabla.css" text="Nuevo" />
+                <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="395.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../icons/nueva-cuenta.png" />
+                    </image>
+                </ImageView>
+
+                <Button fx:id="btnEliminar" layoutX="424.0" layoutY="223.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Eliminar" />
+                <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="395.0" layoutY="223.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../icons/eliminar.png" />
+                    </image>
+                </ImageView>
+
+                <Button fx:id="btnModificiar" layoutX="547.0" layoutY="205.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Modificar" />
+                <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="522.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../icons/boton-editar.png" />
+                    </image>
+                </ImageView>
+            <Label layoutX="27.0" layoutY="247.0" text="Género:">
+               <font>
+                  <Font name="Arial Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="cajaGenero" layoutX="143.0" layoutY="242.0" prefHeight="26.0" prefWidth="175.0" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

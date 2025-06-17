@@ -1,0 +1,57 @@
+.left-form {
+    -fx-background-color: linear-gradient(
+            from 100% 0% to 0% 100%,
+            #acc08f 30%,
+            #4c6043 90%
+    );
+
+    -fx-border-color: #000;
+    -fx-border-width: 0.4px 0px 0.4px 0.4px;
+    -fx-text-fill: black;
+}
+
+.right-form {
+    -fx-background-color: #fff;
+    -fx-border-color: #000;
+    -fx-border-width: 0.4px 0.4px 0.4px 0px;
+}
+
+.button {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+}
+
+.anchor-pane {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-padding: 20;
+
+    /* Sombra suave */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 10, 0.3, 0, 4);
+}
+
+.botonCerrarSesion {
+    -fx-background-color: #637256;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-border-color: #2f3e2d;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0.3, 0, 2);
+}
+
+.botonCerrarSesion:hover {
+    -fx-background-color: #3f5036;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 4, 0.4, 0, 3);
+    -fx-text-fill: white;
+}
+
+.botonCerrarSesion:pressed {
+    -fx-background-color: #2d3a26;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 2, 0.2, 0, 1);
+    -fx-translate-y: 1;
+}

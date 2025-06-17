@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="572.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrReportePensiones">
+    <Label layoutX="28.0" layoutY="33.0" text="Filtrar por:">
+        <font>
+            <Font name="Cambria Bold" size="14.0" />
+        </font>
+    </Label>
+    <ComboBox fx:id="comboGradoB" layoutX="173.0" layoutY="29.0" prefHeight="26.0" prefWidth="59.0" />
+    <Label layoutX="128.0" layoutY="34.0" text="Grado:">
+      <font>
+         <Font name="Bell MT" size="13.0" />
+      </font></Label>
+    <ComboBox fx:id="comboSeccionB" layoutX="304.0" layoutY="29.0" prefHeight="26.0" prefWidth="59.0" />
+    <Label layoutX="251.0" layoutY="34.0" text="Sección:">
+      <font>
+         <Font name="Bell MT" size="13.0" />
+      </font></Label>
+   <Label layoutX="28.0" layoutY="75.0" text="Tabla de Pagos:">
+      <font>
+         <Font name="Cambria Bold" size="14.0" />
+      </font>
+   </Label>
+   <TableView layoutX="28.0" layoutY="103.0" prefHeight="408.0" prefWidth="659.0">
+     <columns>
+       <TableColumn prefWidth="75.0" text="Código" />
+       <TableColumn prefWidth="178.39998626708984" text="Alumno" />
+         <TableColumn prefWidth="102.5999755859375" text="Fecha" />
+         <TableColumn text="Monto" />
+         <TableColumn prefWidth="109.39999389648438" text="Método" />
+         <TableColumn prefWidth="113.800048828125" text="Estado" />
+     </columns>
+   </TableView>
+   <Button fx:id="btnCerrar" layoutX="643.0" layoutY="520.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="43.0" stylesheets="@../tabla.css" />
+   <ImageView fitHeight="18.0" fitWidth="28.0" layoutX="651.0" layoutY="526.0">
+      <image>
+         <Image url="@../../icons/proximo.png" />
+      </image>
+   </ImageView>
+   <Button fx:id="btnCerrar1" layoutX="591.0" layoutY="520.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="43.0" stylesheets="@../tabla.css" />
+   <ImageView fitHeight="18.0" fitWidth="28.0" layoutX="599.0" layoutY="526.0">
+      <image>
+         <Image url="@../../icons/anterior.png" />
+      </image>
+   </ImageView>
+   <ComboBox fx:id="comboEstadoPago" layoutX="432.0" layoutY="29.0" prefHeight="26.0" prefWidth="59.0" />
+   <Label layoutX="385.0" layoutY="34.0" text="Estado:">
+      <font>
+         <Font name="Bell MT" size="13.0" />
+      </font></Label>
+
+    <Button fx:id="btnEliminar" layoutX="60.0" layoutY="520.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Exportar a EXCEL" />
+    <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="31.0" layoutY="520.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../icons/xlsx.png" />
+        </image>
+    </ImageView>
+</AnchorPane>

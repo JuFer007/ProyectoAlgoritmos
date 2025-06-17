@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="572.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrNotas">
+    <TextField fx:id="cajaBusqueda" layoutX="37.0" layoutY="14.0" prefHeight="26.0" prefWidth="309.0" promptText="Búsqueda.." styleClass="buscar" stylesheets="@../tabla.css" />
+    <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="14.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../icons/simbolo-de-interfaz-de-lupa-de-busqueda.png" />
+        </image>
+    </ImageView>
+    <TableView fx:id="tablaAlumno" layoutX="14.0" layoutY="87.0" prefHeight="105.0" prefWidth="680.0" stylesheets="@../tabla.css">
+        <columns>
+            <TableColumn prefWidth="75.0" text="Código" />
+            <TableColumn prefWidth="99.2" text="DNI" />
+            <TableColumn prefWidth="91.2" text="Nombre" />
+            <TableColumn prefWidth="120.8" text="Apellido Paterno" />
+            <TableColumn prefWidth="116.19998168945312" text="Apellido Materno" />
+            <TableColumn prefWidth="99.800048828125" text="N° Matricula" />
+            <TableColumn prefWidth="75.5999755859375" text="Género" />
+        </columns>
+        <styleClass>
+            <String fx:value="column-header-background" />
+            <String fx:value="table-view" />
+        </styleClass>
+    </TableView>
+    <ComboBox fx:id="comboGradoB" layoutX="417.0" layoutY="14.0" prefHeight="26.0" prefWidth="59.0" />
+    <Label layoutX="373.0" layoutY="19.0" text="Grado:" />
+    <ComboBox fx:id="comboSeccionB" layoutX="572.0" layoutY="14.0" prefHeight="26.0" prefWidth="59.0" />
+    <Label layoutX="519.0" layoutY="19.0" text="Sección:" />
+   <Label layoutX="25.0" layoutY="211.0" text="Lista de cursos del alumno:">
+      <font>
+         <Font name="Arial Black" size="12.0" />
+      </font></Label>
+   <TableView fx:id="tablaCursos" layoutX="22.0" layoutY="239.0" prefHeight="312.0" prefWidth="295.0">
+     <columns>
+       <TableColumn prefWidth="124.20000648498535" text="Codigo" />
+       <TableColumn prefWidth="170.19998168945312" text="Nombre" />
+     </columns>
+   </TableView>
+   <Label layoutX="14.0" layoutY="58.0" text="Datos del estudiante:">
+      <font>
+         <Font name="Arial Black" size="12.0" />
+      </font>
+   </Label>
+   <Label layoutX="357.0" layoutY="301.0" text="Nota 1: ">
+      <font>
+         <Font name="Britannic Bold" size="13.0" />
+      </font></Label>
+   <Label layoutX="357.0" layoutY="338.0" text="Nota 2: ">
+      <font>
+         <Font name="Britannic Bold" size="13.0" />
+      </font>
+   </Label>
+   <Label layoutX="357.0" layoutY="377.0" text="Nota 3: ">
+      <font>
+         <Font name="Britannic Bold" size="13.0" />
+      </font>
+   </Label>
+   <TextField fx:id="nota1" layoutX="432.0" layoutY="293.0" prefHeight="26.0" prefWidth="110.0" />
+   <TextField fx:id="nota2" layoutX="432.0" layoutY="330.0" prefHeight="26.0" prefWidth="110.0" />
+   <TextField fx:id="nota3" layoutX="432.0" layoutY="369.0" prefHeight="26.0" prefWidth="110.0" />
+   <Label layoutX="357.0" layoutY="416.0" text="Promedio:">
+      <font>
+         <Font name="Britannic Bold" size="13.0" />
+      </font>
+   </Label>
+   <TextField fx:id="promedio" editable="false" layoutX="432.0" layoutY="410.0" prefHeight="26.0" prefWidth="110.0" />
+   <Label layoutX="576.0" layoutY="327.0" text="Curso:">
+      <font>
+         <Font name="Britannic Bold" size="13.0" />
+      </font>
+   </Label>
+   <ComboBox fx:id="comboCursos" layoutX="576.0" layoutY="358.0" prefHeight="26.0" prefWidth="110.0" />
+
+    <Button fx:id="btnRegistrar" layoutX="417.0" layoutY="474.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Registrar" />
+    <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="388.0" layoutY="474.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../icons/boton-editar.png" />
+        </image>
+    </ImageView>
+   <Button fx:id="btnModificar" layoutX="572.0" layoutY="474.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Modificar" />
+   <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="543.0" layoutY="474.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../icons/historia.png" />
+      </image>
+   </ImageView>
+</AnchorPane>
