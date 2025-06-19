@@ -14,6 +14,7 @@
         <junit.version>5.10.2</junit.version>
     </properties>
 
+    <!-- INICIO DE LAS DEPENDENCIAS -->
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -111,8 +112,15 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-    </dependencies>
 
+        <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.3.0</version>
+        </dependency>
+    </dependencies>
+    <!-- FINAL DE LAS DEPENDENCIAS -->
     <build>
         <plugins>
             <plugin>

@@ -11,6 +11,7 @@ module ColegioSystem {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires java.desktop;
+    requires java.sql;
 
     opens Clases to javafx.fxml;
     opens Forms to javafx.fxml, javafx.graphics;
