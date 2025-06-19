@@ -1,0 +1,85 @@
+package Clases.ClasesPersonas;
+
+public class Trabajador {
+    private int idTrabajador;
+    private String codigoTrabajador;
+    private int idPersona;
+    private String tipoTrabajador;
+    private String turnoAsignado;
+    private String cargo;
+
+    public Trabajador(int idTrabajador, String codigoTrabajador, int idPersona, String tipoTrabajador, String turnoAsignado, String cargo) {
+        this.idTrabajador = idTrabajador;
+        this.codigoTrabajador = codigoTrabajador;
+        this.idPersona = idPersona;
+        this.tipoTrabajador = tipoTrabajador;
+        this.turnoAsignado = turnoAsignado;
+        this.cargo = cargo;
+    }
+
+    public int getIdTrabajador() {
+        return idTrabajador;
+    }
+
+    public void setIdTrabajador(int idTrabajador) {
+        this.idTrabajador = idTrabajador;
+    }
+
+    public String getCodigoTrabajador() {
+        return codigoTrabajador;
+    }
+
+    public void setCodigoTrabajador(String codigoTrabajador) {
+        this.codigoTrabajador = codigoTrabajador;
+    }
+
+    public int getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(int idPersona) {
+        this.idPersona = idPersona;
+    }
+
+    public String getTipoTrabajador() {
+        return tipoTrabajador;
+    }
+
+    public void setTipoTrabajador(String tipoTrabajador) {
+        this.tipoTrabajador = tipoTrabajador;
+    }
+
+    public String getTurnoAsignado() {
+        return turnoAsignado;
+    }
+
+    public void setTurnoAsignado(String turnoAsignado) {
+        this.turnoAsignado = turnoAsignado;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    @Override
+    public String toString() {
+        return "Trabajador{" +
+                "idTrabajador=" + idTrabajador +
+                ", codigoTrabajador='" + codigoTrabajador + '\'' +
+                ", idPersona=" + idPersona +
+                ", tipoTrabajador='" + tipoTrabajador + '\'' +
+                ", turnoAsignado='" + turnoAsignado + '\'' +
+                ", cargo='" + cargo + '\'' +
+                '}';
+    }
+
+    public Object[] convertir(){
+        Object[] trabajador ={this.codigoTrabajador,this.tipoTrabajador,this.turnoAsignado,this.cargo};
+        return trabajador;
+    }
+
+}
