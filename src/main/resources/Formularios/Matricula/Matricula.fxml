@@ -1,8 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<AnchorPane prefHeight="502.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrMatricula">
-
+<AnchorPane prefHeight="572.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrMatricula">
+   <children>
+      <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="469.0" prefWidth="340.0" styleClass="anchor-pane" stylesheets="@../style.css">
+         <children>
+            <Label layoutX="14.0" layoutY="4.0" text="Lista de Alumnos:">
+               <font>
+                  <Font name="Arial Black" size="13.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="26.0" layoutY="81.0" prefHeight="418.0" prefWidth="274.0">
+               <children>
+                  <TableView fx:id="tablaAlumnos" layoutX="14.0" prefHeight="386.0" prefWidth="274.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn prefWidth="122.20001220703125" text="Código" />
+                      <TableColumn prefWidth="150.40000305175784" text="Apellidos y Nombres" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+            <Label layoutX="26.0" layoutY="43.0" text="Grado:" />
+            <Label layoutX="187.0" layoutY="43.0" text="Seccion:" />
+            <ComboBox fx:id="ComboGrado" layoutX="70.0" layoutY="39.0" prefHeight="18.0" prefWidth="104.0" />
+            <ComboBox fx:id="ComboSeccion" layoutX="237.0" layoutY="38.0" prefHeight="26.0" prefWidth="43.0" />
+         </children>
+      </AnchorPane>
+      <Button fx:id="BtnRealizarMatricula" layoutX="502.0" layoutY="14.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Realizar Matricula" />
+      <Button fx:id="btnResumenMatricula" layoutX="477.0" layoutY="51.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Resumen de Matricula" />
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="462.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../icons/tesis.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="441.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../icons/pdf.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tablaResumenPagos" layoutX="381.0" layoutY="423.0" prefHeight="134.0" prefWidth="306.0">
+         <columns>
+            <TableColumn prefWidth="152.0" text="Código" />
+            <TableColumn prefWidth="160.0" text="Monto" />
+         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Label layoutX="377.0" layoutY="391.0" text="Resumen de pago de pensiones:">
+         <font>
+            <Font name="Arial Black" size="13.0" />
+         </font>
+      </Label>
+      <TableView layoutX="381.0" layoutY="127.0" prefHeight="248.0" prefWidth="306.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Código" />
+          <TableColumn fx:id="TablaResumenCursos" prefWidth="183.2" text="Nombre Curso" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Label layoutX="381.0" layoutY="98.0" text="Resumen de cursos matriculados:">
+         <font>
+            <Font name="Arial Black" size="13.0" />
+         </font>
+      </Label>
+   </children>
 </AnchorPane>

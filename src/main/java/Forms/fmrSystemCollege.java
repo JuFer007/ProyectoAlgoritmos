@@ -1,5 +1,4 @@
 package Forms;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,12 +10,17 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.input.MouseEvent;
-
 import java.io.IOException;
 
 public class fmrSystemCollege extends Application {
     private double x = 0;
     private double y = 0;
+
+    @FXML
+    private void initialize() throws IOException {
+        formularioBienvenida();
+    };
+
     @FXML
     private AnchorPane AnchorPanePrincipal;
     @FXML
@@ -88,6 +92,11 @@ public class fmrSystemCollege extends Application {
     @FXML
     private void formularioReportePensiones() throws IOException {
         cargarFormulario("/Formularios/Reportes/ReportePensiones.fxml");
+    }
+
+    @FXML
+    private void formularioBienvenida() throws IOException {
+        cargarFormulario("/Formularios/Principales/Bienvenida.fxml");
     }
 
     @Override
