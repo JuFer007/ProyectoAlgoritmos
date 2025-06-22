@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -41,7 +42,7 @@
                   <Image url="@../../icons/right-from-bracket-solid.png" />
                </image>
             </ImageView>
-            <Button fx:id="btnCerrarSesion" layoutX="97.0" layoutY="516.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="126.0" styleClass="botonCerrarSesion" stylesheets="@../style.css" text="Cerrar Sesión" textAlignment="CENTER" onAction="#cerrarSesion">
+            <Button fx:id="btnCerrarSesion" layoutX="97.0" layoutY="516.0" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="35.0" prefWidth="126.0" styleClass="botonCerrarSesion" stylesheets="@../style.css" text="Cerrar Sesión" textAlignment="CENTER">
                <font>
                   <Font name="Impact" size="18.0" />
                </font>
@@ -50,7 +51,7 @@
       </AnchorPane>
       <AnchorPane layoutX="285.0" prefHeight="600.0" prefWidth="704.0" styleClass="right-form" stylesheets="@../style.css">
          <children>
-            <MenuBar fx:id="menuBar" layoutY="1.0" prefHeight="26.0" prefWidth="667.0">
+            <MenuBar fx:id="menuBar" layoutY="1.0" prefHeight="26.0" prefWidth="708.0">
                <menus>
                   <Menu fx:id="MenuGestionPersonas" mnemonicParsing="false" text="Gestión de Personas">
                      <graphic>
@@ -199,7 +200,7 @@
                   <Image url="@../../icons/cross_14875490.png" />
                </image>
             </ImageView>
-            <Button fx:id="btnCerrar" layoutX="676.0" layoutY="1.0" mnemonicParsing="false" onAction="#cerrarVentana" prefHeight="26.0" prefWidth="32.0" stylesheets="@../style.css" />
+            <Button fx:id="btnCerrar" layoutX="682.0" layoutY="1.0" mnemonicParsing="false" onAction="#cerrarVentana" prefHeight="18.0" prefWidth="26.0" stylesheets="@../style.css" />
             <AnchorPane fx:id="AnchorPanePrincipal" layoutY="23.0" prefHeight="572.0" prefWidth="681.0" />
          </children>
       </AnchorPane>
