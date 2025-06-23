@@ -110,11 +110,20 @@
                         </ImageView>
                      </graphic>
                      <items>
-                        <MenuItem fx:id="menuMatricularAlumno" mnemonicParsing="false" onAction="#formularioMatricula" text="Matricular Alumno">
+                        <MenuItem fx:id="menuRenovarMatricularAlumno" mnemonicParsing="false" onAction="#formularioRenovarMatricula" text="Renovar Matricula">
                            <graphic>
                               <ImageView fitHeight="16" fitWidth="16">
                                  <image>
                                     <Image url="@../../icons/address-card-solid.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem fx:id="menuMatricularAlumno" mnemonicParsing="false" onAction="#formularioNuevaMatricula" text="Nueva Matricula">
+                           <graphic>
+                              <ImageView fitHeight="16" fitWidth="16">
+                                 <image>
+                                    <Image url="@../../icons/matricula.png" />
                                  </image>
                               </ImageView>
                            </graphic>

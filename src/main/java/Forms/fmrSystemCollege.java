@@ -70,8 +70,13 @@ public class fmrSystemCollege extends Application {
     }
 
     @FXML
-    private void formularioMatricula() throws IOException {
-        cargarFormulario("/Formularios/Matricula/Matricula.fxml");
+    private void formularioRenovarMatricula() throws IOException {
+        cargarFormulario("/Formularios/Matricula/RenovarMatricula.fxml");
+    }
+
+    @FXML
+    private void formularioNuevaMatricula() throws IOException {
+        cargarFormulario("/Formularios/Matricula/NuevaMatricula.fxml");
     }
 
     @FXML
