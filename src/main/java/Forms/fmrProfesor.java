@@ -1,20 +1,31 @@
 package Forms;
-
 import Clases.ClasesPersonas.Profesor;
+import Clases.ConexionBD.Entidades_CRUD.DAO_Profesor;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
 public class fmrProfesor {
     @FXML
-    private void initializable(){
+    private void initialize(){
         configuracionCombox();
+        configurarTablaProfesores();
+        listarProfesores();
     }
+
+    //Columnas de la tabla
+    @FXML private TableColumn<Object[], String> codigoProf;
+    @FXML private TableColumn<Object[], String> dniProf;
+    @FXML private TableColumn<Object[], String> nombreProf;
+    @FXML private TableColumn<Object[], String> apellidoPaternoProf;
+    @FXML private TableColumn<Object[], String> apellidoMaternoProf;
+    @FXML private TableColumn<Object[], String> especialidadProf;
+    @FXML private TableColumn<Object[], String> generoP;
 
     //Campo de búsqueda
     @FXML
@@ -22,7 +33,7 @@ public class fmrProfesor {
 
     //Tabla de profesores
     @FXML
-    private TableView<Profesor> tablaProfesores;
+    private TableView<Object[]> tablaProfesores;
 
     //Campos de texto
     @FXML
@@ -136,6 +147,7 @@ public class fmrProfesor {
         }
     }
 
+    //Metodo para limpiar campos
     private void LimpiarCampos() {
         cajaDNI.clear();
         cajaPrimerNombre.clear();
@@ -146,5 +158,37 @@ public class fmrProfesor {
         cajaFechaNacimiento.setValue(null);
         comboEpecialidad.getSelectionModel().clearSelection();
         comboGradoAcademico.getSelectionModel().clearSelection();
+    }
+
+    //Configurar los campos de la tabla
+    private void configurarTablaProfesores() {
+        codigoProf.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[0].toString()));
+        dniProf.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[1].toString()));
+        nombreProf.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[2].toString()));
+        apellidoPaternoProf.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[3].toString()));
+        apellidoMaternoProf.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[4].toString()));
+        especialidadProf.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[5].toString()));
+        generoP.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[6].toString()));
+
+        //Evitar que se muevan las columnas
+        for (TableColumn<?, ?> col : tablaProfesores.getColumns()) {
+            col.setReorderable(false);
+        }
+
+        //Evitar el scroll horizontal
+        tablaProfesores.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    }
+
+    //
+    private void listarProfesores() {
+        DAO_Profesor dao = new DAO_Profesor();
+        dao.Listar();
+
+        ObservableList<Object[]> datos = FXCollections.observableArrayList();
+        for (Profesor prof : dao.getProfesores()) {
+            datos.add(prof.Convertir());
+        }
+
+        tablaProfesores.setItems(datos);
     }
 }

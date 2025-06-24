@@ -1,13 +1,17 @@
 package Clases.ClasesPersonas;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.Date;
 
-public class Alumno {
+public class Alumno extends Persona{
     private int idAlumno;
     private String codigoAlumno;
     private int idPersona;
     private int idApoderado;
 
-    public Alumno(int idAlumno, String codigoAlumno, int idPersona, int idApoderado) {
-        this.idAlumno = idAlumno;
+    public Alumno(String dnipersona, String primernombre, String segundonombre, String apellidopaterno, String apellidomaterno, Date fechanacimiento, String genero, String codigoAlumno, int idPersona, int idApoderado) {
+        super(dnipersona, primernombre, segundonombre, apellidopaterno, apellidomaterno, fechanacimiento, genero);
         this.codigoAlumno = codigoAlumno;
         this.idPersona = idPersona;
         this.idApoderado = idApoderado;
@@ -55,8 +59,26 @@ public class Alumno {
                 '}';
     }
 
+    //Metodo para obtener la edad y algunos datos a mostrar de alumno
     public Object[] convertir() {
-        Object[] alumno = {this.codigoAlumno};
-        return alumno;
+        int edad = 0;
+        if (this.getFechanacimiento() != null) {
+            try {
+                LocalDate fechaNac = ((java.sql.Date) this.getFechanacimiento()).toLocalDate();
+                edad = Period.between(fechaNac, LocalDate.now()).getYears();
+            } catch (ClassCastException e) {
+                edad = 0;
+            }
+        }
+
+        return new Object[] {
+                this.codigoAlumno,
+                this.getDnipersona(),
+                this.getPrimernombre() + " " + this.getSegundonombre(),
+                this.getApellidopaterno(),
+                this.getApellidomaterno(),
+                edad,
+                this.getGenero()
+        };
     }
 }

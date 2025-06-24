@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="572.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrAlumno">
+<AnchorPane prefHeight="572.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrTrabajador">
     <children>
         <TextField fx:id="cajaBusqueda" layoutX="37.0" layoutY="14.0" prefHeight="26.0" prefWidth="309.0" promptText="Búsqueda.." styleClass="buscar" stylesheets="@../tabla.css" />
         <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="14.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
@@ -81,14 +81,14 @@
                         <Font name="Arial Bold" size="12.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="cajaEspecialidad" layoutX="481.0" layoutY="103.0" prefHeight="26.0" prefWidth="100.0" />
+                <ComboBox fx:id="cajaTipoTrabajo" layoutX="481.0" layoutY="103.0" prefHeight="26.0" prefWidth="100.0" />
 
                 <Label layoutX="354.0" layoutY="142.0" text="Turno Asignado:">
                     <font>
                         <Font name="Arial Bold" size="12.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="cajaTexto" layoutX="481.0" layoutY="136.0" prefHeight="26.0" prefWidth="100.0" />
+                <ComboBox fx:id="cajaTurnoAsignado" layoutX="481.0" layoutY="136.0" prefHeight="26.0" prefWidth="100.0" />
 
                 <Button fx:id="btnNuevo" layoutX="423.0" layoutY="221.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" stylesheets="@../tabla.css" text="Nuevo" />
                 <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="394.0" layoutY="220.0" pickOnBounds="true" preserveRatio="true">

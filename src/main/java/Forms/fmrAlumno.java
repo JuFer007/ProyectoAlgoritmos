@@ -1,5 +1,8 @@
 package Forms;
 import Clases.ClasesPersonas.Alumno;
+import Clases.ConexionBD.Entidades_CRUD.DAO_Alumno;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,11 +12,23 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 public class fmrAlumno {
+
     //Constructor
     @FXML
     public void initialize() {
         configuracionCombox();
+        ConfigurarTabla();
+        listarAlumos();
     }
+
+    //Columnas de la tabla
+    @FXML private TableColumn<Object[], String> codigoAlumno;
+    @FXML private TableColumn<Object[], String> DNIAlumno;
+    @FXML private TableColumn<Object[], String> nombreA;
+    @FXML private TableColumn<Object[], String> apellidoPaternoA;
+    @FXML private TableColumn<Object[], String> apellidoMaternoA;
+    @FXML private TableColumn<Object[], Integer> edadA;
+    @FXML private TableColumn<Object[], String> generoA;
 
     //Cajas de texto del form
     @FXML private TextField cajaBusqueda;
@@ -43,7 +58,7 @@ public class fmrAlumno {
     @FXML private Button btnAgregarApoderado;
 
     //Tabla de alumnos
-    @FXML private TableView<Alumno> tablaAlumnos;
+    @FXML private TableView<Object[]> tablaAlumnos;
 
     //Validacion de campos para registro nuevo alumno
     private boolean validarCamposDeIngreso() {
@@ -96,8 +111,6 @@ public class fmrAlumno {
     private void configuracionCombox() {
         ObservableList<String> grados = FXCollections.observableArrayList("Primer Grado", "Segundo Grado", "Tercer Grado", "Cuarto Grado", "Quinto Grado");
         ObservableList<String> secciones = FXCollections.observableArrayList("A", "B", "C");
-
-        //Asignacion de valores del list de tipo String
         comboGradoB.setItems(grados);
         comboGrado.setItems(grados);
         comboSeccionB.setItems(secciones);
@@ -156,5 +169,36 @@ public class fmrAlumno {
         String Apoderado = comboApoderado.getSelectionModel().getSelectedItem().toString();
 
         // FALTA TERMINAR
+    }
+
+    //Metodo para configurar la tabla
+    private void ConfigurarTabla() {
+        codigoAlumno.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[0].toString()));
+        DNIAlumno.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[1].toString()));
+        nombreA.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[2].toString()));
+        apellidoPaternoA.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[3].toString()));
+        apellidoMaternoA.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[4].toString()));
+        edadA.setCellValueFactory(data -> new SimpleIntegerProperty((int) data.getValue()[5]).asObject());
+        generoA.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[6].toString()));
+
+        //Evitar que se muevan las columnas
+        for (TableColumn<?, ?> col : tablaAlumnos.getColumns()) {
+            col.setReorderable(false);
+        }
+
+        //Evitar el scroll horizontal
+        tablaAlumnos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    }
+
+    //Metodo para listar los alumnos
+    private void listarAlumos() {
+        DAO_Alumno daoAlumno = new DAO_Alumno();
+        daoAlumno.Listar();
+
+        ObservableList<Object[]> datosAlumno = FXCollections.observableArrayList();
+        for (Alumno a : daoAlumno.getAlumnos()) {
+            datosAlumno.add(a.convertir());
+        }
+        tablaAlumnos.setItems(datosAlumno);
     }
 }

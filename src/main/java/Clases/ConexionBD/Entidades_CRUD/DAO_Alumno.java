@@ -1,5 +1,5 @@
 package Clases.ConexionBD.Entidades_CRUD;
-import Clases.ClasesPersonas.Profesor;
+import Clases.ClasesPersonas.Alumno;
 import Clases.ConexionBD.ConexionMySQL;
 import Clases.ConexionBD.DAO;
 import java.sql.PreparedStatement;
@@ -7,12 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DAO_Profesor implements DAO {
-    private ArrayList<Profesor> profesores;
+public class DAO_Alumno implements DAO {
+    private ArrayList<Alumno> alumnos;
 
     @Override
     public void Crear() {
-
     }
 
     @Override
@@ -27,19 +26,16 @@ public class DAO_Profesor implements DAO {
 
     @Override
     public void Listar() {
-        profesores = new ArrayList();
-        profesores.clear();
+        alumnos = new ArrayList<>();
+        alumnos.clear();
 
-        String consulta = "select persona.DNIpersona, persona.primerNombre, persona.segundoNombre, persona.apellidoMaterno, persona.apellidoPaterno, persona.fechaNacimiento, persona.genero,\n" +
-                "profesor.codigoProfesor, profesor.especialidad, profesor.idPersona, profesor.gradoAcademico, profesor.horasSemanales, profesor.correoElectronico, profesor.telefono\n" +
-                "from persona inner join profesor on persona.idPersona = profesor.idPersona\n" +
-                "order by persona.apellidoPaterno";
-
+        String consulta = "select persona.DNIpersona, persona.primerNombre, persona.segundoNombre, persona.apellidoMaterno, persona.apellidoPaterno, persona.fechaNacimiento, persona.genero, alumno.codigoAlumno, alumno.idPersona, alumno.idApoderado  from persona inner join Alumno on persona.idPersona = alumno.idAlumno\n" +
+                "order by persona.apellidoPaterno ";
         try {
             PreparedStatement comando = ConexionMySQL.getInstancia().getConexion().prepareStatement(consulta);
             ResultSet resultado = comando.executeQuery();
             while (resultado.next()) {
-                Profesor profesor = new Profesor(
+                Alumno alumno = new Alumno(
                         resultado.getString("DNIpersona"),
                         resultado.getString("primerNombre"),
                         resultado.getString("segundoNombre"),
@@ -47,15 +43,11 @@ public class DAO_Profesor implements DAO {
                         resultado.getString("apellidoMaterno"),
                         resultado.getDate("fechaNacimiento"),
                         resultado.getString("genero"),
-                        resultado.getString("codigoProfesor"),
+                        resultado.getString("codigoAlumno"),
                         resultado.getInt("idPersona"),
-                        resultado.getString("especialidad"),
-                        resultado.getString("gradoAcademico"),
-                        resultado.getInt("horasSemanales"),
-                        resultado.getString("correoElectronico"),
-                        resultado.getString("telefono")
+                        resultado.getInt("idApoderado")
                 );
-                profesores.add(profesor);
+                alumnos.add(alumno);
             }
             resultado.close();
             comando.close();
@@ -64,7 +56,7 @@ public class DAO_Profesor implements DAO {
         }
     }
 
-    public ArrayList<Profesor> getProfesores() {
-        return profesores;
+    public ArrayList<Alumno> getAlumnos() {
+        return alumnos;
     }
 }

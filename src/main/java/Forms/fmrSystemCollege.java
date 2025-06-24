@@ -19,6 +19,7 @@ public class fmrSystemCollege extends Application {
     @FXML
     private void initialize() throws IOException {
         formularioBienvenida();
+
     };
 
     @FXML

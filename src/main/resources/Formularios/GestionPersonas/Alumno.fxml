@@ -16,13 +16,13 @@
         </ImageView>
         <TableView fx:id="tablaAlumnos" layoutX="14.0" layoutY="54.0" prefHeight="177.0" prefWidth="680.0" stylesheets="@../tabla.css">
             <columns>
-                <TableColumn prefWidth="75.0" text="Código" />
-                <TableColumn prefWidth="99.2" text="DNI" />
-                <TableColumn prefWidth="91.2" text="Nombre" />
-                <TableColumn prefWidth="120.8" text="Apellido Paterno" />
-                <TableColumn prefWidth="130.8" text="Apellido Materno" />
-                <TableColumn prefWidth="70.4" text="Edad" />
-                <TableColumn prefWidth="89.6" text="Género" />
+                <TableColumn fx:id="codigoAlumno" prefWidth="75.0" text="Código" />
+                <TableColumn fx:id="DNIAlumno" prefWidth="99.2" text="DNI" />
+                <TableColumn fx:id="nombreA" prefWidth="91.2" text="Nombre" />
+                <TableColumn fx:id="apellidoPaternoA" prefWidth="120.8" text="Apellido Paterno" />
+                <TableColumn fx:id="apellidoMaternoA" prefWidth="130.8" text="Apellido Materno" />
+                <TableColumn fx:id="edadA" prefWidth="70.4" text="Edad" />
+                <TableColumn fx:id="generoA" prefWidth="89.6" text="Género" />
             </columns>
             <styleClass>
                 <String fx:value="column-header-background" />

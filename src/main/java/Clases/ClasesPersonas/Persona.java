@@ -1,19 +1,17 @@
 package Clases.ClasesPersonas;
-
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Persona {
     private int idpersona;
-    private int dnipersona;
+    private String dnipersona;
     private String primernombre;
     private String segundonombre;
     private String apellidopaterno;
     private String apellidomaterno;
-    private LocalDate fechanacimiento;
+    private Date fechanacimiento;
     private String genero;
 
-    public Persona(int idpersona, int dnipersona, String primernombre, String segundonombre, String apellidopaterno, String apellidomaterno, LocalDate fechanacimiento, String genero) {
-        this.idpersona = idpersona;
+    public Persona(String dnipersona, String primernombre, String segundonombre, String apellidopaterno, String apellidomaterno, Date fechanacimiento, String genero) {
         this.dnipersona = dnipersona;
         this.primernombre = primernombre;
         this.segundonombre = segundonombre;
@@ -31,12 +29,16 @@ public class Persona {
         this.idpersona = idpersona;
     }
 
-    public int getDnipersona() {
+    public String getDnipersona() {
         return dnipersona;
     }
 
-    public void setDnipersona(int dnipersona) {
+    public void setDnipersona(String dnipersona) {
         this.dnipersona = dnipersona;
+    }
+
+    public String getGenero() {
+        return genero;
     }
 
     public String getPrimernombre() {
@@ -71,11 +73,11 @@ public class Persona {
         this.apellidomaterno = apellidomaterno;
     }
 
-    public LocalDate getFechanacimiento() {
+    public Date getFechanacimiento() {
         return fechanacimiento;
     }
 
-    public void setFechanacimiento(LocalDate fechanacimiento) {
+    public void setFechanacimiento(Date fechanacimiento) {
         this.fechanacimiento = fechanacimiento;
     }
 

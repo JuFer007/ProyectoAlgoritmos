@@ -1,6 +1,7 @@
 package Clases.ClasesPersonas;
+import java.util.Date;
 
-public class Trabajador {
+public class Trabajador extends Persona {
     private int idTrabajador;
     private String codigoTrabajador;
     private int idPersona;
@@ -8,7 +9,8 @@ public class Trabajador {
     private String turnoAsignado;
     private String cargo;
 
-    public Trabajador(int idTrabajador, String codigoTrabajador, int idPersona, String tipoTrabajador, String turnoAsignado, String cargo) {
+    public Trabajador(String dnipersona, String primernombre, String segundonombre, String apellidopaterno, String apellidomaterno, Date fechanacimiento, String genero, int idTrabajador, String codigoTrabajador, int idPersona, String tipoTrabajador, String turnoAsignado, String cargo) {
+        super(dnipersona, primernombre, segundonombre, apellidopaterno, apellidomaterno, fechanacimiento, genero);
         this.idTrabajador = idTrabajador;
         this.codigoTrabajador = codigoTrabajador;
         this.idPersona = idPersona;
