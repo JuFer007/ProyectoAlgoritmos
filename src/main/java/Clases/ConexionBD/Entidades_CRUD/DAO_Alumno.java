@@ -56,7 +56,81 @@ public class DAO_Alumno implements DAO {
         }
     }
 
+    //Retonar la lista de alumnos
     public ArrayList<Alumno> getAlumnos() {
+        return alumnos;
+    }
+
+    //Metodo para listar alumnos por grado
+    public ArrayList<Alumno> alumnosPorGrado(String grado) {
+        alumnos = new ArrayList<>();
+        alumnos.clear();
+
+        try {
+            String sql = "{CALL BuscarAlumnosPorGrado(?)}";
+            PreparedStatement ps = ConexionMySQL.getInstancia().getConexion().prepareCall(sql);
+            ps.setString(1, grado);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Alumno alumno = new Alumno(
+                        rs.getString("DNIpersona"),
+                        rs.getString("primerNombre"),
+                        rs.getString("segundoNombre"),
+                        rs.getString("apellidoPaterno"),
+                        rs.getString("apellidoMaterno"),
+                        rs.getDate("fechaNacimiento"),
+                        rs.getString("genero"),
+                        rs.getString("codigoAlumno"),
+                        rs.getInt("idPersona"),
+                        rs.getInt("idApoderado")
+                );
+                alumnos.add(alumno);
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return alumnos;
+    }
+
+    //Metodo para listar alumnos por grado y seccion
+    public ArrayList<Alumno> alumnosPorGradoYSeccion(String grado, String seccion) {
+        alumnos = new ArrayList<>();
+        alumnos.clear();
+
+        try {
+            String sql = "{CALL BuscarAlumnosPorGradoYSeccion(?, ?)}";
+            PreparedStatement ps = ConexionMySQL.getInstancia().getConexion().prepareCall(sql);
+            ps.setString(1, grado);
+            ps.setString(2, seccion);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Alumno alumno = new Alumno(
+                        rs.getString("DNIpersona"),
+                        rs.getString("primerNombre"),
+                        rs.getString("segundoNombre"),
+                        rs.getString("apellidoPaterno"),
+                        rs.getString("apellidoMaterno"),
+                        rs.getDate("fechaNacimiento"),
+                        rs.getString("genero"),
+                        rs.getString("codigoAlumno"),
+                        rs.getInt("idPersona"),
+                        rs.getInt("idApoderado")
+                );
+                alumnos.add(alumno);
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return alumnos;
     }
 }

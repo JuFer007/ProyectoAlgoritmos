@@ -179,7 +179,7 @@ public class fmrProfesor {
         tablaProfesores.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
-    //
+    //Metodo para listar profesores
     private void listarProfesores() {
         DAO_Profesor dao = new DAO_Profesor();
         dao.Listar();
@@ -190,5 +190,23 @@ public class fmrProfesor {
         }
 
         tablaProfesores.setItems(datos);
+    }
+
+    //Metodo de busqueda dinamica
+    private void buscarAlumno(String textoIngresado) {
+        DAO_Profesor daoProfesor = new DAO_Profesor();
+        daoProfesor.Listar();
+        ObservableList<Object[]> resultadoFiltrados = FXCollections.observableArrayList();
+
+        for (Profesor profesor : daoProfesor.getProfesores()) {
+            Object[] datos = profesor.Convertir();
+
+            String nombreCompleto = (profesor.getPrimernombre() + " " + profesor.getSegundonombre() + " " + profesor.getApellidopaterno() + " " + profesor.getApellidomaterno()).toLowerCase();
+
+            if (textoIngresado == null || textoIngresado.isEmpty() || nombreCompleto.contains(textoIngresado.toLowerCase())) {
+                resultadoFiltrados.add(datos);
+            }
+        }
+        tablaProfesores.setItems(resultadoFiltrados);
     }
 }

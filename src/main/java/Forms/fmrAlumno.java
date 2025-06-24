@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 
 public class fmrAlumno {
 
@@ -19,6 +20,9 @@ public class fmrAlumno {
         configuracionCombox();
         ConfigurarTabla();
         listarAlumos();
+        cajaBusqueda.textProperty().addListener((obs, oldText, newText) -> aplicarFiltrosCombinados());
+        comboGradoB.valueProperty().addListener((obs, oldVal, newVal) -> aplicarFiltrosCombinados());
+        comboSeccionB.valueProperty().addListener((obs, oldVal, newVal) -> aplicarFiltrosCombinados());
     }
 
     //Columnas de la tabla
@@ -109,7 +113,7 @@ public class fmrAlumno {
 
     //Configuracion de los comboBox
     private void configuracionCombox() {
-        ObservableList<String> grados = FXCollections.observableArrayList("Primer Grado", "Segundo Grado", "Tercer Grado", "Cuarto Grado", "Quinto Grado");
+        ObservableList<String> grados = FXCollections.observableArrayList("Primer", "Segundo", "Tercer", "Cuarto", "Quinto");
         ObservableList<String> secciones = FXCollections.observableArrayList("A", "B", "C");
         comboGradoB.setItems(grados);
         comboGrado.setItems(grados);
@@ -200,5 +204,37 @@ public class fmrAlumno {
             datosAlumno.add(a.convertir());
         }
         tablaAlumnos.setItems(datosAlumno);
+    }
+
+    //Metodo para aplicar filtros de busqueda y los comboBox
+    private void aplicarFiltrosCombinados() {
+        String texto = cajaBusqueda.getText();
+        String grado = comboGradoB.getValue();
+        String seccion = comboSeccionB.getValue();
+
+        DAO_Alumno dao = new DAO_Alumno();
+        ObservableList<Object[]> resultados = FXCollections.observableArrayList();
+        ArrayList<Alumno> lista;
+
+        if (grado != null && seccion != null) {
+            lista = dao.alumnosPorGradoYSeccion(grado, seccion);
+        } else if (grado != null) {
+            lista = dao.alumnosPorGrado(grado);
+        } else {
+            dao.Listar();
+            lista = dao.getAlumnos();
+        }
+
+        for (Alumno alumno : lista) {
+            String nombreCompleto = (alumno.getPrimernombre() + " " +
+                    alumno.getSegundonombre() + " " +
+                    alumno.getApellidopaterno() + " " +
+                    alumno.getApellidomaterno()).toLowerCase();
+
+            if (texto == null || texto.isEmpty() || nombreCompleto.contains(texto.toLowerCase())) {
+                resultados.add(alumno.convertir());
+            }
+        }
+        tablaAlumnos.setItems(resultados);
     }
 }
