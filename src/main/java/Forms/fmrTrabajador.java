@@ -1,75 +1,70 @@
 package Forms;
+import Clases.ClasesPersonas.Profesor;
+import Clases.ClasesPersonas.Trabajador;
+import Clases.ConexionBD.Entidades_CRUD.DAO_Profesor;
+import Clases.ConexionBD.Entidades_CRUD.DAO_Trabajador;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 public class fmrTrabajador {
-    //Constructor
     @FXML
     private void initialize() {
         configuracionCombox();
     }
 
-    @FXML
-    private TextField cajaBusqueda;
+    //Campo de búsqueda
+    @FXML private TextField cajaBusqueda;
 
-    // Tabla
-    @FXML
-    private TableView<?> tablaProfesores;
+    //Tabla de trabajadores
+    @FXML private TableView<Object[]> tablaTrabajador;
 
-    // Campos de texto
-    @FXML
-    private TextField cajaDNI;
+    //Columnas de la tabla
+    @FXML private TableColumn<Object[], String> codigoProf;
+    @FXML private TableColumn<Object[], String> dniProf;
+    @FXML private TableColumn<Object[], String> nombreProf;
+    @FXML private TableColumn<Object[], String> apellidoPaternoProf;
+    @FXML private TableColumn<Object[], String> apellidoMaternoProf;
+    @FXML private TableColumn<Object[], String> tipoTrabajo;
+    @FXML private TableColumn<Object[], String> cargo;
 
-    @FXML
-    private TextField cajaPrimerNombre;
+    //Campos de insercion
+    @FXML private TextField cajaDNI;
+    @FXML private TextField cajaPrimerNombre;
+    @FXML private TextField cajaSegundoNombre;
+    @FXML private TextField cajaApellidoPaterno;
+    @FXML private TextField cajaApellidoMaterno;
+    @FXML private TextField cajaGenero;
+    @FXML private DatePicker cajaFechaNacimiento;
 
-    @FXML
-    private TextField cajaSegundoNombre;
+    //Campos de combox
+    @FXML private ComboBox<String> cajaTipoTrabajo;
+    @FXML private ComboBox<String> cajaTurnoAsignado;
+    @FXML private ComboBox<String> cargoAsignado;
 
-    @FXML
-    private TextField cajaApellidoPaterno;
+    @FXML private TextField cajaTelef;
 
-    @FXML
-    private TextField cajaApellidoMaterno;
+    //Botonoes
+    @FXML private Button btnNuevo;
+    @FXML private Button btnEliminar;
+    @FXML private Button btnModificiar;
 
-    @FXML
-    private TextField cajaGenero;
-
-    // Fecha de nacimiento
-    @FXML
-    private DatePicker cajaFechaNacimiento;
-
-    // Combos
-    @FXML
-    private ComboBox<String> cajaTipoTrabajo;
-
-    @FXML
-    private ComboBox<String> cajaTurnoAsignado;
-
-    // Botones
-    @FXML
-    private Button btnNuevo;
-
-    @FXML
-    private Button btnEliminar;
-
-    @FXML
-    private Button btnModificar;
-
-    //Metodo para validar campos
-    private boolean validarCampos() {
+    private boolean validarCamposDeIngreso() {
         String mensaje = "";
 
-        //Validar DNI
+        //Validacion de DNI
         if (cajaDNI.getText().isEmpty()) {
             mensaje += "El campo DNI no puede estar vacío.\n";
         } else if (!cajaDNI.getText().matches("\\d{8}")) {
             mensaje += "El DNI debe tener exactamente 8 dígitos.\n";
         }
 
-        //Validar nombres
+        //Validar primer nombre y segundo nombre
         if (cajaPrimerNombre.getText().isEmpty() || cajaSegundoNombre.getText().isEmpty()) {
             mensaje += "Los nombres no pueden estar vacíos.\n";
         } else if (!cajaPrimerNombre.getText().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+") || !cajaSegundoNombre.getText().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
@@ -77,10 +72,10 @@ public class fmrTrabajador {
         }
 
         //Validar apellidos
-        if (cajaApellidoPaterno.getText().isEmpty() || cajaApellidoPaterno.getText().isEmpty()) {
+        if (cajaApellidoPaterno.getText().isEmpty() || cajaApellidoMaterno.getText().isEmpty()) {
             mensaje += "Los apellidos no pueden estar vacíos.\n";
         } else if (!cajaApellidoPaterno.getText().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+") ||
-                !cajaApellidoPaterno.getText().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+                !cajaApellidoMaterno.getText().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
             mensaje += "Los apellidos solo pueden contener letras.\n";
         }
 
@@ -92,7 +87,34 @@ public class fmrTrabajador {
             mensaje += "El género debe ser 'Masculino' o 'Femenino'.\n";
         }
 
-        //Muestra mensaje de errores en validacion
+        //Validar teléfono
+        if (cajaTelef.getText().isEmpty()) {
+            mensaje += "El campo teléfono no puede estar vacío.\n";
+        } else if (!cajaTelef.getText().matches("\\d{9}")) {
+            mensaje += "El teléfono debe tener exactamente 9 dígitos.\n";
+        }
+
+        //Validar tipo de trabajo
+        if (cajaTipoTrabajo.getValue() == null) {
+            mensaje += "El campo tipo de trabajo es obligatorio.\n";
+        }
+
+        //Validar turno asignado
+        if (cajaTurnoAsignado.getValue() == null) {
+            mensaje += "El campo turno asignado es obligatorio.\n";
+        }
+
+        //Validar cargo seleccionado
+        if (cajaTurnoAsignado.getValue() == null) {
+            mensaje += "El campo de cargos es obligatorio.\n";
+        }
+
+        //Validar fecha de nacimiento
+        if (cajaFechaNacimiento.getValue() == null) {
+            mensaje += "La fecha de nacimiento es obligatoria.\n";
+        }
+
+        // Muestra mensaje de errores en validación
         if (!mensaje.isEmpty()) {
             Alert alerta = new Alert(Alert.AlertType.WARNING);
             alerta.setTitle("Validación de campos");
@@ -101,14 +123,184 @@ public class fmrTrabajador {
             alerta.showAndWait();
             return false;
         }
+
         return true;
     }
+
+
+    //Metodo para configurar los combox
     private void configuracionCombox() {
         ObservableList<String> tipoDeTrabajo = FXCollections.observableArrayList("Administrativo", "Servicios Educativos", "Seguridad", "Servicios Generales", "Apoyo Psicologico");
         ObservableList<String> turnoAsignado = FXCollections.observableArrayList( "Mañana", "Tarde", "Noche");
+        ObservableList<String> cargos = FXCollections.observableArrayList("Vigilante", "Secretaria", "Secretario", "Auxiliar Administrativo", "Bibliotecario", "Psicologo", "Psicologa", "Personal de Limpieza");
 
         //Asignacion de valores del list de tipo String
         cajaTipoTrabajo.setItems(tipoDeTrabajo);
         cajaTurnoAsignado.setItems(turnoAsignado);
+        cargoAsignado.setItems(cargos);
+    }
+
+    //Validar fecha de nacimiento
+    private Date valorFechaNacimiento() {
+        if (cajaFechaNacimiento.getValue() == null) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Validación");
+            alerta.setHeaderText("Fecha de nacimiento requerida");
+            alerta.setContentText("Debe seleccionar una fecha de nacimiento.");
+            alerta.showAndWait();
+            return null;
+        } else {
+            LocalDate fechaLocal = cajaFechaNacimiento.getValue();
+            Date fechaConvertida = (Date) Date.from(fechaLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            return fechaConvertida;
+        }
+    }
+
+    //Limpiar campos
+    private void LimpiarCampos() {
+        cajaDNI.clear();
+        cajaPrimerNombre.clear();
+        cajaSegundoNombre.clear();
+        cajaApellidoPaterno.clear();
+        cajaApellidoMaterno.clear();
+        cajaGenero.clear();
+        cajaFechaNacimiento.setValue(null);
+        cajaTipoTrabajo.getSelectionModel().clearSelection();
+        cajaTurnoAsignado.getSelectionModel().clearSelection();
+    }
+
+    //Modificar trabajador
+    public void modificarTrabajador() {
+        Object[] filaSeleccionada = tablaTrabajador.getSelectionModel().getSelectedItem();
+
+        if (filaSeleccionada == null) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Selección Requerida");
+            alerta.setHeaderText("No se ha seleccionado ningún trabajador");
+            alerta.setContentText("Por favor, seleccione un trabajador para modificar.");
+            alerta.showAndWait();
+            return;
+        }
+
+        String dniTrabajador = filaSeleccionada[1].toString();
+        cajaDNI.setText(dniTrabajador);
+        cajaDNI.setEditable(false);
+
+        if (!validarCamposDeIngreso()) {
+            return;
+        }
+
+        Date fechaNacimiento = valorFechaNacimiento();
+        if (fechaNacimiento == null) {
+            return;
+        }
+
+        String DNI = cajaDNI.getText();
+        String PrimerNombre = cajaPrimerNombre.getText();
+        String SegundoNombre = cajaSegundoNombre.getText();
+        String ApellidoPaterno = cajaApellidoPaterno.getText();
+        String ApellidoMaterno = cajaApellidoMaterno.getText();
+        String Genero = cajaGenero.getText();
+        Date FechaNacimiento = Date.valueOf(cajaFechaNacimiento.getValue().toString());
+        String TipoTrabajo = cajaTipoTrabajo.getValue();
+        String TurnoAsignado = cajaTurnoAsignado.getValue();
+        String Cargo = cargoAsignado.getValue();
+        String Telefono = cajaTelef.getText();
+
+        Trabajador trabajador = new Trabajador(DNI, PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero, TipoTrabajo, TurnoAsignado, Telefono, Cargo);
+
+        DAO_Trabajador daoTrabajador = new DAO_Trabajador();
+        daoTrabajador.Actualizar(trabajador);
+
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Información");
+        alerta.setHeaderText("Datos actualizados correctamente");
+        alerta.showAndWait();
+
+        LimpiarCampos();
+    }
+
+    //Crear trabajador
+    public void insertarTrabajador() {
+        if (!validarCamposDeIngreso()) {
+            return;
+        }
+
+        Date fechaNacimiento = valorFechaNacimiento();
+        if (fechaNacimiento == null) {
+            return;
+        }
+
+        String DNI = cajaDNI.getText();
+        String PrimerNombre = cajaPrimerNombre.getText();
+        String SegundoNombre = cajaSegundoNombre.getText();
+        String ApellidoPaterno = cajaApellidoPaterno.getText();
+        String ApellidoMaterno = cajaApellidoMaterno.getText();
+        String Genero = cajaGenero.getText();
+        Date FechaNacimiento = Date.valueOf(cajaFechaNacimiento.getValue().toString());
+        String TipoTrabajo = cajaTipoTrabajo.getValue();
+        String TurnoAsignado = cajaTurnoAsignado.getValue();
+        String Cargo = cargoAsignado.getValue();
+        String Telefono = cajaTelef.getText();
+
+        Trabajador trabajador = new Trabajador(DNI, PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero, TipoTrabajo, TurnoAsignado, Telefono, Cargo);
+
+        DAO_Trabajador daoTrabajador = new DAO_Trabajador();
+        daoTrabajador.Crear(trabajador);
+
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Información");
+        alerta.setHeaderText("Trabajador registrado correctamente");
+        alerta.showAndWait();
+
+        LimpiarCampos();
+    }
+
+    //Métodos para configurar la tabla
+    private void ConfigurarTabla() {
+        codigoProf.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[0].toString()));
+        dniProf.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[1].toString()));
+        nombreProf.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[2].toString()));
+        apellidoPaternoProf.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[3].toString()));
+        apellidoMaternoProf.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[4].toString()));
+        tipoTrabajo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[5].toString()));
+        cargo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[6].toString()));
+
+        for (TableColumn<?, ?> col : tablaTrabajador.getColumns()) {
+            col.setReorderable(false);
+        }
+
+        tablaTrabajador.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    }
+
+    //Metodo para listar trabajadores en la tabla
+    private void listarTrabajadores() {
+        DAO_Trabajador daoTrabajador = new DAO_Trabajador();
+        daoTrabajador.Listar();
+
+        ObservableList<Object[]> datosTrabajador = FXCollections.observableArrayList();
+        for (Trabajador t : daoTrabajador.getTrabajadores()) {
+            datosTrabajador.add(t.convertir());
+        }
+        tablaTrabajador.setItems(datosTrabajador);
+    }
+
+    //Metodo de busqueda dinamica
+    private void buscarProfesor(String textoIngresado) {
+        DAO_Trabajador daoTrabajador = new DAO_Trabajador();
+        daoTrabajador.Listar();
+
+        ObservableList<Object[]> resultadoFiltrados = FXCollections.observableArrayList();
+
+        for (Trabajador trabajador : daoTrabajador.getTrabajadores()) {
+            Object[] datos = trabajador.Convertir();
+
+            String nombreCompleto = (trabajador.getPrimernombre() + " " + trabajador.getSegundonombre() + " " + trabajador.getApellidopaterno() + " " + trabajador.getApellidomaterno()).toLowerCase();
+
+            if (textoIngresado == null || textoIngresado.isEmpty() || nombreCompleto.contains(textoIngresado.toLowerCase())) {
+                resultadoFiltrados.add(datos);
+            }
+        }
+        tablaTrabajador.setItems(resultadoFiltrados);
     }
 }

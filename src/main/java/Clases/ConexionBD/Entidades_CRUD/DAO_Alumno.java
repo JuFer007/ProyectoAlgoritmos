@@ -1,36 +1,79 @@
 package Clases.ConexionBD.Entidades_CRUD;
 import Clases.ClasesPersonas.Alumno;
 import Clases.ConexionBD.ConexionMySQL;
-import Clases.ConexionBD.DAO;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javafx.scene.control.Alert;
+import java.sql.*;
 import java.util.ArrayList;
 
-public class DAO_Alumno implements DAO {
+public class DAO_Alumno {
     private ArrayList<Alumno> alumnos;
 
-    @Override
-    public void Crear() {
+    //Metodo para creaar alumno
+    public void Crear(Alumno alumno, String DNIApoderado) {
+        String mensaje = "";
+        String consulta = "{CALL sp_Alumno_Insert(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+
+        try {
+            CallableStatement statement = ConexionMySQL.getInstancia().getConexion().prepareCall(consulta);
+            statement.setString(1, alumno.getDnipersona());
+            statement.setString(2, alumno.getPrimernombre());
+            statement.setString(3, alumno.getSegundonombre());
+            statement.setString(4, alumno.getApellidopaterno());
+            statement.setString(5, alumno.getApellidomaterno());
+            statement.setDate(6, (Date) alumno.getFechanacimiento());
+            statement.setString(7, alumno.getGenero());
+            statement.setString(8, DNIApoderado);
+
+            statement.registerOutParameter(9, Types.VARCHAR);
+            statement.executeUpdate();
+
+            mensaje = statement.getString(9);
+            statement.close();
+
+            mostrarMensaje(mensaje);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    @Override
-    public void Actualizar() {
+    //Metodo para actualizar datos de un alumno
+    public void Actualizar(Alumno alumno, String DNIApoderado) {
+        String mensaje = "";
+        String consulta = "{CALL sp_Alumno_Update(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 
+        try {
+            CallableStatement statement = ConexionMySQL.getInstancia().getConexion().prepareCall(consulta);
+            statement.setString(1, alumno.getDnipersona());
+            statement.setString(2, alumno.getPrimernombre());
+            statement.setString(3, alumno.getSegundonombre());
+            statement.setString(4, alumno.getApellidopaterno());
+            statement.setString(5, alumno.getApellidomaterno());
+            statement.setDate(6, (Date) alumno.getFechanacimiento());
+            statement.setString(7, alumno.getGenero());
+            statement.setString(8, DNIApoderado);
+
+            statement.registerOutParameter(9, Types.VARCHAR);
+            statement.executeUpdate();
+
+            mensaje = statement.getString(9);
+            statement.close();
+
+            mostrarMensaje(mensaje);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public void Eliminar() {
-
-    }
-
-    @Override
+    //Metodo para obtener los alumnos
     public void Listar() {
         alumnos = new ArrayList<>();
         alumnos.clear();
 
-        String consulta = "select persona.DNIpersona, persona.primerNombre, persona.segundoNombre, persona.apellidoMaterno, persona.apellidoPaterno, persona.fechaNacimiento, persona.genero, alumno.codigoAlumno, alumno.idPersona, alumno.idApoderado  from persona inner join Alumno on persona.idPersona = alumno.idAlumno\n" +
-                "order by persona.apellidoPaterno ";
+        String consulta = "select persona.DNIpersona, persona.primerNombre, persona.segundoNombre, persona.apellidoMaterno, persona.apellidoPaterno, persona.fechaNacimiento, persona.genero, alumno.codigoAlumno, alumno.idApoderado  from persona inner join Alumno on persona.idPersona = alumno.idPersona\n" +
+                "order by persona.apellidoPaterno";
         try {
             PreparedStatement comando = ConexionMySQL.getInstancia().getConexion().prepareStatement(consulta);
             ResultSet resultado = comando.executeQuery();
@@ -44,7 +87,6 @@ public class DAO_Alumno implements DAO {
                         resultado.getDate("fechaNacimiento"),
                         resultado.getString("genero"),
                         resultado.getString("codigoAlumno"),
-                        resultado.getInt("idPersona"),
                         resultado.getInt("idApoderado")
                 );
                 alumnos.add(alumno);
@@ -82,7 +124,6 @@ public class DAO_Alumno implements DAO {
                         rs.getDate("fechaNacimiento"),
                         rs.getString("genero"),
                         rs.getString("codigoAlumno"),
-                        rs.getInt("idPersona"),
                         rs.getInt("idApoderado")
                 );
                 alumnos.add(alumno);
@@ -119,7 +160,6 @@ public class DAO_Alumno implements DAO {
                         rs.getDate("fechaNacimiento"),
                         rs.getString("genero"),
                         rs.getString("codigoAlumno"),
-                        rs.getInt("idPersona"),
                         rs.getInt("idApoderado")
                 );
                 alumnos.add(alumno);
@@ -132,5 +172,14 @@ public class DAO_Alumno implements DAO {
         }
 
         return alumnos;
+    }
+
+    //Metodo para mostrar mensaje
+    private void mostrarMensaje(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Mensaje de información");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }

@@ -13,8 +13,6 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 
 public class fmrAlumno {
-
-    //Constructor
     @FXML
     public void initialize() {
         configuracionCombox();
@@ -42,14 +40,13 @@ public class fmrAlumno {
     @FXML private TextField cajaApellidoPaterno;
     @FXML private TextField cajaApellidoMaterno;
     @FXML private TextField cajaGenero;
+    @FXML private TextField DNIapoderado;
 
     //ComboBox de para filtros de busqueda
     @FXML private ComboBox<String> comboGradoB;
     @FXML private ComboBox<String> comboSeccionB;
 
     //ComboBox para insercion de nuevo alumno
-    @FXML private ComboBox<String> comboGrado;
-    @FXML private ComboBox<String> comboSeccion;
     @FXML private ComboBox<String> comboApoderado;
 
     //Fecha nacimiento
@@ -116,9 +113,7 @@ public class fmrAlumno {
         ObservableList<String> grados = FXCollections.observableArrayList("Primer", "Segundo", "Tercer", "Cuarto", "Quinto");
         ObservableList<String> secciones = FXCollections.observableArrayList("A", "B", "C");
         comboGradoB.setItems(grados);
-        comboGrado.setItems(grados);
         comboSeccionB.setItems(secciones);
-        comboSeccion.setItems(secciones);
     }
 
     //Validar fecha de nacimiento
@@ -145,13 +140,11 @@ public class fmrAlumno {
         cajaApellidoMaterno.clear();
         cajaGenero.clear();
         cajaFechaNacimiento.setValue(null);
-        comboGrado.getSelectionModel().clearSelection();
-        comboSeccion.getSelectionModel().clearSelection();
         comboApoderado.getSelectionModel().clearSelection();
     }
 
     //Agregar alumno
-    private void agregarAlumno() {
+    public void agregarAlumno() {
         if (!validarCamposDeIngreso()) {
             return;
         }
@@ -167,12 +160,68 @@ public class fmrAlumno {
         String ApellidoPaterno = cajaApellidoPaterno.getText();
         String ApellidoMaterno = cajaApellidoMaterno.getText();
         String Genero = cajaGenero.getText();
-        String FechaNacimiento = cajaFechaNacimiento.getValue().toString();
-        String grado = comboGrado.getSelectionModel().getSelectedItem().toString();
-        String seccion = comboSeccion.getSelectionModel().getSelectedItem().toString();
-        String Apoderado = comboApoderado.getSelectionModel().getSelectedItem().toString();
+        Date FechaNacimiento = Date.valueOf(cajaFechaNacimiento.getValue().toString());
+        String dniApoderado = DNIapoderado.getText();
 
-        // FALTA TERMINAR
+        Alumno alumno = new Alumno(DNI, PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero);
+        DAO_Alumno daoAlumno = new DAO_Alumno();
+        daoAlumno.Crear(alumno, dniApoderado);
+
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Información");
+        alerta.setHeaderText("Alumno registrado correctamente");
+        alerta.showAndWait();
+
+        LimpiarCampos();
+    }
+
+    //Modificar alumno
+    public void modificarAlumno() {
+        //Obtener fila seleccionada
+        Object[] filaSeleccionada = tablaAlumnos.getSelectionModel().getSelectedItem();
+
+        if (filaSeleccionada == null) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Selección Requerida");
+            alerta.setHeaderText("No se ha seleccionado ningún alumno");
+            alerta.setContentText("Por favor, seleccione un alumno para modificar.");
+            alerta.showAndWait();
+            return;
+        }
+
+        String dniAlumno = filaSeleccionada[1].toString();
+        cajaDNI.setText(dniAlumno);
+        cajaDNI.setEditable(false);
+
+        if (!validarCamposDeIngreso()) {
+            return;
+        }
+
+        Date fechaNacimiento = valorFechaNacimiento();
+        if (fechaNacimiento == null) {
+            return;
+        }
+
+        String DNI = cajaDNI.getText();
+        String PrimerNombre = cajaPrimerNombre.getText();
+        String SegundoNombre = cajaSegundoNombre.getText();
+        String ApellidoPaterno = cajaApellidoPaterno.getText();
+        String ApellidoMaterno = cajaApellidoMaterno.getText();
+        String Genero = cajaGenero.getText();
+        Date FechaNacimiento = Date.valueOf(cajaFechaNacimiento.getValue().toString());
+        String dniApoderado = DNIapoderado.getText();
+
+        Alumno alumno = new Alumno(DNI, PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero);
+        DAO_Alumno daoAlumno = new DAO_Alumno();
+
+        daoAlumno.Actualizar(alumno, dniApoderado);
+
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Información");
+        alerta.setHeaderText("Datos actualizados correctamente");
+        alerta.showAndWait();
+
+        LimpiarCampos();
     }
 
     //Metodo para configurar la tabla

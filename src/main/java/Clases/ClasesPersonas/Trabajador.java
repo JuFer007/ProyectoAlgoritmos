@@ -7,15 +7,14 @@ public class Trabajador extends Persona {
     private int idPersona;
     private String tipoTrabajador;
     private String turnoAsignado;
+    private String telefono;
     private String cargo;
 
-    public Trabajador(String dnipersona, String primernombre, String segundonombre, String apellidopaterno, String apellidomaterno, Date fechanacimiento, String genero, int idTrabajador, String codigoTrabajador, int idPersona, String tipoTrabajador, String turnoAsignado, String cargo) {
+    public Trabajador(String dnipersona, String primernombre, String segundonombre, String apellidopaterno, String apellidomaterno, Date fechanacimiento, String genero, String tipoTrabajador, String turnoAsignado, String telefono, String cargo) {
         super(dnipersona, primernombre, segundonombre, apellidopaterno, apellidomaterno, fechanacimiento, genero);
-        this.idTrabajador = idTrabajador;
-        this.codigoTrabajador = codigoTrabajador;
-        this.idPersona = idPersona;
         this.tipoTrabajador = tipoTrabajador;
         this.turnoAsignado = turnoAsignado;
+        this.telefono = telefono;
         this.cargo = cargo;
     }
 
@@ -80,7 +79,15 @@ public class Trabajador extends Persona {
     }
 
     public Object[] convertir(){
-        Object[] trabajador ={this.codigoTrabajador,this.tipoTrabajador,this.turnoAsignado,this.cargo};
+        Object[] trabajador = {
+                this.codigoTrabajador,
+                this.getDnipersona(),
+                this.getPrimernombre() + " " + this.getSegundonombre(),
+                this.getApellidopaterno(),
+                this.getApellidomaterno(),
+                this.cargo,
+                this.tipoTrabajador
+        };
         return trabajador;
     }
 

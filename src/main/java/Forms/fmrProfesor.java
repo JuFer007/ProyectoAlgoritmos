@@ -1,5 +1,8 @@
 package Forms;
+import Clases.ClasesPersonas.Alumno;
+import Clases.ClasesPersonas.Persona;
 import Clases.ClasesPersonas.Profesor;
+import Clases.ConexionBD.Entidades_CRUD.DAO_Alumno;
 import Clases.ConexionBD.Entidades_CRUD.DAO_Profesor;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -16,6 +19,7 @@ public class fmrProfesor {
         configuracionCombox();
         configurarTablaProfesores();
         listarProfesores();
+        cajaBusqueda.textProperty().addListener((obs, oldText, newText) -> buscarProfesor(newText));
     }
 
     //Columnas de la tabla
@@ -36,44 +40,27 @@ public class fmrProfesor {
     private TableView<Object[]> tablaProfesores;
 
     //Campos de texto
-    @FXML
-    private TextField cajaDNI;
-
-    @FXML
-    private TextField cajaPrimerNombre;
-
-    @FXML
-    private TextField cajaSegundoNombre;
-
-    @FXML
-    private TextField cajaApellidoPaterno;
-
-    @FXML
-    private TextField cajaApellidoMaterno;
-
-    @FXML
-    private TextField cajaGenero;
+    @FXML private TextField cajaDNI;
+    @FXML private TextField cajaPrimerNombre;
+    @FXML private TextField cajaSegundoNombre;
+    @FXML private TextField cajaApellidoPaterno;
+    @FXML private TextField cajaApellidoMaterno;
+    @FXML private TextField cajaGenero;
+    @FXML private TextField cajaHorasSem;
+    @FXML private TextField cajaTelefono;
+    @FXML private TextField cajaCorreoE;
 
     // ComboBoxes
-    @FXML
-    private ComboBox<String> comboEpecialidad;
-
-    @FXML
-    private ComboBox<String> comboGradoAcademico;
+    @FXML private ComboBox<String> comboEpecialidad;
+    @FXML private ComboBox<String> comboGradoAcademico;
 
     // Selector de fecha
-    @FXML
-    private DatePicker cajaFechaNacimiento;
+    @FXML private DatePicker cajaFechaNacimiento;
 
     // Botones
-    @FXML
-    private Button btnNuevo;
-
-    @FXML
-    private Button btnEliminar;
-
-    @FXML
-    private Button btnModificiar;
+    @FXML private Button btnNuevo;
+    @FXML private Button btnEliminar;
+    @FXML private Button btnModificiar;
 
     //Metodo para validar campos
     private boolean validarCampos() {
@@ -107,6 +94,35 @@ public class fmrProfesor {
         } else if (!cajaGenero.getText().equalsIgnoreCase("masculino") &&
                 !cajaGenero.getText().equalsIgnoreCase("femenino")) {
             mensaje += "El género debe ser 'Masculino' o 'Femenino'.\n";
+        }
+
+        // Validar horas semanales
+        if (cajaHorasSem.getText().isEmpty()) {
+            mensaje += "El campo horas semanales no puede estar vacío.\n";
+        } else {
+            try {
+                int horas = Integer.parseInt(cajaHorasSem.getText());
+
+                if (horas < 12 || horas > 24) {
+                    mensaje += "Las horas semanales deben estar entre 12 y 24 horas.\n";
+                }
+            } catch (NumberFormatException e) {
+                mensaje += "Las horas semanales deben ser un número entero válido.\n";
+            }
+        }
+
+        // Validar teléfono
+        if (cajaTelefono.getText().isEmpty()) {
+            mensaje += "El campo teléfono no puede estar vacío.\n";
+        } else if (!cajaTelefono.getText().matches("\\d{9}")) {
+            mensaje += "El teléfono debe tener exactamente 9 dígitos.\n";
+        }
+
+        // Validar correo electrónico
+        if (cajaCorreoE.getText().isEmpty()) {
+            mensaje += "El campo correo electrónico no puede estar vacío.\n";
+        } else if (!cajaCorreoE.getText().matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
+            mensaje += "El correo electrónico no tiene un formato válido.\n";
         }
 
         //Muestra mensaje de errores en validacion
@@ -192,8 +208,93 @@ public class fmrProfesor {
         tablaProfesores.setItems(datos);
     }
 
+    //Nuevo profesor
+    public void nuevoProfesor() {
+        if (!validarCampos()) {
+            return;
+        }
+
+        Date fechaNacimiento = valorFechaNacimiento();
+        if (fechaNacimiento == null) {
+            return;
+        }
+
+        String DNI = cajaDNI.getText();
+        String PrimerNombre = cajaPrimerNombre.getText();
+        String SegundoNombre = cajaSegundoNombre.getText();
+        String ApellidoPaterno = cajaApellidoPaterno.getText();
+        String ApellidoMaterno = cajaApellidoMaterno.getText();
+        String Genero = cajaGenero.getText();
+        Date FechaNacimiento = Date.valueOf(cajaFechaNacimiento.getValue().toString());
+        String especialidad = comboEpecialidad.getValue();
+        String gradoAcademico = comboGradoAcademico.getValue();
+        int horasSemanales = Integer.parseInt(cajaHorasSem.getText());
+        String telefono  = cajaTelefono.getText();
+        String correoE = cajaCorreoE.getText();
+
+        Profesor profesor = new Profesor(DNI, PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero, especialidad, gradoAcademico, horasSemanales, telefono, correoE);
+        DAO_Profesor dao = new DAO_Profesor();
+        dao.Crear(profesor);
+
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Información");
+        alerta.setHeaderText("Profesor registrado correctamente");
+        alerta.showAndWait();
+
+        LimpiarCampos();
+    }
+
+    //MOodificar profesor
+    public void actualizarProfesor() {
+        //Obtener fila seleccionada
+        Object[] filaSeleccionada = tablaProfesores.getSelectionModel().getSelectedItem();
+
+        if (filaSeleccionada == null) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Selección Requerida");
+            alerta.setHeaderText("No se ha seleccionado ningún alumno");
+            alerta.setContentText("Por favor, seleccione un alumno para modificar.");
+            alerta.showAndWait();
+            return;
+        }
+
+        if (!validarCampos()) {
+            return;
+        }
+
+        Date fechaNacimiento = valorFechaNacimiento();
+        if (fechaNacimiento == null) {
+            return;
+        }
+
+        String DNI = cajaDNI.getText();
+        String PrimerNombre = cajaPrimerNombre.getText();
+        String SegundoNombre = cajaSegundoNombre.getText();
+        String ApellidoPaterno = cajaApellidoPaterno.getText();
+        String ApellidoMaterno = cajaApellidoMaterno.getText();
+        String Genero = cajaGenero.getText();
+        Date FechaNacimiento = Date.valueOf(cajaFechaNacimiento.getValue().toString());
+        String especialidad = comboEpecialidad.getValue();
+        String gradoAcademico = comboGradoAcademico.getValue();
+        int horasSemanales = Integer.parseInt(cajaHorasSem.getText());
+        String telefono  = cajaTelefono.getText();
+        String correoE = cajaCorreoE.getText();
+
+        Profesor profesor = new Profesor(DNI, PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero, especialidad, gradoAcademico, horasSemanales, telefono, correoE);
+        DAO_Profesor dao = new DAO_Profesor();
+        dao.Actualizar(profesor);
+
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Información");
+        alerta.setHeaderText("Datos actualizados correctamente");
+        alerta.showAndWait();
+
+        LimpiarCampos();
+    }
+
+
     //Metodo de busqueda dinamica
-    private void buscarAlumno(String textoIngresado) {
+    private void buscarProfesor(String textoIngresado) {
         DAO_Profesor daoProfesor = new DAO_Profesor();
         daoProfesor.Listar();
         ObservableList<Object[]> resultadoFiltrados = FXCollections.observableArrayList();

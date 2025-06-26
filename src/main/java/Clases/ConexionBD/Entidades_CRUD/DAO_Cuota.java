@@ -1,23 +1,19 @@
 package Clases.ConexionBD.Entidades_CRUD;
-import Clases.ConexionBD.DAO;
 
-public class DAO_Cuota implements DAO {
-    @Override
+public class DAO_Cuota {
+
     public void Crear() {
 
     }
 
-    @Override
     public void Actualizar() {
 
     }
 
-    @Override
     public void Eliminar() {
 
     }
 
-    @Override
     public void Listar() {
 
     }

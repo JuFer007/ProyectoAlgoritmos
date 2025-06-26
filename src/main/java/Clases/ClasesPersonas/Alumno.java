@@ -1,7 +1,6 @@
 package Clases.ClasesPersonas;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.ZoneId;
 import java.util.Date;
 
 public class Alumno extends Persona{
@@ -10,11 +9,14 @@ public class Alumno extends Persona{
     private int idPersona;
     private int idApoderado;
 
-    public Alumno(String dnipersona, String primernombre, String segundonombre, String apellidopaterno, String apellidomaterno, Date fechanacimiento, String genero, String codigoAlumno, int idPersona, int idApoderado) {
+    public Alumno(String dnipersona, String primernombre, String segundonombre, String apellidopaterno, String apellidomaterno, Date fechanacimiento, String genero, String codigoAlumno, int idApoderado) {
         super(dnipersona, primernombre, segundonombre, apellidopaterno, apellidomaterno, fechanacimiento, genero);
         this.codigoAlumno = codigoAlumno;
-        this.idPersona = idPersona;
         this.idApoderado = idApoderado;
+    }
+
+    public Alumno(String dnipersona, String primernombre, String segundonombre, String apellidopaterno, String apellidomaterno, Date fechanacimiento, String genero) {
+        super(dnipersona, primernombre, segundonombre, apellidopaterno, apellidomaterno, fechanacimiento, genero);
     }
 
     public int getIdAlumno() {
