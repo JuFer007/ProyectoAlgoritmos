@@ -1,7 +1,5 @@
 package Forms;
-import Clases.ClasesPersonas.Profesor;
 import Clases.ClasesPersonas.Trabajador;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Profesor;
 import Clases.ConexionBD.Entidades_CRUD.DAO_Trabajador;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -16,6 +14,9 @@ public class fmrTrabajador {
     @FXML
     private void initialize() {
         configuracionCombox();
+        ConfigurarTabla();
+        listarTrabajadores();
+        cajaBusqueda.textProperty().addListener((observable, oldValue, newValue) -> {buscarProfesor(newValue);});
     }
 
     //Campo de búsqueda
@@ -25,11 +26,11 @@ public class fmrTrabajador {
     @FXML private TableView<Object[]> tablaTrabajador;
 
     //Columnas de la tabla
-    @FXML private TableColumn<Object[], String> codigoProf;
-    @FXML private TableColumn<Object[], String> dniProf;
-    @FXML private TableColumn<Object[], String> nombreProf;
-    @FXML private TableColumn<Object[], String> apellidoPaternoProf;
-    @FXML private TableColumn<Object[], String> apellidoMaternoProf;
+    @FXML private TableColumn<Object[], String> codigoTrabajador;
+    @FXML private TableColumn<Object[], String> DNITrabajador;
+    @FXML private TableColumn<Object[], String> nombreT;
+    @FXML private TableColumn<Object[], String> apellidoPatT;
+    @FXML private TableColumn<Object[], String> apellidoMatT;
     @FXML private TableColumn<Object[], String> tipoTrabajo;
     @FXML private TableColumn<Object[], String> cargo;
 
@@ -46,8 +47,6 @@ public class fmrTrabajador {
     @FXML private ComboBox<String> cajaTipoTrabajo;
     @FXML private ComboBox<String> cajaTurnoAsignado;
     @FXML private ComboBox<String> cargoAsignado;
-
-    @FXML private TextField cajaTelef;
 
     //Botonoes
     @FXML private Button btnNuevo;
@@ -87,13 +86,6 @@ public class fmrTrabajador {
             mensaje += "El género debe ser 'Masculino' o 'Femenino'.\n";
         }
 
-        //Validar teléfono
-        if (cajaTelef.getText().isEmpty()) {
-            mensaje += "El campo teléfono no puede estar vacío.\n";
-        } else if (!cajaTelef.getText().matches("\\d{9}")) {
-            mensaje += "El teléfono debe tener exactamente 9 dígitos.\n";
-        }
-
         //Validar tipo de trabajo
         if (cajaTipoTrabajo.getValue() == null) {
             mensaje += "El campo tipo de trabajo es obligatorio.\n";
@@ -105,7 +97,7 @@ public class fmrTrabajador {
         }
 
         //Validar cargo seleccionado
-        if (cajaTurnoAsignado.getValue() == null) {
+        if (cargoAsignado.getValue() == null) {
             mensaje += "El campo de cargos es obligatorio.\n";
         }
 
@@ -167,6 +159,7 @@ public class fmrTrabajador {
         cajaFechaNacimiento.setValue(null);
         cajaTipoTrabajo.getSelectionModel().clearSelection();
         cajaTurnoAsignado.getSelectionModel().clearSelection();
+        cargoAsignado.getSelectionModel().clearSelection();
     }
 
     //Modificar trabajador
@@ -205,9 +198,8 @@ public class fmrTrabajador {
         String TipoTrabajo = cajaTipoTrabajo.getValue();
         String TurnoAsignado = cajaTurnoAsignado.getValue();
         String Cargo = cargoAsignado.getValue();
-        String Telefono = cajaTelef.getText();
 
-        Trabajador trabajador = new Trabajador(DNI, PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero, TipoTrabajo, TurnoAsignado, Telefono, Cargo);
+        Trabajador trabajador = new Trabajador(DNI, PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero, TipoTrabajo, TurnoAsignado, Cargo);
 
         DAO_Trabajador daoTrabajador = new DAO_Trabajador();
         daoTrabajador.Actualizar(trabajador);
@@ -218,6 +210,7 @@ public class fmrTrabajador {
         alerta.showAndWait();
 
         LimpiarCampos();
+        listarTrabajadores();
     }
 
     //Crear trabajador
@@ -241,9 +234,8 @@ public class fmrTrabajador {
         String TipoTrabajo = cajaTipoTrabajo.getValue();
         String TurnoAsignado = cajaTurnoAsignado.getValue();
         String Cargo = cargoAsignado.getValue();
-        String Telefono = cajaTelef.getText();
 
-        Trabajador trabajador = new Trabajador(DNI, PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero, TipoTrabajo, TurnoAsignado, Telefono, Cargo);
+        Trabajador trabajador = new Trabajador(DNI, PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero, TipoTrabajo, TurnoAsignado, Cargo);
 
         DAO_Trabajador daoTrabajador = new DAO_Trabajador();
         daoTrabajador.Crear(trabajador);
@@ -254,15 +246,16 @@ public class fmrTrabajador {
         alerta.showAndWait();
 
         LimpiarCampos();
+        listarTrabajadores();
     }
 
     //Métodos para configurar la tabla
     private void ConfigurarTabla() {
-        codigoProf.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[0].toString()));
-        dniProf.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[1].toString()));
-        nombreProf.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[2].toString()));
-        apellidoPaternoProf.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[3].toString()));
-        apellidoMaternoProf.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[4].toString()));
+        codigoTrabajador.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[0].toString()));
+        DNITrabajador.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[1].toString()));
+        nombreT.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[2].toString()));
+        apellidoPatT.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[3].toString()));
+        apellidoMatT.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[4].toString()));
         tipoTrabajo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[5].toString()));
         cargo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[6].toString()));
 

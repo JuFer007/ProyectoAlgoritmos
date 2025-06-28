@@ -173,6 +173,7 @@ public class fmrAlumno {
         alerta.showAndWait();
 
         LimpiarCampos();
+        listarAlumos();
     }
 
     //Modificar alumno
@@ -222,6 +223,7 @@ public class fmrAlumno {
         alerta.showAndWait();
 
         LimpiarCampos();
+        listarAlumos();
     }
 
     //Metodo para configurar la tabla

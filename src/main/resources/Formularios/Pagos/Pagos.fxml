@@ -6,46 +6,40 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="572.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrPagos">
-    <TextField fx:id="cajaBusqueda" layoutX="37.0" layoutY="14.0" prefHeight="30.0" prefWidth="270.0" promptText="Búsqueda.." styleClass="buscar" stylesheets="@../tabla.css" />
-    <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="14.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
-        <image>
-            <Image url="@../../icons/simbolo-de-interfaz-de-lupa-de-busqueda.png" />
-        </image>
-    </ImageView>
-    <TableView fx:id="tablaAlumnos" layoutX="14.0" layoutY="57.0" prefHeight="431.0" prefWidth="680.0" stylesheets="@../tabla.css">
+    <TableView fx:id="tablaPagos" layoutX="14.0" layoutY="57.0" prefHeight="431.0" prefWidth="680.0" stylesheets="@../tabla.css">
         <columns>
-            <TableColumn prefWidth="87.19999504089355" text="Código" />
-            <TableColumn prefWidth="87.20001983642578" text="Nombre" />
-            <TableColumn prefWidth="127.20001220703125" text="Apellido" />
-            <TableColumn prefWidth="106.0" text="Fecha" />
-            <TableColumn prefWidth="101.99996948242188" text="Estado" />
-            <TableColumn prefWidth="80.4000244140625" text="Monto" />
-            <TableColumn prefWidth="89.6" text="Método" />
+            <TableColumn fx:id="columCodigo" prefWidth="87.19999504089355" text="Código" />
+            <TableColumn fx:id="columNombreP" prefWidth="87.20001983642578" text="Nombre" />
+            <TableColumn fx:id="columApellidoP" prefWidth="127.20001220703125" text="Apellido" />
+            <TableColumn fx:id="columFechaP" prefWidth="106.0" text="Fecha" />
+            <TableColumn fx:id="columEstado" prefWidth="101.99996948242188" text="Estado" />
+            <TableColumn fx:id="columMonto" prefWidth="80.4000244140625" text="Monto" />
+            <TableColumn fx:id="columMetodo" prefWidth="89.6" text="Método" />
         </columns>
         <styleClass>
             <String fx:value="column-header-background" />
             <String fx:value="table-view" />
         </styleClass>
     </TableView>
-    <Button fx:id="btnNuevo" layoutX="124.0" layoutY="510.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="125.0" stylesheets="@../tabla.css" text="Registrar Pago" />
+    <Button fx:id="btnRegistrarPago" layoutX="124.0" layoutY="510.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="125.0" stylesheets="@../tabla.css" text="Registrar Pago" onAction="#registrarPago"/>
     <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="93.0" layoutY="513.0" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../icons/caja-registradora.png" />
         </image>
     </ImageView>
-    <ComboBox fx:id="comboGradoB" layoutX="364.0" layoutY="16.0" prefHeight="26.0" prefWidth="59.0" />
-    <Label layoutX="320.0" layoutY="21.0" text="Grado:" />
-    <ComboBox fx:id="comboSeccionB" layoutX="495.0" layoutY="16.0" prefHeight="26.0" prefWidth="59.0" />
-    <Label layoutX="442.0" layoutY="21.0" text="Sección:" />
-   <ComboBox fx:id="comboSeccionB1" layoutX="612.0" layoutY="16.0" prefHeight="26.0" prefWidth="79.0" />
-   <Label layoutX="567.0" layoutY="21.0" text="Estado:" />
-   <Button fx:id="btnNuevo1" layoutX="301.0" layoutY="510.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="182.0" stylesheets="@../tabla.css" text="Imprimir Comprobante" />
+    <ComboBox fx:id="comboGradoB" layoutX="151.0" layoutY="14.0" prefHeight="26.0" prefWidth="100.0" />
+    <Label layoutX="107.0" layoutY="19.0" text="Grado:" />
+    <ComboBox fx:id="comboSeccionB" layoutX="315.0" layoutY="14.0" prefHeight="26.0" prefWidth="88.0" />
+    <Label layoutX="262.0" layoutY="19.0" text="Sección:" />
+   <ComboBox fx:id="comboEstado" layoutX="458.0" layoutY="14.0" prefHeight="26.0" prefWidth="144.0" />
+   <Label layoutX="413.0" layoutY="19.0" text="Estado:" />
+   <Button fx:id="btnImprimirComprobante" layoutX="301.0" layoutY="510.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="182.0" stylesheets="@../tabla.css" text="Imprimir Comprobante" />
    <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="270.0" layoutY="513.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../../icons/cheque.png" />
       </image>
    </ImageView>
-   <Button fx:id="btnNuevo11" layoutX="528.0" layoutY="510.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="107.0" stylesheets="@../tabla.css" text="Anular Pago" />
+   <Button fx:id="btnAnularPago" layoutX="528.0" layoutY="510.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="107.0" stylesheets="@../tabla.css" text="Anular Pago" onAction="#eliminarPago" />
    <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="498.0" layoutY="513.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../../icons/eliminar.png" />

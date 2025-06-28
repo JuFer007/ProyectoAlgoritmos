@@ -1,8 +1,11 @@
 package Clases.ConexionBD.Entidades_CRUD;
 import Clases.ConexionBD.ConexionMySQL;
 import java.sql.CallableStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DAO_Reportes {
     //Metodo para obtener el total de alumnos
@@ -51,17 +54,61 @@ public class DAO_Reportes {
     }
 
     //Metodo para obtener el total de alumnos por grado
-    public static int obtenerTotalDeAlumnosPorGrado() {
-        int totalAlumnosPorGrado = 0;
-        String consulta = "{CALL sp_Total_Alumnos_PorGrado(?)}";
+    public Map<String, Integer> alumnosPorGrado() {
+        Map<String, Integer> alumnosPorGrado = new HashMap<>();
+        String consulta = "{CALL sp_Total_Alumnos_PorGrado()}";
 
-        try (CallableStatement statement = ConexionMySQL.getInstancia().getConexion().prepareCall(consulta)) {
-            statement.registerOutParameter(1, Types.INTEGER);
-            statement.execute();
-            totalAlumnosPorGrado = statement.getInt(1);
+        try {
+            CallableStatement callableStatement = ConexionMySQL.getInstancia().getConexion().prepareCall(consulta);
+            ResultSet rs = callableStatement.executeQuery();
+            while (rs.next()) {
+                String grado = rs.getString("Grado");
+                int total = rs.getInt("TotalAlumnos");
+                alumnosPorGrado.put(grado, total);
+            }
+            rs.close();
+            callableStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return totalAlumnosPorGrado;
+        return alumnosPorGrado;
     }
+
+    //Metodo para obtener los trabajadores, padres y profesores
+    public Map<String, Integer> resumenPersonal() {
+        Map<String, Integer> resumen = new HashMap<>();
+        String consulta = "{CALL sp_Resumen_Personal()}";
+
+        try {
+            CallableStatement callableStatement = ConexionMySQL.getInstancia().getConexion().prepareCall(consulta);
+            ResultSet rs = callableStatement.executeQuery();
+            while (rs.next()) {
+                String categoria = rs.getString("Categoria");
+                int cantidad = rs.getInt("Cantidad");
+                resumen.put(categoria, cantidad);
+            }
+            rs.close();
+            callableStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resumen;
+    }
+
+    //Metodo para obtener el total de apoderados
+    public static int obtenerTotalDeApoderados() {
+        int totalApoderados = 0;
+        String consulta = "{CALL sp_TotalApoderados(?)}";
+        try (CallableStatement statement = ConexionMySQL.getInstancia().getConexion().prepareCall(consulta)) {
+            statement.registerOutParameter(1, Types.INTEGER);
+            statement.execute();
+            totalApoderados = statement.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalApoderados;
+    }
+
+    //Metodo para obtener los pagos segun el mes
+
 }

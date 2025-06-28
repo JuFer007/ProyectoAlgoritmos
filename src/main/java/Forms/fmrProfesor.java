@@ -242,6 +242,7 @@ public class fmrProfesor {
         alerta.showAndWait();
 
         LimpiarCampos();
+        listarProfesores();
     }
 
     //MOodificar profesor
@@ -290,6 +291,7 @@ public class fmrProfesor {
         alerta.showAndWait();
 
         LimpiarCampos();
+        listarProfesores();
     }
 
 

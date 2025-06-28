@@ -83,7 +83,6 @@ public class DAO_Apoderado {
         try (PreparedStatement comando = ConexionMySQL.getInstancia().getConexion().prepareStatement(consulta);
              ResultSet resultado = comando.executeQuery()) {
 
-            // Usamos un solo while para iterar sobre el ResultSet
             while (resultado.next()) {
                 Apoderado apoderado = new Apoderado(
                         resultado.getString("DNIpersona"),
@@ -111,5 +110,9 @@ public class DAO_Apoderado {
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+
+    public ArrayList<Apoderado> getApoderados() {
+        return apoderados;
     }
 }

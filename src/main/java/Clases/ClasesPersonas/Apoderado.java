@@ -62,16 +62,12 @@ public class Apoderado extends Persona{
         }
 
         return new Object[] {
-                this.idApoderado,
                 this.getDnipersona(),
                 this.getPrimernombre() + " " + this.getSegundonombre(),
                 this.getApellidopaterno(),
                 this.getApellidomaterno(),
-                edad,
-                this.getGenero(),
                 this.correoElectronico,
                 this.numeroTelefono,
-                this.parentesco_relacion
         };
     }
 }

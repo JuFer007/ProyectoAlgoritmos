@@ -1,5 +1,4 @@
 package Clases.ConexionBD.Entidades_CRUD;
-import Clases.ClasesPersonas.Alumno;
 import Clases.ClasesPersonas.Trabajador;
 import Clases.ConexionBD.ConexionMySQL;
 import javafx.scene.control.Alert;
@@ -77,11 +76,15 @@ public class DAO_Trabajador {
         trabajadores = new ArrayList<>();
         trabajadores.clear();
 
-        String consulta = "select persona.DNIpersona, persona.primerNombre, persona.segundoNombre, persona.apellidoMaterno, persona.apellidoPaterno, persona.fechaNacimiento, persona.genero, alumno.codigoAlumno, alumno.idApoderado  from persona inner join Alumno on persona.idPersona = alumno.idPersona\n" +
-                "order by persona.apellidoPaterno";
+        String consulta = "SELECT persona.DNIpersona, persona.primerNombre, persona.segundoNombre, persona.apellidoPaterno, persona.apellidoMaterno, persona.fechaNacimiento, persona.genero, " +
+                "trabajador.codigoTrabajador, trabajador.tipoTrabajo, trabajador.turnoAsignado, trabajador.cargo " +
+                "FROM persona INNER JOIN trabajador ON persona.idPersona = trabajador.idPersona " +
+                "ORDER BY persona.apellidoPaterno";
+
         try {
             PreparedStatement comando = ConexionMySQL.getInstancia().getConexion().prepareStatement(consulta);
             ResultSet resultado = comando.executeQuery();
+
             while (resultado.next()) {
                 Trabajador trabajador = new Trabajador(
                         resultado.getString("DNIpersona"),
@@ -91,13 +94,16 @@ public class DAO_Trabajador {
                         resultado.getString("apellidoMaterno"),
                         resultado.getDate("fechaNacimiento"),
                         resultado.getString("genero"),
-                        resultado.getString("codigoTrabajador"),
                         resultado.getString("tipoTrabajo"),
                         resultado.getString("turnoAsignado"),
                         resultado.getString("cargo")
                 );
+
+                trabajador.setCodigoTrabajador(resultado.getString("codigoTrabajador"));
+
                 trabajadores.add(trabajador);
             }
+
             resultado.close();
             comando.close();
         } catch (SQLException e) {

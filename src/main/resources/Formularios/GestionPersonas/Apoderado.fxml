@@ -16,12 +16,12 @@
         </ImageView>
         <TableView fx:id="tablaApoderados" layoutX="14.0" layoutY="54.0" prefHeight="180.0" prefWidth="680.0" stylesheets="@../tabla.css">
             <columns>
-                <TableColumn prefWidth="65.20001220703125" text="DNI" />
-                <TableColumn prefWidth="109.19998168945312" text="Nombre" />
-                <TableColumn prefWidth="107.79998779296875" text="Apellido Paterno" />
-                <TableColumn prefWidth="142.60003662109375" text="Apellido Materno" />
-                <TableColumn prefWidth="124.0" text="Teléfono" />
-            <TableColumn prefWidth="128.0" text="Correo Electronico" />
+                <TableColumn fx:id="columDNI" prefWidth="65.20001220703125" text="DNI" />
+                <TableColumn fx:id="columNombre" prefWidth="109.19998168945312" text="Nombre" />
+                <TableColumn fx:id="columApellidoP" prefWidth="107.79998779296875" text="Apellido Paterno" />
+                <TableColumn fx:id="columnApellidoM" prefWidth="142.60003662109375" text="Apellido Materno" />
+                <TableColumn fx:id="columTelef" prefWidth="124.0" text="Teléfono" />
+            <TableColumn fx:id="columCorreoE" prefWidth="128.0" text="Correo Electronico" />
             </columns>
             <styleClass>
                 <String fx:value="column-header-background" />
@@ -73,7 +73,7 @@
                         <Font name="Arial Bold" size="12.0" />
                     </font>
                 </Label>
-                <DatePicker fx:id="cajaFechaNac" layoutX="470.0" layoutY="148.0" prefHeight="26.0" prefWidth="157.0" />
+                <DatePicker fx:id="cajaFechaNac" layoutX="475.0" layoutY="147.0" prefHeight="26.0" prefWidth="175.0" />
 
                 <Label layoutX="355.0" layoutY="68.0" text="Correo Electronico:">
                     <font>
@@ -87,21 +87,14 @@
                     </font>
                 </Label>
 
-                <Button fx:id="btnNuevo" layoutX="424.0" layoutY="196.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" stylesheets="@../tabla.css" text="Nuevo" />
-                <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="395.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true">
+                <Button fx:id="btnNuevo" layoutX="430.0" layoutY="218.0" mnemonicParsing="false" onAction="#agregarApoderado" prefHeight="30.0" prefWidth="82.0" stylesheets="@../tabla.css" text="Nuevo" />
+                <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="401.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../icons/nueva-cuenta.png" />
                     </image>
                 </ImageView>
 
-                <Button fx:id="btnEliminar" layoutX="424.0" layoutY="238.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Eliminar" />
-                <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="395.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../icons/eliminar.png" />
-                    </image>
-                </ImageView>
-
-                <Button fx:id="btnModificar" layoutX="547.0" layoutY="220.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Modificar" />
+                <Button fx:id="btnModificar" layoutX="547.0" layoutY="220.0" mnemonicParsing="false" onAction="#actualizarApoderado" stylesheets="@../tabla.css" text="Modificar" />
                 <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="522.0" layoutY="223.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../icons/boton-editar.png" />
@@ -114,7 +107,7 @@
                   <Font name="Arial Bold" size="12.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cajaParentesco" layoutX="441.0" layoutY="106.0" prefHeight="26.0" prefWidth="134.0" />
+            <ComboBox fx:id="cajaParentesco" layoutX="475.0" layoutY="103.0" prefHeight="26.0" prefWidth="175.0" />
             <Label layoutX="355.0" layoutY="25.0" text="Género:">
                <font>
                   <Font name="Arial Bold" size="12.0" />

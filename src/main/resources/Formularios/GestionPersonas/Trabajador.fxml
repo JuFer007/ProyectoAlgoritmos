@@ -16,11 +16,11 @@
         </ImageView>
         <TableView fx:id="tablaTrabajador" layoutX="14.0" layoutY="54.0" prefHeight="168.0" prefWidth="680.0" stylesheets="@../tabla.css">
             <columns>
-                <TableColumn prefWidth="75.0" text="Código" />
-                <TableColumn prefWidth="67.20001983642578" text="DNI" />
-                <TableColumn prefWidth="95.20001220703125" text="Nombre" />
-                <TableColumn prefWidth="117.79998779296875" text="Apellido Paterno" />
-                <TableColumn prefWidth="134.39996337890625" text="Apellido Materno" />
+                <TableColumn fx:id="codigoTrabajador" prefWidth="75.0" text="Código" />
+                <TableColumn fx:id="DNITrabajador" prefWidth="67.20001983642578" text="DNI" />
+                <TableColumn fx:id="nombreT" prefWidth="95.20001220703125" text="Nombre" />
+                <TableColumn fx:id="apellidoPatT" prefWidth="117.79998779296875" text="Apellido Paterno" />
+                <TableColumn fx:id="apellidoMatT" prefWidth="134.39996337890625" text="Apellido Materno" />
                 <TableColumn fx:id="tipoTrabajo" prefWidth="98.39999389648438" text="Tipo Trabajo" />
                 <TableColumn fx:id="cargo" prefWidth="89.6" text="Cargo" />
             </columns>
@@ -69,36 +69,36 @@
                 <TextField fx:id="cajaApellidoPaterno" layoutX="143.0" layoutY="172.0" prefHeight="26.0" prefWidth="174.0" />
                 <TextField fx:id="cajaApellidoMaterno" layoutX="143.0" layoutY="208.0" prefHeight="26.0" prefWidth="175.0" />
 
-                <Label layoutX="354.0" layoutY="178.0" text="Fecha Nacimiento:">
+                <Label layoutX="354.0" layoutY="146.0" text="Fecha Nacimiento:">
                     <font>
                         <Font name="Arial Bold" size="12.0" />
                     </font>
                 </Label>
-                <DatePicker fx:id="cajaFechaNacimiento" layoutX="481.0" layoutY="173.0" prefHeight="26.0" prefWidth="157.0" />
+                <DatePicker fx:id="cajaFechaNacimiento" layoutX="481.0" layoutY="141.0" prefHeight="26.0" prefWidth="157.0" />
 
-                <Label layoutX="354.0" layoutY="108.0" text="Tipo de Trabajo:">
+                <Label layoutX="354.0" layoutY="76.0" text="Tipo de Trabajo:">
                     <font>
                         <Font name="Arial Bold" size="12.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="cajaTipoTrabajo" layoutX="481.0" layoutY="103.0" prefHeight="26.0" prefWidth="158.0" />
+                <ComboBox fx:id="cajaTipoTrabajo" layoutX="481.0" layoutY="71.0" prefHeight="26.0" prefWidth="158.0" />
 
-                <Label layoutX="354.0" layoutY="142.0" text="Turno Asignado:">
+                <Label layoutX="354.0" layoutY="110.0" text="Turno Asignado:">
                     <font>
                         <Font name="Arial Bold" size="12.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="cajaTurnoAsignado" layoutX="481.0" layoutY="136.0" prefHeight="26.0" prefWidth="158.0" />
+                <ComboBox fx:id="cajaTurnoAsignado" layoutX="481.0" layoutY="104.0" prefHeight="26.0" prefWidth="158.0" />
 
-                <Button fx:id="btnNuevo" layoutX="408.0" layoutY="252.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" stylesheets="@../tabla.css" text="Nuevo" onAction="#insertarTrabajador" />
-                <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="379.0" layoutY="251.0" pickOnBounds="true" preserveRatio="true">
+                <Button fx:id="btnNuevo" layoutX="408.0" layoutY="220.0" mnemonicParsing="false" onAction="#insertarTrabajador" prefHeight="30.0" prefWidth="82.0" stylesheets="@../tabla.css" text="Nuevo" />
+                <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="379.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../icons/nueva-cuenta.png" />
                     </image>
                 </ImageView>
 
-                <Button fx:id="btnModificiar" layoutX="531.0" layoutY="254.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Modificar" onAction="#modificarTrabajador"/>
-                <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="506.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
+                <Button fx:id="btnModificiar" layoutX="531.0" layoutY="222.0" mnemonicParsing="false" onAction="#modificarTrabajador" stylesheets="@../tabla.css" text="Modificar" />
+                <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="506.0" layoutY="225.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../icons/boton-editar.png" />
                     </image>
@@ -109,18 +109,12 @@
                </font>
             </Label>
             <TextField fx:id="cajaGenero" layoutX="143.0" layoutY="242.0" prefHeight="26.0" prefWidth="175.0" />
-            <Label layoutX="354.0" layoutY="68.0" text="Teléfono">
+            <Label layoutX="354.0" layoutY="181.0" text="Cargo:">
                <font>
                   <Font name="Arial Bold" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="cajaTelef" layoutX="481.0" layoutY="63.0" prefHeight="26.0" prefWidth="158.0" />
-            <Label layoutX="354.0" layoutY="213.0" text="Cargo:">
-               <font>
-                  <Font name="Arial Bold" size="12.0" />
-               </font>
-            </Label>
-            <ComboBox fx:id="cargoAsignado" layoutX="481.0" layoutY="207.0" prefHeight="26.0" prefWidth="158.0" />
+            <ComboBox fx:id="cargoAsignado" layoutX="481.0" layoutY="175.0" prefHeight="26.0" prefWidth="158.0" />
             </children>
         </AnchorPane>
     </children>
