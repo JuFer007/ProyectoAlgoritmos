@@ -11,7 +11,7 @@ public class DAO_Apoderado {
     //Metodo para agregar apoderado
     public void Crear(Apoderado apoderado) {
         String mensaje = "";
-        String consulta = "{CALL sp_Apoderado_Insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+        String consulta = "{CALL sp_Apoderado_Insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)}";
 
         try {
             CallableStatement statement = ConexionMySQL.getInstancia().getConexion().prepareCall(consulta);
@@ -26,10 +26,10 @@ public class DAO_Apoderado {
             statement.setString(9, apoderado.getNumeroTelefono());
             statement.setString(10, apoderado.getParentesco_relacion());
 
-            statement.registerOutParameter(10, Types.VARCHAR);
+            statement.registerOutParameter(11, Types.VARCHAR);
             statement.executeUpdate();
 
-            mensaje = statement.getString(10);
+            mensaje = statement.getString(11);
             statement.close();
 
             mostrarMensaje(mensaje);

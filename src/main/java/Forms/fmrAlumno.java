@@ -127,7 +127,7 @@ public class fmrAlumno {
             return null;
         } else {
             LocalDate fechaLocal = cajaFechaNacimiento.getValue();
-            Date fechaConvertida = (Date) Date.from(fechaLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            Date fechaConvertida = java.sql.Date.valueOf(fechaLocal);
             return fechaConvertida;
         }
     }
@@ -140,7 +140,7 @@ public class fmrAlumno {
         cajaApellidoMaterno.clear();
         cajaGenero.clear();
         cajaFechaNacimiento.setValue(null);
-        comboApoderado.getSelectionModel().clearSelection();
+        DNIapoderado.clear();
     }
 
     //Agregar alumno

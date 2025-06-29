@@ -10,7 +10,7 @@ public class ConexionMySQL {
     public ConexionMySQL() {
         String cadenaDeConexion = "jdbc:mysql://localhost:3306/bdcolegio2prueba?useSSL=false&serverTimezone=UTC";
         String usuario = "root";
-        String contraseña = "Fjunior07!";
+        String contraseña = "123456";
 
         try {
             conexion = DriverManager.getConnection(cadenaDeConexion, usuario, contraseña);
