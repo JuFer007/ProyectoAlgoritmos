@@ -7,39 +7,38 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="572.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrNotas">
-    <TextField fx:id="cajaBusqueda" layoutX="37.0" layoutY="14.0" prefHeight="26.0" prefWidth="309.0" promptText="Búsqueda.." styleClass="buscar" stylesheets="@../tabla.css" />
+    <TextField fx:id="cajaBusqueda" layoutX="37.0" layoutY="14.0" prefHeight="30.0" prefWidth="659.0" promptText="Búsqueda.." styleClass="buscar" stylesheets="@../tabla.css" />
     <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="14.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../icons/simbolo-de-interfaz-de-lupa-de-busqueda.png" />
         </image>
     </ImageView>
-    <TableView fx:id="tablaAlumno" layoutX="14.0" layoutY="87.0" prefHeight="105.0" prefWidth="680.0" stylesheets="@../tabla.css">
+    <TableView fx:id="tablaAlumno" layoutX="14.0" layoutY="87.0" prefHeight="115.0" prefWidth="680.0" stylesheets="@../tabla.css">
         <columns>
-            <TableColumn prefWidth="75.0" text="Código" />
-            <TableColumn prefWidth="99.2" text="DNI" />
-            <TableColumn prefWidth="91.2" text="Nombre" />
-            <TableColumn prefWidth="120.8" text="Apellido Paterno" />
-            <TableColumn prefWidth="116.19998168945312" text="Apellido Materno" />
-            <TableColumn prefWidth="99.800048828125" text="N° Matricula" />
-            <TableColumn prefWidth="75.5999755859375" text="Género" />
+            <TableColumn fx:id="columCodigo" prefWidth="75.0" text="Código" />
+            <TableColumn fx:id="DNI" prefWidth="107.19998168945312" text="DNI" />
+            <TableColumn fx:id="Nombre" prefWidth="120.0" text="Nombre" />
+            <TableColumn fx:id="apellidoP" prefWidth="143.5999755859375" text="Apellido Paterno" />
+            <TableColumn fx:id="apellidoM" prefWidth="143.5999755859375" text="Apellido Materno" />
+            <TableColumn fx:id="NumMatricula" prefWidth="92.4000244140625" text="N° Matricula" />
         </columns>
         <styleClass>
             <String fx:value="column-header-background" />
             <String fx:value="table-view" />
         </styleClass>
     </TableView>
-    <ComboBox fx:id="comboGradoB" layoutX="417.0" layoutY="14.0" prefHeight="26.0" prefWidth="59.0" />
-    <Label layoutX="373.0" layoutY="19.0" text="Grado:" />
-    <ComboBox fx:id="comboSeccionB" layoutX="572.0" layoutY="14.0" prefHeight="26.0" prefWidth="59.0" />
-    <Label layoutX="519.0" layoutY="19.0" text="Sección:" />
    <Label layoutX="25.0" layoutY="211.0" text="Lista de cursos del alumno:">
       <font>
          <Font name="Arial Black" size="12.0" />
       </font></Label>
-   <TableView fx:id="tablaCursos" layoutX="22.0" layoutY="239.0" prefHeight="312.0" prefWidth="295.0">
+   <TableView fx:id="tablaCursos" layoutX="22.0" layoutY="239.0" prefHeight="312.0" prefWidth="449.0">
      <columns>
-       <TableColumn prefWidth="124.20000648498535" text="Codigo" />
-       <TableColumn prefWidth="170.19998168945312" text="Nombre" />
+       <TableColumn fx:id="codigoCurso" prefWidth="71.40000915527344" text="Codigo" />
+       <TableColumn fx:id="curso" prefWidth="108.0" text="Curso" />
+         <TableColumn fx:id="Columnota1" prefWidth="67.20001220703125" text="Nota 1" />
+         <TableColumn fx:id="Columnota2" prefWidth="62.0" text="Nota 2" />
+         <TableColumn fx:id="Columnota3" prefWidth="58.79998779296875" text="Nota 3" />
+         <TableColumn fx:id="columProm" prefWidth="83.99997558593748" text="Promedio" />
      </columns>
    </TableView>
    <Label layoutX="14.0" layoutY="58.0" text="Datos del estudiante:">
@@ -47,46 +46,40 @@
          <Font name="Arial Black" size="12.0" />
       </font>
    </Label>
-   <Label layoutX="357.0" layoutY="301.0" text="Nota 1: ">
+   <Label layoutX="484.0" layoutY="280.0" text="Nota Parcial: ">
       <font>
          <Font name="Britannic Bold" size="13.0" />
       </font></Label>
-   <Label layoutX="357.0" layoutY="338.0" text="Nota 2: ">
+   <TextField fx:id="nota1" layoutX="569.0" layoutY="274.0" prefHeight="26.0" prefWidth="110.0" />
+   <TextField fx:id="nota2" layoutX="569.0" layoutY="311.0" prefHeight="26.0" prefWidth="110.0" />
+   <TextField fx:id="nota3" layoutX="569.0" layoutY="350.0" prefHeight="26.0" prefWidth="110.0" />
+   <Label layoutX="493.0" layoutY="397.0" text="Promedio:">
       <font>
          <Font name="Britannic Bold" size="13.0" />
       </font>
    </Label>
-   <Label layoutX="357.0" layoutY="377.0" text="Nota 3: ">
-      <font>
-         <Font name="Britannic Bold" size="13.0" />
-      </font>
-   </Label>
-   <TextField fx:id="nota1" layoutX="432.0" layoutY="293.0" prefHeight="26.0" prefWidth="110.0" />
-   <TextField fx:id="nota2" layoutX="432.0" layoutY="330.0" prefHeight="26.0" prefWidth="110.0" />
-   <TextField fx:id="nota3" layoutX="432.0" layoutY="369.0" prefHeight="26.0" prefWidth="110.0" />
-   <Label layoutX="357.0" layoutY="416.0" text="Promedio:">
-      <font>
-         <Font name="Britannic Bold" size="13.0" />
-      </font>
-   </Label>
-   <TextField fx:id="promedio" editable="false" layoutX="432.0" layoutY="410.0" prefHeight="26.0" prefWidth="110.0" />
-   <Label layoutX="576.0" layoutY="327.0" text="Curso:">
-      <font>
-         <Font name="Britannic Bold" size="13.0" />
-      </font>
-   </Label>
-   <ComboBox fx:id="comboCursos" layoutX="576.0" layoutY="358.0" prefHeight="26.0" prefWidth="110.0" />
+   <TextField fx:id="promedio" editable="false" layoutX="569.0" layoutY="391.0" prefHeight="26.0" prefWidth="110.0" />
 
-    <Button fx:id="btnRegistrar" layoutX="417.0" layoutY="474.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Registrar" />
-    <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="388.0" layoutY="474.0" pickOnBounds="true" preserveRatio="true">
+    <Button fx:id="btnRegistrar" layoutX="553.0" layoutY="507.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Registrar" />
+    <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="524.0" layoutY="507.0" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../icons/boton-editar.png" />
         </image>
     </ImageView>
-   <Button fx:id="btnModificar" layoutX="572.0" layoutY="474.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Modificar" />
-   <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="543.0" layoutY="474.0" pickOnBounds="true" preserveRatio="true">
+   <Button fx:id="btnModificar" layoutX="554.0" layoutY="459.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Modificar" />
+   <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="524.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../../icons/historia.png" />
       </image>
    </ImageView>
+   <Label layoutX="484.0" layoutY="317.0" text="Nota Parcial: ">
+      <font>
+         <Font name="Britannic Bold" size="13.0" />
+      </font>
+   </Label>
+   <Label layoutX="484.0" layoutY="358.0" text="Nota Parcial: ">
+      <font>
+         <Font name="Britannic Bold" size="13.0" />
+      </font>
+   </Label>
 </AnchorPane>

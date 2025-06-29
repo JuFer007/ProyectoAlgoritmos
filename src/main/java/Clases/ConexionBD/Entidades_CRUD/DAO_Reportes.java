@@ -4,10 +4,13 @@ import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DAO_Reportes {
+    private ArrayList<Object[]> listapagos;
+
     //Metodo para obtener el total de alumnos
     public static int obtenerTotalAlumnos() {
         int totalAlumnos = 0;
@@ -110,5 +113,46 @@ public class DAO_Reportes {
     }
 
     //Metodo para obtener los pagos segun el mes
+    public void listarPagos(Integer mes) {
+        listapagos = new ArrayList<>();
+        String sql = "{CALL sp_ListarPagosPorMes(?)}";
 
+        try {
+            CallableStatement cs = ConexionMySQL.getInstancia().getConexion().prepareCall(sql);
+
+            if (mes == null) {
+                cs.setNull(1, Types.INTEGER);
+            } else {
+                cs.setInt(1, mes);
+            }
+
+            ResultSet resultado = cs.executeQuery();
+
+            while (resultado.next()) {
+                Object[] fila = new Object[]{
+                        resultado.getInt("idPago"),
+                        resultado.getString("codigoAlumno"),
+                        resultado.getString("primerNombre"),
+                        resultado.getString("segundoNombre"),
+                        resultado.getString("apellidoPaterno"),
+                        resultado.getString("apellidoMaterno"),
+                        resultado.getDate("fechaPago"),
+                        resultado.getString("estadoPago"),
+                        resultado.getDouble("montoPago"),
+                        resultado.getString("metodoPago")
+                };
+                listapagos.add(fila);
+            }
+
+            resultado.close();
+            cs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<Object[]> getListapagos() {
+        return listapagos;
+    }
 }
