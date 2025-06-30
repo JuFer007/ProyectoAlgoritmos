@@ -119,15 +119,6 @@
                               </ImageView>
                            </graphic>
                         </MenuItem>
-                        <MenuItem fx:id="menuMatricularAlumno" mnemonicParsing="false" text="Nueva Matricula">
-                           <graphic>
-                              <ImageView fitHeight="16" fitWidth="16">
-                                 <image>
-                                    <Image url="@../../icons/matricula.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
                      </items>
                   </Menu>
 

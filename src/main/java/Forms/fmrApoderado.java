@@ -130,6 +130,7 @@ public class fmrApoderado {
         cajaApellidoP.clear();
         cajaGenero.clear();
         cajaCorreoE.clear();
+        cajaTelefono.clear();
         cajaFechaNac.setValue(null);
         cajaParentesco.getSelectionModel().clearSelection();
     }

@@ -160,6 +160,7 @@ public class fmrTrabajador {
         cajaTipoTrabajo.getSelectionModel().clearSelection();
         cajaTurnoAsignado.getSelectionModel().clearSelection();
         cargoAsignado.getSelectionModel().clearSelection();
+
     }
 
     //Modificar trabajador
