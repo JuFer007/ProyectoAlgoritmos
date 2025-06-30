@@ -91,8 +91,6 @@ public class DAO_Alumno {
                 );
                 alumnos.add(alumno);
             }
-            resultado.close();
-            comando.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -128,9 +126,6 @@ public class DAO_Alumno {
                 );
                 alumnos.add(alumno);
             }
-
-            rs.close();
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -164,9 +159,6 @@ public class DAO_Alumno {
                 );
                 alumnos.add(alumno);
             }
-
-            rs.close();
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

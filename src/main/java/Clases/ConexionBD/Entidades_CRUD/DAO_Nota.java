@@ -1,14 +1,11 @@
 package Clases.ConexionBD.Entidades_CRUD;
 import Clases.ConexionBD.ConexionMySQL;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class DAO_Nota {
     ArrayList<Object[]> notas;
+    ArrayList<Object[]> datosNotas;
 
     public void updateNota() {
 
@@ -45,7 +42,6 @@ public class DAO_Nota {
 
                 notas.add(fila);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -53,34 +49,10 @@ public class DAO_Nota {
     }
 
     public ArrayList<Object[]> listarNotasPorAlumno(String codigoAlumno) {
-        ArrayList<Object[]> lista = new ArrayList<>();
-
-        String sql = "{CALL sp_ListarNotasPorAlumno(?)}";
-
-        try (Connection cn = ConexionMySQL.getInstancia().getConexion();
-             PreparedStatement ps = cn.prepareCall(sql)) {
-
-            ps.setString(1, codigoAlumno);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    Object[] fila = new Object[7];
-                    fila[0] = rs.getInt("idCurso");
-                    fila[1] = rs.getString("nombreCurso");
-                    fila[2] = rs.getInt("idNota");
-                    fila[3] = rs.getInt("idMatricula");
-                    fila[4] = rs.getInt("idCurso");
-                    fila[5] = rs.getInt("nota");
-                    fila[6] = rs.getString("tipoNota");
-
-                    lista.add(fila);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return lista;
+        return datosNotas;
     }
 
+    public ArrayList<Object[]> getNotas() {
+        return notas;
+    }
 }
