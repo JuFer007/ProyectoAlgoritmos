@@ -12,7 +12,7 @@ public class DAO_Trabajador {
     //Metodo para crear trabajador
     public void Crear(Trabajador trabajador) {
         String mensaje = "";
-        String consulta = "{CALL sp_Trabajador_Insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+        String consulta = "{CALL sp_Trabajador_Insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)}";
 
         try {
             CallableStatement statement = ConexionMySQL.getInstancia().getConexion().prepareCall(consulta);
