@@ -117,7 +117,7 @@ public class fmrApoderado {
             return null;
         } else {
             LocalDate fechaLocal = cajaFechaNac.getValue();
-            Date fechaConvertida = (Date) Date.from(fechaLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            Date fechaConvertida = java.sql.Date.valueOf(fechaLocal);
             return fechaConvertida;
         }
     }
@@ -129,6 +129,7 @@ public class fmrApoderado {
         cajaApellidoM.clear();
         cajaApellidoP.clear();
         cajaGenero.clear();
+        cajaCorreoE.clear();
         cajaFechaNac.setValue(null);
         cajaParentesco.getSelectionModel().clearSelection();
     }

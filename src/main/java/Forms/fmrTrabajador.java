@@ -143,7 +143,7 @@ public class fmrTrabajador {
             return null;
         } else {
             LocalDate fechaLocal = cajaFechaNacimiento.getValue();
-            Date fechaConvertida = (Date) Date.from(fechaLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            Date fechaConvertida = java.sql.Date.valueOf(fechaLocal);
             return fechaConvertida;
         }
     }

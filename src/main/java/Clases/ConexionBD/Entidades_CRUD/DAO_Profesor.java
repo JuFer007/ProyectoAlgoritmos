@@ -11,7 +11,7 @@ public class DAO_Profesor {
     //Metodo para crear profesores
     public void Crear(Profesor profesor) {
         String mensaje = "";
-        String consulta = "{CALL sp_Profesor_Insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+        String consulta = "{CALL sp_Profesor_Insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)}";
 
         try {
             CallableStatement statement = ConexionMySQL.getInstancia().getConexion().prepareCall(consulta);

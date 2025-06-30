@@ -158,7 +158,7 @@ public class fmrProfesor {
             return null;
         } else {
             LocalDate fechaLocal = cajaFechaNacimiento.getValue();
-            Date fechaConvertida = (Date) Date.from(fechaLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            Date fechaConvertida = java.sql.Date.valueOf(fechaLocal);
             return fechaConvertida;
         }
     }
@@ -174,6 +174,9 @@ public class fmrProfesor {
         cajaFechaNacimiento.setValue(null);
         comboEpecialidad.getSelectionModel().clearSelection();
         comboGradoAcademico.getSelectionModel().clearSelection();
+        cajaHorasSem.clear();
+        cajaCorreoE.clear();
+        cajaTelefono.clear();
     }
 
     //Configurar los campos de la tabla
@@ -232,7 +235,7 @@ public class fmrProfesor {
         String telefono  = cajaTelefono.getText();
         String correoE = cajaCorreoE.getText();
 
-        Profesor profesor = new Profesor(DNI, PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero, especialidad, gradoAcademico, horasSemanales, telefono, correoE);
+        Profesor profesor = new Profesor(DNI, PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero, especialidad, gradoAcademico, horasSemanales, correoE, telefono);
         DAO_Profesor dao = new DAO_Profesor();
         dao.Crear(profesor);
 
