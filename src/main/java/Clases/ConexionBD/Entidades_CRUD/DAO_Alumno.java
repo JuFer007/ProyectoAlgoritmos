@@ -166,6 +166,58 @@ public class DAO_Alumno {
         return alumnos;
     }
 
+    //Metodo para recibir los datos de un alumno por su codigoAlumno
+    public Alumno buscarPorCodigo(String codigo) {
+        Alumno alumno = null;
+
+        String sql = """
+                        SELECT 
+                            a.idAlumno,
+                            a.codigoAlumno,
+                            a.idPersona,
+                            a.idApoderado,
+                            p.DNIpersona,
+                            p.primerNombre,
+                            p.segundoNombre,
+                            p.apellidoPaterno,
+                            p.apellidoMaterno,
+                            p.fechaNacimiento,
+                            p.genero
+                        FROM Alumno a
+                        INNER JOIN Persona p ON a.idPersona = p.idPersona
+                        WHERE a.codigoAlumno = ?
+                    """;
+
+        try (Connection conn = ConexionMySQL.getInstancia().getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, codigo);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    alumno = new Alumno(
+                            rs.getString("DNIpersona"),
+                            rs.getString("primerNombre"),
+                            rs.getString("segundoNombre"),
+                            rs.getString("apellidoPaterno"),
+                            rs.getString("apellidoMaterno"),
+                            rs.getDate("fechaNacimiento"),
+                            rs.getString("genero"),
+                            rs.getString("codigoAlumno"),
+                            rs.getInt("idApoderado")
+                    );
+
+                    alumno.setIdAlumno(rs.getInt("idAlumno"));
+                    alumno.setIdPersona(rs.getInt("idPersona"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return alumno;
+    }
+
+
     //Metodo para mostrar mensaje
     private void mostrarMensaje(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
