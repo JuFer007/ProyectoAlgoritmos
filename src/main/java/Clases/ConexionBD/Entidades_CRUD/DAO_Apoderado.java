@@ -104,6 +104,58 @@ public class DAO_Apoderado {
 
     }
 
+    //Buscar apoderado por idApoderado
+    public Apoderado buscarPorId(int idApoderado) {
+        Apoderado apo = null;
+
+        String sql = """
+                        SELECT 
+                            a.idApoderado,
+                            a.correoElectronico,
+                            a.numeroTelefono,
+                            a.parentesco_relacion,
+                            p.DNIpersona,
+                            p.primerNombre,
+                            p.segundoNombre,
+                            p.apellidoPaterno,
+                            p.apellidoMaterno,
+                            p.fechaNacimiento,
+                            p.genero
+                        FROM Apoderado a
+                        INNER JOIN Persona p ON a.idPersona = p.idPersona
+                        WHERE a.idApoderado = ?
+                    """;
+
+        try (Connection conn = ConexionMySQL.getInstancia().getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, idApoderado);
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        apo = new Apoderado(
+                                rs.getString("DNIpersona"),
+                                rs.getString("primerNombre"),
+                                rs.getString("segundoNombre"),
+                                rs.getString("apellidoPaterno"),
+                                rs.getString("apellidoMaterno"),
+                                rs.getDate("fechaNacimiento"),
+                                rs.getString("genero"),
+                                rs.getString("correoElectronico"),
+                                rs.getString("numeroTelefono"),
+                                rs.getString("parentesco_relacion")
+                        );
+
+                        apo.setIdApoderado(rs.getInt("idApoderado"));
+                    }
+                }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return apo;
+    }
+
+
     private void mostrarMensaje(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Mensaje de información");
