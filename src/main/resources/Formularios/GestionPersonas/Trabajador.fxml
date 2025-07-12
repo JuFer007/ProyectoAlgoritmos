@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="572.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrTrabajador">
     <children>
-        <TextField fx:id="cajaBusqueda" layoutX="37.0" layoutY="14.0" prefHeight="26.0" prefWidth="309.0" promptText="Búsqueda.." styleClass="buscar" stylesheets="@../tabla.css" />
+        <TextField fx:id="cajaBusqueda" layoutX="37.0" layoutY="14.0" prefHeight="29.0" prefWidth="659.0" promptText="Búsqueda.." styleClass="buscar" stylesheets="@../tabla.css" />
         <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="14.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../icons/simbolo-de-interfaz-de-lupa-de-busqueda.png" />

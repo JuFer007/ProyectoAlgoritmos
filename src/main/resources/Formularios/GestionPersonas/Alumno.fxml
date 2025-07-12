@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="572.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrAlumno">
+<AnchorPane fx:id="AnchorPanePrincipal" prefHeight="572.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrAlumno">
     <children>
         <TextField fx:id="cajaBusqueda" layoutX="37.0" layoutY="14.0" prefHeight="26.0" prefWidth="309.0" promptText="Búsqueda.." styleClass="buscar" stylesheets="@../tabla.css" />
         <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="14.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
@@ -34,7 +34,7 @@
         <ComboBox fx:id="comboSeccionB" layoutX="601.0" layoutY="14.0" prefHeight="26.0" prefWidth="91.0" />
         <Label layoutX="548.0" layoutY="19.0" text="Sección:" />
 
-        <AnchorPane layoutX="9.0" layoutY="248.0" prefHeight="309.0" prefWidth="667.0" styleClass="anchor-pane" stylesheets="@../style.css">
+        <AnchorPane layoutX="9.0" layoutY="248.0" prefHeight="279.0" prefWidth="686.0" styleClass="anchor-pane" stylesheets="@../style.css">
             <children>
                 <Label layoutX="18.0" layoutY="14.0" text="Agregar o modificar alumno:">
                     <font>
@@ -73,22 +73,22 @@
                 <TextField fx:id="cajaApellidoPaterno" layoutX="143.0" layoutY="172.0" prefHeight="26.0" prefWidth="174.0" />
                 <TextField fx:id="cajaApellidoMaterno" layoutX="143.0" layoutY="208.0" prefHeight="26.0" prefWidth="175.0" />
 
-                <Label layoutX="357.0" layoutY="127.0" text="Fecha Nacimiento:">
+                <Label layoutX="355.0" layoutY="104.0" text="Fecha Nacimiento:">
                     <font>
                         <Font name="Arial Bold" size="12.0" />
                     </font>
                 </Label>
-                <DatePicker fx:id="cajaFechaNacimiento" layoutX="472.0" layoutY="122.0" prefHeight="26.0" prefWidth="175.0" />
+                <DatePicker fx:id="cajaFechaNacimiento" layoutX="470.0" layoutY="99.0" prefHeight="26.0" prefWidth="175.0" />
 
-                <Button fx:id="btnNuevo" layoutX="500.0" layoutY="200.0" mnemonicParsing="false" onAction="#agregarAlumno" prefHeight="30.0" prefWidth="82.0" stylesheets="@../tabla.css" text="Nuevo" />
-                <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="471.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true">
+                <Button fx:id="btnNuevo" layoutX="439.0" layoutY="152.0" mnemonicParsing="false" onAction="#agregarAlumno" prefHeight="30.0" prefWidth="82.0" stylesheets="@../tabla.css" text="Nuevo" />
+                <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="410.0" layoutY="155.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../icons/nueva-cuenta.png" />
                     </image>
                 </ImageView>
 
-                <Button fx:id="btnModificiar" layoutX="502.0" layoutY="239.0" mnemonicParsing="false" onAction="#modificarAlumno" prefHeight="30.0" prefWidth="91.0" stylesheets="@../tabla.css" text="Modificar" />
-                <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="476.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true">
+                <Button fx:id="btnModificiar" layoutX="439.0" layoutY="192.0" mnemonicParsing="false" onAction="#modificarAlumno" prefHeight="30.0" prefWidth="91.0" stylesheets="@../tabla.css" text="Modificar" />
+                <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="413.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../icons/boton-editar.png" />
                     </image>
@@ -99,12 +99,18 @@
                </font>
             </Label>
             <TextField fx:id="cajaGenero" layoutX="143.0" layoutY="242.0" prefHeight="26.0" prefWidth="175.0" />
-            <Label layoutX="356.0" layoutY="91.0" text="DNI Apoderado:">
+            <Label layoutX="354.0" layoutY="68.0" text="DNI Apoderado:">
                <font>
                   <Font name="Arial Bold" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="DNIapoderado" layoutX="472.0" layoutY="85.0" prefHeight="26.0" prefWidth="175.0" />
+            <TextField fx:id="DNIapoderado" layoutX="470.0" layoutY="62.0" prefHeight="26.0" prefWidth="175.0" />
+            <Button fx:id="btnAgregarApoderado" layoutX="439.0" layoutY="233.0" mnemonicParsing="false" onAction="#redegirirFormularioApoderado" prefHeight="30.0" prefWidth="161.0" stylesheets="@../tabla.css" text="Agregar Apoderado" />
+            <ImageView fitHeight="25.0" fitWidth="36.0" layoutX="409.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/familia.png" />
+               </image>
+            </ImageView>
             </children>
         </AnchorPane>
     </children>

@@ -7,7 +7,7 @@
    <children>
       <ImageView fitHeight="593.0" fitWidth="708.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../icons/Diseño%20sin%20título%20(5).png" />
+            <Image url="@../../icons/imagenDeBienvenida.png" />
          </image>
       </ImageView>
    </children>

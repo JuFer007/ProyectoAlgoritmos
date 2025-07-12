@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -7,7 +8,7 @@
 
 <AnchorPane prefHeight="572.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrProfesor">
     <children>
-        <TextField fx:id="cajaBusqueda" layoutX="37.0" layoutY="14.0" prefHeight="30.0" prefWidth="440.0" promptText="Búsqueda.." styleClass="buscar" stylesheets="@../tabla.css" />
+        <TextField fx:id="cajaBusqueda" layoutX="37.0" layoutY="14.0" prefHeight="30.0" prefWidth="657.0" promptText="Búsqueda.." styleClass="buscar" stylesheets="@../tabla.css" />
         <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="14.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../icons/simbolo-de-interfaz-de-lupa-de-busqueda.png" />
@@ -89,14 +90,14 @@
                 </Label>
                 <ComboBox fx:id="comboGradoAcademico" layoutX="468.0" layoutY="69.0" prefHeight="26.0" prefWidth="100.0" />
 
-                <Button fx:id="btnNuevo" layoutX="407.0" layoutY="241.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" stylesheets="@../tabla.css" text="Nuevo" onAction="#nuevoProfesor" />
+                <Button fx:id="btnNuevo" layoutX="407.0" layoutY="241.0" mnemonicParsing="false" onAction="#nuevoProfesor" prefHeight="30.0" prefWidth="82.0" stylesheets="@../tabla.css" text="Nuevo" />
                 <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="377.0" layoutY="244.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../icons/nueva-cuenta.png" />
                     </image>
                 </ImageView>
 
-                <Button fx:id="btnModificiar" layoutX="524.0" layoutY="241.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Modificar" onAction="#actualizarProfesor"/>
+                <Button fx:id="btnModificiar" layoutX="524.0" layoutY="241.0" mnemonicParsing="false" onAction="#actualizarProfesor" stylesheets="@../tabla.css" text="Modificar" />
                 <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="499.0" layoutY="244.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../icons/boton-editar.png" />

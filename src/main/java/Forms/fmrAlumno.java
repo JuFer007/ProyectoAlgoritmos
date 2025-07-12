@@ -6,10 +6,13 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 
 public class fmrAlumno {
@@ -46,9 +49,6 @@ public class fmrAlumno {
     @FXML private ComboBox<String> comboGradoB;
     @FXML private ComboBox<String> comboSeccionB;
 
-    //ComboBox para insercion de nuevo alumno
-    @FXML private ComboBox<String> comboApoderado;
-
     //Fecha nacimiento
     @FXML private DatePicker cajaFechaNacimiento;
 
@@ -60,6 +60,21 @@ public class fmrAlumno {
 
     //Tabla de alumnos
     @FXML private TableView<Object[]> tablaAlumnos;
+
+    //Anchor Pane principal
+    @FXML AnchorPane AnchorPanePrincipal;
+
+    //Metodo para redigirir formulario
+    @FXML
+    public void redegirirFormularioApoderado() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Formularios/GestionPersonas/Apoderado.fxml"));
+        Parent root = loader.load();
+        AnchorPanePrincipal.getChildren().setAll(root);
+        AnchorPanePrincipal.setTopAnchor(root, 0.0);
+        AnchorPanePrincipal.setBottomAnchor(root, 0.0);
+        AnchorPanePrincipal.setLeftAnchor(root, 0.0);
+        AnchorPanePrincipal.setRightAnchor(root, 0.0);
+    }
 
     //Validacion de campos para registro nuevo alumno
     private boolean validarCamposDeIngreso() {

@@ -1,5 +1,4 @@
 package Forms;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,18 +11,14 @@ import javafx.stage.StageStyle;
 import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 
-public class fmrSystemCollege extends Application {
-    private double x = 0;
-    private double y = 0;
-
+public class fmrSystemCollege {
     @FXML
     private void initialize() throws IOException {
         formularioBienvenida();
-
     };
 
     @FXML
-    private AnchorPane AnchorPanePrincipal;
+    public AnchorPane AnchorPanePrincipal;
     @FXML
     private Button btnCerrar;
     @FXML
@@ -71,7 +66,7 @@ public class fmrSystemCollege extends Application {
     }
 
     @FXML
-    private void formularioRenovarMatricula() throws IOException {
+    private void formularioMatricula() throws IOException {
         cargarFormulario("/Formularios/Matricula/Matricula.fxml");
     }
 
@@ -98,34 +93,6 @@ public class fmrSystemCollege extends Application {
     @FXML
     private void formularioBienvenida() throws IOException {
         cargarFormulario("/Formularios/Principales/Bienvenida.fxml");
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Formularios/Principales/SystemCollege.fxml"));
-
-        Scene scene = new Scene(root);
-
-        root.setOnMousePressed((MouseEvent event) -> {
-            x = event.getSceneX();
-            y = event.getSceneY();
-        });
-
-        root.setOnMouseDragged((MouseEvent event) -> {
-            primaryStage.setX(event.getScreenX() - x);
-            primaryStage.setY(event.getScreenY() - y);
-
-            primaryStage.setOpacity(0.8);
-        });
-
-        root.setOnMouseReleased((MouseEvent event) -> {
-            primaryStage.setOpacity(1);
-        });
-
-        primaryStage.initStyle(StageStyle.UNDECORATED);
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     //Metodo para cargar los formulario en el anchor pane

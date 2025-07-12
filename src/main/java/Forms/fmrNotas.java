@@ -4,17 +4,41 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+
 import java.util.ArrayList;
 
 public class fmrNotas {
     public void initialize() {
         configurarTablaAlumno();
-        configurarTablaCurso();
+        configurarComboGradoYSeccion();
+        listarAlumnos();
+
+        comboBoxGrado.setOnAction(event -> aplicarFiltrosCombinados());
+        comboBoxSeccion.setOnAction(event -> aplicarFiltrosCombinados());
+
+        cajaBusqueda.textProperty().addListener((observable, oldValue, newValue) -> aplicarFiltrosCombinados());
+
+        configurarTablaCursosYNotas();
+        tablaAlumno.setOnMouseClicked(event -> {
+            int idMatricula = numeroMatricula();
+            if (idMatricula != -1) {
+                listarCursosEnComboBox(idMatricula);
+                listarCursos(idMatricula);
+            }
+        });
+        comboBoxCursos.setOnAction(event -> {
+            String cursoSeleccionado = (String) comboBoxCursos.getValue();
+            int idMatricula = numeroMatricula();
+            listarNotasDeUnSoloCurso(idMatricula, cursoSeleccionado);
+            listarNotasEnLosCampos(idMatricula, cursoSeleccionado);
+        });
     }
+
+    //ComboBox
+    @FXML private ComboBox comboBoxCursos;
+    @FXML private ComboBox comboBoxGrado;
+    @FXML private ComboBox comboBoxSeccion;
 
     //Cajas de texto
     @FXML private TextField cajaBusqueda;
@@ -33,9 +57,9 @@ public class fmrNotas {
     @FXML private TableColumn<Object[], String> columapellidoM;
     @FXML private TableColumn<Object[], String> columNumMatricula;
 
+    //Tabla y columnas
     //Segunda tabla
     @FXML private TableView<Object[]> tablaCursos;
-    @FXML private TableColumn<Object[], String> codigoCurso;
     @FXML private TableColumn<Object[], String> curso;
     @FXML private TableColumn<Object[], String> Columnota;
     @FXML private TableColumn<Object[], String> columTipoNota;
@@ -51,32 +75,161 @@ public class fmrNotas {
 
     //Metodo para configurar la tabla de alumno
     private void configurarTablaAlumno() {
-        columCodigo.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue()[0])));
-        DNI.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue()[1]));
-        Nombre.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue()[2]));
-        columapellidoP.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue()[4]));
-        columapellidoM.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue()[5]));
-        columNumMatricula.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue()[6])));
+        columCodigo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[0].toString()));
+        DNI.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[1].toString()));
+        Nombre.setCellValueFactory(data -> {
+            String primerNombre = data.getValue()[2].toString();
+            String segundoNombre = data.getValue()[3].toString();
+            return new SimpleStringProperty(primerNombre + " " + segundoNombre);
+        });
+        columapellidoP.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[4].toString()));
+        columapellidoM.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[5].toString()));
+        columNumMatricula.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[6].toString()));
 
-        listarDatosEstudiantes();
+        for (TableColumn<?, ?> col : tablaAlumno.getColumns()) {
+            col.setReorderable(false);
+        }
+
+        tablaAlumno.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
-    //Metodo para configurar la tabla de cursos
-    private void configurarTablaCurso() {
-        codigoCurso.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue()[0])));
-        curso.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue()[1]));
-        Columnota.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue()[3])));
-        columTipoNota.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue()[3])));
+    //Metodo para listar alumnos
+    private void listarAlumnos() {
+        DAO_Nota dao = new DAO_Nota();
+        ArrayList<Object[]> alumnos = dao.listarAlumnos();
+        ObservableList<Object[]> observableList = FXCollections.observableArrayList(alumnos);
+
+        tablaAlumno.setItems(observableList);
     }
 
-    //Metodo para registrar nota
-    private void registrarNota() {
+    //Metodo par configurar la tabla de cursos
+    private void configurarTablaCursosYNotas() {
+        curso.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[0].toString()));
+        Columnota.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[1].toString()));
+        columTipoNota.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[2].toString()));
 
-
+        for (TableColumn<?, ?> col : tablaCursos.getColumns()) {
+            col.setReorderable(false);
+        }
+        tablaCursos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
-    //Metodo para registrar varias notas
-    private void registarVariasNotas() {
+    //Metodo para listar los cursos y notas de un alumno
+    private void listarCursos(int idMatricula) {
+        if (idMatricula > 0) {
+            DAO_Nota dao = new DAO_Nota();
+            ArrayList<Object[]> cursosNotas = dao.listarCursosDeAlumno(idMatricula);
+
+            ObservableList<Object[]> observableList = FXCollections.observableArrayList(cursosNotas);
+
+            tablaCursos.setItems(observableList);
+        }
+    }
+
+    //Metodo para obtener el idMatricula de la tabla de alumnos
+    private int numeroMatricula() {
+        Object[] filaSeleccionada = tablaAlumno.getSelectionModel().getSelectedItem();
+
+        if (filaSeleccionada != null) {
+            return Integer.parseInt(filaSeleccionada[6].toString());
+        } else {
+            return -1;
+        }
+    }
+
+    //Metodo para configurar el comboBox
+    private void listarCursosEnComboBox(int idMatricula) {
+        DAO_Nota dao = new DAO_Nota();
+        ArrayList<String> cursos = dao.listarCursos(idMatricula);
+
+        ObservableList<String> observableCursos = FXCollections.observableArrayList("Todos");
+        observableCursos.addAll(cursos);
+
+        comboBoxCursos.setItems(observableCursos);
+    }
+
+    private void listarNotasDeUnSoloCurso(int idMatricula, String nombreCurso) {
+        DAO_Nota dao = new DAO_Nota();
+
+        if (nombreCurso != null && !nombreCurso.equals("Todos")) {
+            ArrayList<Object[]> cursosNotas = dao.listarNotasDeUnSoloCurso(idMatricula, nombreCurso);
+            ObservableList<Object[]> observableList = FXCollections.observableArrayList(cursosNotas);
+            tablaCursos.setItems(observableList);
+        } else {
+            ArrayList<Object[]> cursosNotas = dao.listarCursosDeAlumno(idMatricula);
+            ObservableList<Object[]> observableList = FXCollections.observableArrayList(cursosNotas);
+            tablaCursos.setItems(observableList);
+        }
+    }
+
+    //Metodo para configurar los comboBox de grado y seccion
+    private void configurarComboGradoYSeccion() {
+        ObservableList<String> grados = FXCollections.observableArrayList("Primer", "Segundo", "Tercer", "Cuarto", "Quinto");
+        ObservableList<String> secciones = FXCollections.observableArrayList("A", "B", "C");
+        comboBoxGrado.setItems(grados);
+        comboBoxSeccion.setItems(secciones);
+    }
+
+    //Metodo para aplicar filtros de busqueda y los comboBox
+    private void aplicarFiltrosCombinados() {
+        String texto = cajaBusqueda.getText();
+        String grado = (String) comboBoxGrado.getValue();
+        String seccion = (String) comboBoxSeccion.getValue();
+
+        DAO_Nota dao = new DAO_Nota();
+
+        ObservableList<Object[]> resultados = FXCollections.observableArrayList();
+        ArrayList<Object[]> lista;
+
+        if (grado != null && seccion != null) {
+            lista = dao.alumnosPorGradoYSeccion(grado, seccion);
+        } else if (grado != null) {
+            lista = dao.alumnosPorGrado(grado);
+        } else {
+            dao.listarAlumnos();
+            lista = dao.listarAlumnos();
+        }
+
+        for (Object[] alumnoData : lista) {
+            String nombreCompleto = (alumnoData[2] + " " + alumnoData[3] + " " + alumnoData[4] + " " + alumnoData[5]).toLowerCase();
+
+            if (texto == null || texto.isEmpty() || nombreCompleto.contains(texto.toLowerCase())) {
+                resultados.add(alumnoData);
+            }
+        }
+        tablaAlumno.setItems(resultados);
+    }
+
+    //Metodo para cargar las notas en las cajas de texto
+    private void listarNotasEnLosCampos(int idMatricula, String nombreCurso) {
+        DAO_Nota dao = new DAO_Nota();
+        if (nombreCurso != null && !nombreCurso.equals("Todos")) {
+            ArrayList<Integer> notasYPromedio = dao.obtenerNotasDeCurso(idMatricula, nombreCurso);
+
+            nota1.clear();
+            nota2.clear();
+            nota3.clear();
+            promedio.clear();
+
+            if (notasYPromedio.size() > 0) {
+                nota1.setText(String.valueOf(notasYPromedio.get(0)));
+            }
+            if (notasYPromedio.size() > 1) {
+                nota2.setText(String.valueOf(notasYPromedio.get(1)));
+            }
+            if (notasYPromedio.size() > 2) {
+                nota3.setText(String.valueOf(notasYPromedio.get(2)));
+            }
+
+            if (notasYPromedio.size() > 3) {
+                promedio.setText(String.valueOf(notasYPromedio.get(3)));
+                promedio.setEditable(false);
+            }
+        }
+    }
+
+    //Metodo para registrar notas
+    private void modificarNotas(int idMatricula, String nombreCurso, int nuevaNota1, int nuevaNota2, int nuevaNota3) {
 
     }
 }

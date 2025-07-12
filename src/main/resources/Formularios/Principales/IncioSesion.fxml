@@ -30,47 +30,38 @@
                         <Font name="Cooper Black" size="30.0" />
                      </font>
                   </Label>
-               </children></AnchorPane>
+               </children>
+            </AnchorPane>
             <AnchorPane layoutX="353.0" prefHeight="600.0" prefWidth="450.0" styleClass="right-form" stylesheets="@../InicioSesion.css" AnchorPane.rightAnchor="0.0">
                <children>
-                  <ImageView fitHeight="72.0" fitWidth="65.0" layoutX="194.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="72.0" fitWidth="65.0" layoutX="194.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../icons/user-solid.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="158.0" layoutY="228.0" prefHeight="30.0" prefWidth="134.0" text="¡Bienvenido!">
+                  <Label layoutX="158.0" layoutY="236.0" prefHeight="30.0" prefWidth="134.0" text="¡Bienvenido!">
                      <font>
                         <Font name="Tahoma Bold" size="20.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtNombreUsuario" layoutX="100.0" layoutY="278.0" prefHeight="30.0" prefWidth="250.0" promptText="NombreUsuario">
+                  <TextField fx:id="txtNombreUsuario" layoutX="100.0" layoutY="290.0" prefHeight="30.0" prefWidth="250.0" promptText="NombreUsuario">
                      <font>
                         <Font size="14.0" />
                      </font></TextField>
-                  <PasswordField fx:id="txtContraseña" layoutX="100.0" layoutY="336.0" prefHeight="30.0" prefWidth="250.0" promptText="Contraseña">
+                  <PasswordField fx:id="txtContraseña" layoutX="100.0" layoutY="348.0" prefHeight="30.0" prefWidth="250.0" promptText="Contraseña">
                      <font>
                         <Font size="14.0" />
                      </font></PasswordField>
-                  <Button fx:id="BtnIniciarSesion" layoutX="144.0" layoutY="392.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="162.0" stylesheets="@../InicioSesion.css" text="Iniciar Sesión" onAction="#iniciarSesion">
+                  <Button fx:id="BtnIniciarSesion" layoutX="144.0" layoutY="404.0" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="38.0" prefWidth="162.0" stylesheets="@../InicioSesion.css" text="Iniciar Sesión">
                      <font>
                         <Font name="Eras Bold ITC" size="17.0" />
                      </font></Button>
-                  <Button fx:id="btnRegistrarse" layoutX="144.0" layoutY="468.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="162.0" stylesheets="@../InicioSesion.css" text="Registrate" onAction="#registrarse">
-                     <font>
-                        <Font name="Eras Bold ITC" size="17.0" />
-                     </font>
-                  </Button>
-                  <Label layoutX="221.0" layoutY="440.0" text="ó">
-                     <font>
-                        <Font name="Bodoni MT Black Italic" size="13.0" />
-                     </font>
-                  </Label>
                   <ImageView fitHeight="19.0" fitWidth="20.0" layoutX="427.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../icons/cross_14875490.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="btnCerrarVentana" layoutX="428.0" layoutY="2.0" mnemonicParsing="false" stylesheets="@../style.css" onAction="#cerrarVentana"/>
+                  <Button fx:id="btnCerrarVentana" layoutX="428.0" layoutY="2.0" mnemonicParsing="false" onAction="#cerrarVentana" stylesheets="@../style.css" />
                </children>
             </AnchorPane>
          </children>
