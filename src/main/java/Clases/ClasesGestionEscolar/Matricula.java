@@ -4,21 +4,21 @@ import java.time.LocalDate;
 
 public class Matricula {
     private int idMatricula;
-    private int idGrado;
-    private int idSeccion;
-    private int idAñoE;
-    private int idAlumno;
-    private int idTrabajador;
+    private String grado;
+    private String seccion;
+    private String añoE;
+    private String codigoAlumno;
+    private String trabajador;
     private LocalDate fechaMatricula;
     private String estadoMatricula;
 
-    public Matricula(int idMatricula, int idGrado, int idSeccion, int idAñoE, int idAlumno, int idTrabajador, LocalDate fechaMatricula, String estadoMatricula) {
+    public Matricula(int idMatricula, String grado, String seccion, String añoE, String codigoAlumno, String trabajador, LocalDate fechaMatricula, String estadoMatricula) {
         this.idMatricula = idMatricula;
-        this.idGrado = idGrado;
-        this.idSeccion = idSeccion;
-        this.idAñoE = idAñoE;
-        this.idAlumno = idAlumno;
-        this.idTrabajador = idTrabajador;
+        this.grado = grado;
+        this.seccion = seccion;
+        this.añoE = añoE;
+        this.codigoAlumno = codigoAlumno;
+        this.trabajador = trabajador;
         this.fechaMatricula = fechaMatricula;
         this.estadoMatricula = estadoMatricula;
     }
@@ -31,44 +31,44 @@ public class Matricula {
         this.idMatricula = idMatricula;
     }
 
-    public int getIdGrado() {
-        return idGrado;
+    public String getGrado() {
+        return grado;
     }
 
-    public void setIdGrado(int idGrado) {
-        this.idGrado = idGrado;
+    public void setGrado(String grado) {
+        this.grado = grado;
     }
 
-    public int getIdSeccion() {
-        return idSeccion;
+    public String getSeccion() {
+        return seccion;
     }
 
-    public void setIdSeccion(int idSeccion) {
-        this.idSeccion = idSeccion;
+    public void setSeccion(String seccion) {
+        this.seccion = seccion;
     }
 
-    public int getIdAñoE() {
-        return idAñoE;
+    public String getAñoE() {
+        return añoE;
     }
 
-    public void setIdAñoE(int idAñoE) {
-        this.idAñoE = idAñoE;
+    public void setAñoE(String añoE) {
+        this.añoE = añoE;
     }
 
-    public int getIdAlumno() {
-        return idAlumno;
+    public String getCodigoAlumno() {
+        return codigoAlumno;
     }
 
-    public void setIdAlumno(int idAlumno) {
-        this.idAlumno = idAlumno;
+    public void setCodigoAlumno(String codigoAlumno) {
+        this.codigoAlumno = codigoAlumno;
     }
 
-    public int getIdTrabajador() {
-        return idTrabajador;
+    public String getTrabajador() {
+        return trabajador;
     }
 
-    public void setIdTrabajador(int idTrabajador) {
-        this.idTrabajador = idTrabajador;
+    public void setTrabajador(String trabajador) {
+        this.trabajador = trabajador;
     }
 
     public LocalDate getFechaMatricula() {
@@ -91,11 +91,11 @@ public class Matricula {
     public String toString() {
         return "Matricula{" +
                 "idMatricula=" + idMatricula +
-                ", idGrado=" + idGrado +
-                ", idSeccion=" + idSeccion +
-                ", idAñoE=" + idAñoE +
-                ", idAlumno=" + idAlumno +
-                ", idTrabajador=" + idTrabajador +
+                ", grado='" + grado + '\'' +
+                ", seccion='" + seccion + '\'' +
+                ", añoE='" + añoE + '\'' +
+                ", codigoAlumno='" + codigoAlumno + '\'' +
+                ", trabajador='" + trabajador + '\'' +
                 ", fechaMatricula=" + fechaMatricula +
                 ", estadoMatricula='" + estadoMatricula + '\'' +
                 '}';
