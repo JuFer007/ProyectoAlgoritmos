@@ -7,7 +7,24 @@ public class DAO_Nota {
     ArrayList<Object[]> notasPorEstudiante;
 
     //Metodo para modificar notas de un alumo
+    public void modificarNotasYPromedio(int idMatricula, String nombreCurso, int nota1, int nota2, int nota3) {
+        String sql = "{CALL sp_ModificarNotasYPromedio(?, ?, ?, ?, ?)}";
 
+        try (Connection cn = ConexionMySQL.getInstancia().getConexion();
+             CallableStatement stmt = cn.prepareCall(sql)) {
+
+            stmt.setInt(1, idMatricula);
+            stmt.setString(2, nombreCurso);
+            stmt.setInt(3, nota1);
+            stmt.setInt(4, nota2);
+            stmt.setInt(5, nota3);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     //Metodo para listar a todos los alumnos
     public ArrayList<Object[]> listarAlumnos() {
@@ -98,7 +115,6 @@ public class DAO_Nota {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return cursos;
     }
 

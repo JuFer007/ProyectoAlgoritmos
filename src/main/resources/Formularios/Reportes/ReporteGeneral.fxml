@@ -96,7 +96,7 @@
                </font>
             </Label>
          </children></AnchorPane>
-      <AnchorPane layoutX="412.0" layoutY="127.0" prefHeight="367.0" prefWidth="276.0" styleClass="anchor-pane" stylesheets="@../style.css">
+      <AnchorPane layoutX="412.0" layoutY="127.0" prefHeight="419.0" prefWidth="276.0" styleClass="anchor-pane" stylesheets="@../style.css">
          <children>
             <BarChart fx:id="graficoProfesores" layoutX="40.0" layoutY="57.0" prefHeight="310.0" prefWidth="240.0" styleClass="chart-legend-item-symbol" stylesheets="@../style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
               <xAxis>
@@ -113,17 +113,5 @@
             </Label>
          </children>
       </AnchorPane>
-      <Button fx:id="btnExportarPDF" layoutX="439.0" layoutY="514.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="121.0" stylesheets="@../tabla.css" text="Exportar PDF" />
-      <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="412.0" layoutY="517.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../icons/pdf.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="btnActualizar" layoutX="598.0" layoutY="514.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" stylesheets="@../tabla.css" text="Actualizar" />
-      <ImageView fitHeight="25.0" fitWidth="22.0" layoutX="570.0" layoutY="519.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../icons/historia.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

@@ -1,9 +1,13 @@
 package Forms;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Pago;
+import Clases.ClasesFinanzas.ComprobantePagoPDF;
+import Clases.ConexionBD.Entidades_CRUD.DAO_Cuota;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class fmrPagos {
@@ -63,7 +67,7 @@ public class fmrPagos {
 
     //Metodo para listar pagos
     private void listarPagos() {
-        DAO_Pago dao = new DAO_Pago();
+        DAO_Cuota dao = new DAO_Cuota();
         dao.Listar();
         ArrayList<Object[]> lista = dao.getListaPagos();
 
@@ -105,7 +109,7 @@ public class fmrPagos {
         if (confirm.showAndWait().get() == javafx.scene.control.ButtonType.OK) {
             int idPago = (int) filaSeleccionada[0];
 
-            DAO_Pago dao = new DAO_Pago();
+            DAO_Cuota dao = new DAO_Cuota();
             dao.registrarPago(idPago);
             listarPagos();
         }
@@ -131,7 +135,7 @@ public class fmrPagos {
 
         if (confirm.showAndWait().get() == javafx.scene.control.ButtonType.OK) {
             int idPago = (int) filaSeleccionada[0];
-            DAO_Pago dao = new DAO_Pago();
+            DAO_Cuota dao = new DAO_Cuota();
             dao.eliminarPago(idPago);
             listarPagos();
         }
@@ -139,9 +143,9 @@ public class fmrPagos {
 
     //Metodo para configurar los comboBox
     private void configurarComboBox() {
-        ObservableList<String> grados = FXCollections.observableArrayList("Primer", "Segundo", "Tercer", "Cuarto", "Quinto");
-        ObservableList<String> secciones = FXCollections.observableArrayList("A", "B", "C");
-        ObservableList<String> estados = FXCollections.observableArrayList("Pagado", "Pendiente", "Vencido");
+        ObservableList<String> grados = FXCollections.observableArrayList("Todos", "Primer", "Segundo", "Tercer", "Cuarto", "Quinto");
+        ObservableList<String> secciones = FXCollections.observableArrayList("Todos", "A", "B", "C");
+        ObservableList<String> estados = FXCollections.observableArrayList("Todos", "Pagado", "Pendiente", "Vencido");
 
         comboGradoB.setItems(grados);
         comboSeccionB.setItems(secciones);
@@ -152,12 +156,24 @@ public class fmrPagos {
         comboEstado.getSelectionModel().clearSelection();
     }
 
+    //Metodo para filtrar los pagos
     public void filtrarPagos() {
         String grado = comboGradoB.getValue();
         String seccion = comboSeccionB.getValue();
         String estado = comboEstado.getValue();
 
-        DAO_Pago dao = new DAO_Pago();
+        DAO_Cuota dao = new DAO_Cuota();
+
+        if ("Todos".equals(grado)){
+            grado = null;
+        }
+        if ("Todos".equals(seccion)) {
+            seccion = null;
+        }
+        if ("Todos".equals(estado)) {
+            estado = null;
+        }
+
         dao.listarPagosFiltrados(grado, seccion, estado);
 
         ArrayList<Object[]> lista = dao.getListaPagos();
@@ -165,5 +181,47 @@ public class fmrPagos {
         javafx.scene.control.TableView<Object[]> tabla = (javafx.scene.control.TableView<Object[]>) tablaPagos;
         tabla.getItems().clear();
         tabla.getItems().addAll(lista);
+    }
+
+    //Metodo para imprimir el comprobante
+    public void imprimiComprobante() {
+        javafx.scene.control.TableView<Object[]> tabla = (javafx.scene.control.TableView<Object[]>) tablaPagos;
+        Object[] filaSeleccionada = tabla.getSelectionModel().getSelectedItem();
+
+        if (filaSeleccionada == null) {
+            Alert advertencia = new Alert(Alert.AlertType.WARNING);
+            advertencia.setTitle("Advertencia");
+            advertencia.setHeaderText(null);
+            advertencia.setContentText("Debe seleccionar un pago en la tabla.");
+            advertencia.showAndWait();
+            return;
+        }
+
+        String estado = (String) filaSeleccionada[7];
+        if (!estado.equalsIgnoreCase("Pagado")) {
+            Alert info = new Alert(Alert.AlertType.INFORMATION);
+            info.setTitle("Estado no válido");
+            info.setHeaderText(null);
+            info.setContentText("Solo se pueden imprimir comprobantes para pagos con estado 'Pagado'.");
+            info.showAndWait();
+            return;
+        }
+
+        String codigoAlumno = String.valueOf(filaSeleccionada[1]);
+
+        String fechaPago = String.valueOf(filaSeleccionada[6]);
+
+        String metodoPago = (String) filaSeleccionada[9];
+        Double montoPago = (Double) filaSeleccionada[8];
+
+        ComprobantePagoPDF comprobantePagoPDF = new ComprobantePagoPDF(codigoAlumno, fechaPago, metodoPago, montoPago);
+
+        comprobantePagoPDF.generarComprobante();
+
+        Alert success = new Alert(Alert.AlertType.INFORMATION);
+        success.setTitle("Comprobante Generado");
+        success.setHeaderText(null);
+        success.setContentText("El comprobante de pago ha sido generado exitosamente.");
+        success.showAndWait();
     }
 }

@@ -33,6 +33,7 @@ public class fmrNotas {
             listarNotasDeUnSoloCurso(idMatricula, cursoSeleccionado);
             listarNotasEnLosCampos(idMatricula, cursoSeleccionado);
         });
+        btnRegistrar.setOnAction(event -> modificarNotas());
     }
 
     //ComboBox
@@ -66,7 +67,6 @@ public class fmrNotas {
 
     //Botones
     @FXML private Button btnRegistrar;
-    @FXML private Button btnModificar;
 
     //Metodo para listar a los estudiantes
     private void listarDatosEstudiantes() {
@@ -229,7 +229,23 @@ public class fmrNotas {
     }
 
     //Metodo para registrar notas
-    private void modificarNotas(int idMatricula, String nombreCurso, int nuevaNota1, int nuevaNota2, int nuevaNota3) {
+    public void modificarNotas() {
+        int idMatricula = numeroMatricula();
 
+        String nombreCurso = (String) comboBoxCursos.getValue();
+
+        try {
+            int nuevaNota1 = Integer.parseInt(nota1.getText());
+            int nuevaNota2 = Integer.parseInt(nota2.getText());
+            int nuevaNota3 = Integer.parseInt(nota3.getText());
+
+            DAO_Nota dao = new DAO_Nota();
+            dao.modificarNotasYPromedio(idMatricula, nombreCurso, nuevaNota1, nuevaNota2, nuevaNota3);
+
+            listarNotasDeUnSoloCurso(idMatricula, nombreCurso);
+            listarNotasEnLosCampos(idMatricula, nombreCurso);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
 }

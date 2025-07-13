@@ -4,12 +4,12 @@ import javafx.scene.control.Alert;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DAO_Pago {
+public class DAO_Cuota {
     ArrayList<Object[]> listaPagos;
 
     public void registrarPago(int idPago) {
         String mensaje = "";
-        String sql = "{CALL sp_Pago_CambiarEstado(?, ?)}";
+        String sql = "{CALL sp_Pago_Actualizar(?, ?)}";
 
         try {
             CallableStatement consulta = ConexionMySQL.getInstancia().getConexion().prepareCall(sql);
@@ -42,7 +42,7 @@ public class DAO_Pago {
             CallableStatement cs = ConexionMySQL.getInstancia().getConexion().prepareCall(sql);
 
             cs.setInt(1, idPago);
-            cs.registerOutParameter(2, java.sql.Types.VARCHAR); // OUT p_Mensaje
+            cs.registerOutParameter(2, java.sql.Types.VARCHAR);
 
             cs.execute();
 
@@ -62,7 +62,7 @@ public class DAO_Pago {
         listaPagos.clear();
 
         String consulta = "select pago.idPago, alumno.codigoAlumno, persona.primerNombre, persona.segundoNombre, persona.apellidoPaterno, persona.apellidoMaterno,\n" +
-                "pago.fechaPago, pago.estadoPago, pago.montoPago, pago.metodoPago \n" +
+                "pago.fechaPago, cuota.estadoCuota, pago.montoPago, pago.metodoPago \n" +
                 "from persona inner join alumno on persona.idPersona = alumno.idAlumno inner join matricula on alumno.idAlumno = matricula.idAlumno\n" +
                 "inner join cuota on cuota.idMatricula = matricula.idMatricula inner join pago on cuota.idPago = pago.idPago\n" +
                 "order by pago.idPago";
@@ -79,7 +79,7 @@ public class DAO_Pago {
                         resultado.getString("apellidoPaterno"),
                         resultado.getString("apellidoMaterno"),
                         resultado.getDate("fechaPago"),
-                        resultado.getString("estadoPago"),
+                        resultado.getString("estadoCuota"),
                         resultado.getDouble("montoPago"),
                         resultado.getString("metodoPago")
                 };
@@ -97,7 +97,7 @@ public class DAO_Pago {
 
     public void listarPagosFiltrados(String grado, String seccion, String estado) {
         listaPagos = new ArrayList<>();
-        String sql = "{CALL sp_ListarPagosPorGradoSeccionEstado(?, ?, ?)}";
+        String sql = "{CALL sp_ListarCuotasPorGradoSeccionEstado(?, ?, ?)}";
 
         try {
             CallableStatement cs = ConexionMySQL.getInstancia().getConexion().prepareCall(sql);
@@ -117,7 +117,7 @@ public class DAO_Pago {
                         resultado.getString("apellidoPaterno"),
                         resultado.getString("apellidoMaterno"),
                         resultado.getDate("fechaPago"),
-                        resultado.getString("estadoPago"),
+                        resultado.getString("estadoCuota"),
                         resultado.getDouble("montoPago"),
                         resultado.getString("metodoPago")
                 };

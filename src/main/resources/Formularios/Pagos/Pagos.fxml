@@ -33,7 +33,7 @@
     <Label layoutX="262.0" layoutY="19.0" text="Sección:" />
    <ComboBox fx:id="comboEstado" layoutX="458.0" layoutY="14.0" prefHeight="26.0" prefWidth="144.0" />
    <Label layoutX="413.0" layoutY="19.0" text="Estado:" />
-   <Button fx:id="btnImprimirComprobante" layoutX="301.0" layoutY="510.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="182.0" stylesheets="@../tabla.css" text="Imprimir Comprobante" />
+   <Button fx:id="btnImprimirComprobante" layoutX="301.0" layoutY="510.0" onAction="#imprimiComprobante" mnemonicParsing="false" prefHeight="30.0" prefWidth="182.0" stylesheets="@../tabla.css" text="Imprimir Comprobante" />
    <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="270.0" layoutY="513.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../../icons/cheque.png" />

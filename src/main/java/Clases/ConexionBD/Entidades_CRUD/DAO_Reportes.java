@@ -115,7 +115,7 @@ public class DAO_Reportes {
     //Metodo para obtener los pagos segun el mes
     public void listarPagos(Integer mes) {
         listapagos = new ArrayList<>();
-        String sql = "{CALL sp_ListarPagosPorMes(?)}";
+        String sql = "{CALL sp_ListarCuotasPorMes(?)}";
 
         try {
             CallableStatement cs = ConexionMySQL.getInstancia().getConexion().prepareCall(sql);

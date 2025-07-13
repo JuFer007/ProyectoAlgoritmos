@@ -14,6 +14,7 @@ module ColegioSystem {
     requires java.sql;
     requires jdk.jshell;
     requires mysql.connector.j;
+    requires itextpdf;
 
     opens Clases to javafx.fxml;
     opens Forms to javafx.fxml, javafx.graphics;

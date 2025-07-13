@@ -125,8 +125,8 @@ public class fmrAlumno {
 
     //Configuracion de los comboBox
     private void configuracionCombox() {
-        ObservableList<String> grados = FXCollections.observableArrayList("Primer", "Segundo", "Tercer", "Cuarto", "Quinto");
-        ObservableList<String> secciones = FXCollections.observableArrayList("A", "B", "C");
+        ObservableList<String> grados = FXCollections.observableArrayList("Todos", "Primer", "Segundo", "Tercer", "Cuarto", "Quinto");
+        ObservableList<String> secciones = FXCollections.observableArrayList("Todos", "A", "B", "C");
         comboGradoB.setItems(grados);
         comboSeccionB.setItems(secciones);
     }
@@ -282,7 +282,10 @@ public class fmrAlumno {
         ObservableList<Object[]> resultados = FXCollections.observableArrayList();
         ArrayList<Alumno> lista;
 
-        if (grado != null && seccion != null) {
+        if ("Todos".equals(grado) || "Todos".equals(seccion)) {
+            dao.Listar();
+            lista = dao.getAlumnos();
+        } else if (grado != null && seccion != null) {
             lista = dao.alumnosPorGradoYSeccion(grado, seccion);
         } else if (grado != null) {
             lista = dao.alumnosPorGrado(grado);
@@ -290,7 +293,6 @@ public class fmrAlumno {
             dao.Listar();
             lista = dao.getAlumnos();
         }
-
         for (Alumno alumno : lista) {
             String nombreCompleto = (alumno.getPrimernombre() + " " +
                     alumno.getSegundonombre() + " " +

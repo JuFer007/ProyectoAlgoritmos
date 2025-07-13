@@ -57,18 +57,12 @@
    </Label>
    <TextField fx:id="promedio" editable="false" layoutX="535.0" layoutY="394.0" prefHeight="26.0" prefWidth="110.0" />
 
-    <Button fx:id="btnRegistrar" layoutX="527.0" layoutY="445.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Registrar" />
-    <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="498.0" layoutY="445.0" pickOnBounds="true" preserveRatio="true">
+    <Button fx:id="btnRegistrar" layoutX="525.0" layoutY="456.0" mnemonicParsing="false" onAction="#modificarNotas" stylesheets="@../tabla.css" text="Registrar" />
+    <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="496.0" layoutY="456.0" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../icons/boton-editar.png" />
         </image>
     </ImageView>
-   <Button fx:id="btnModificar" layoutX="528.0" layoutY="491.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Modificar" />
-   <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="498.0" layoutY="494.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../icons/historia.png" />
-      </image>
-   </ImageView>
    <Label layoutX="448.0" layoutY="322.0" text="Nota Parcial: ">
       <font>
          <Font name="Britannic Bold" size="13.0" />
@@ -92,4 +86,10 @@
          <Font name="Arial Black" size="12.0" />
       </font>
    </Label>
+   <Button fx:id="btnImprimirBoleta" layoutX="476.0" layoutY="499.0" mnemonicParsing="false" onAction="#modificarNotas" prefHeight="25.0" prefWidth="185.0" stylesheets="@../tabla.css" text="Imprimir Boleta de Notas" />
+   <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="443.0" layoutY="498.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../icons/pdf.png" />
+      </image>
+   </ImageView>
 </AnchorPane>

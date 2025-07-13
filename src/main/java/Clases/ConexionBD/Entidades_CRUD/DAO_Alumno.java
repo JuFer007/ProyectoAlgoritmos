@@ -174,4 +174,45 @@ public class DAO_Alumno {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+
+    //Metodo para obtener datos del alumno
+    public String[] obtenerDatosAlumno(String codigoAlumno) {
+        String sql = "SELECT "
+                + "CONCAT(persona.primerNombre, ' ', persona.segundoNombre, ' ', persona.apellidoPaterno, ' ', persona.apellidoMaterno) AS Estudiante, "
+                + "alumno.codigoAlumno AS Código, "
+                + "grado.grado AS Grado, "
+                + "seccion.seccion AS Sección, "
+                + "añoEscolar.añoEscolar AS `Año Académico` "
+                + "FROM Alumno alumno "
+                + "JOIN Persona persona ON alumno.idPersona = persona.idPersona "
+                + "JOIN Matricula matricula ON alumno.idAlumno = matricula.idAlumno "
+                + "JOIN Grado grado ON matricula.idGrado = grado.idGrado "
+                + "JOIN Seccion seccion ON matricula.idSeccion = seccion.idSeccion "
+                + "JOIN AñoEscolar añoEscolar ON matricula.idAñoE = añoEscolar.idAñoE "
+                + "WHERE alumno.codigoAlumno = ?";
+
+        // Crear un array para almacenar los datos
+        String[] datosAlumno = new String[5];
+
+        try {
+            Connection con = ConexionMySQL.getInstancia().getConexion();
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, codigoAlumno);  // Se asume que este valor es proporcionado de manera correcta
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                datosAlumno[0] = rs.getString("Estudiante");
+                datosAlumno[1] = rs.getString("Código");
+                datosAlumno[2] = rs.getString("Grado");
+                datosAlumno[3] = rs.getString("Sección");
+                datosAlumno[4] = rs.getString("Año Académico");
+            } else {
+                datosAlumno = new String[]{"No encontrado", "", "", "", ""};
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return datosAlumno;
+    }
 }
