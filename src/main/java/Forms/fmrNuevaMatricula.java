@@ -1,16 +1,22 @@
 package Forms;
 
+import Clases.ClasesGestionEscolar.Matricula;
 import Clases.ClasesPersonas.Alumno;
 import Clases.ClasesPersonas.Apoderado;
+import Clases.ClasesPersonas.Trabajador;
 import Clases.ConexionBD.Entidades_CRUD.DAO_Alumno;
 import Clases.ConexionBD.Entidades_CRUD.DAO_Apoderado;
+import Clases.ConexionBD.Entidades_CRUD.DAO_Matricula;
+import Clases.ConexionBD.Entidades_CRUD.DAO_Trabajador;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 
 public class fmrNuevaMatricula {
@@ -20,6 +26,8 @@ public class fmrNuevaMatricula {
         soloLectura();
         deshabilitarCamposRenovacion();
         buscarAlumno();
+        buscarTrabajador();
+        realizarMatricula();
     }
 
     //Seccion alumno
@@ -69,7 +77,7 @@ public class fmrNuevaMatricula {
         apellidoPaternoAlumno.setEditable(false);
         apellidoPaternoAlumno.setMouseTransparent(true);
         apellidomaternoAlumno.setEditable(false);
-        apellidoPaternoAlumno.setMouseTransparent(true);
+        apellidomaternoAlumno.setMouseTransparent(true);
         dniAlumno.setEditable(false);
         dniAlumno.setMouseTransparent(true);
         generoAlumno.setEditable(false);
@@ -107,11 +115,15 @@ public class fmrNuevaMatricula {
         DAO_Apoderado daoApoderado = new DAO_Apoderado();
         if (codigo.isEmpty()){
             mostrarError("Debe ingresar el codigo de alumno");
+            codigoAlumno.setText("");
+            limpiarCampos();
+            return;
         }
 
         Alumno alumno = daoAlumno.buscarPorCodigo(codigo);
         if (alumno == null){
             mostrarError("No se encontro el alumno");
+            codigoAlumno.setText("");
             limpiarCampos();
             return;
         }
@@ -123,6 +135,7 @@ public class fmrNuevaMatricula {
         apellidoPaternoAlumno.setText(alumno.getApellidopaterno());
         apellidomaternoAlumno.setText(alumno.getApellidomaterno());
         dniAlumno.setText(alumno.getDnipersona());
+        fechaNacimientoAlumno.setValue(LocalDate.parse(alumno.getFechanacimiento().toString()));
         generoAlumno.setText(alumno.getGenero());
 
         //BuscarApoderado
@@ -144,6 +157,85 @@ public class fmrNuevaMatricula {
         });
     }
 
+    private void mostrarDatosTrabajador(){
+        String codigo = codigoResponsable.getText().trim();
+        DAO_Trabajador daoTrabajador = new DAO_Trabajador();
+
+        if (codigo.isEmpty()){
+            mostrarError("Debe ingresar el codigo de trabajador");
+            codigoResponsable.setText("");
+            return;
+        }
+
+        Trabajador trabajador = daoTrabajador.buscarPorCodigo(codigo);
+
+        if (trabajador == null){
+            mostrarError("No se encontro el trabajador valido");
+            codigoResponsable.setText("");
+            return;
+        }
+
+        nombresResponsable.setText(trabajador.getPrimernombre()+" "+trabajador.getSegundonombre());
+        apellidosResponsable.setText(trabajador.getApellidopaterno()+" "+trabajador.getApellidomaterno());
+
+    }
+
+    private void buscarTrabajador(){
+        codigoResponsable.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                mostrarDatosTrabajador();
+            }
+        });
+    }
+
+    private void realizarMatricula(){
+        BtnRealizarMatricula.addEventFilter(ActionEvent.ACTION, event -> {
+            if (codigoAlumno.getText().isEmpty()){
+                mostrarError("Debe ingresar el codigo de alumno");
+                return;
+            }
+            if (codigoResponsable.getText().isEmpty()) {
+                mostrarError("Debe ingresar el codigo de responsable");
+                return;
+            }
+
+            DAO_Matricula daoMatricula = new DAO_Matricula();
+            if (renovacionMatricula.isSelected()){
+                daoMatricula.renovar(codigoAlumno.getText(),String.valueOf(LocalDate.now().getYear()+1),codigoResponsable.getText(),"Pendiente");
+                renovacionMatricula.setSelected(false);
+                limpiarCampos();
+            }else {
+                if (comboGrados.getValue() == null) {
+                    mostrarError("Debe seleccionar el grado");
+                    return;
+                }
+                if (comboSeccion.getValue() == null) {
+                    mostrarError("Debe seleccionar la sección");
+                    return;
+                }
+                if (comboAños.getValue() == null) {
+                    mostrarError("Debe seleccionar el año escolar");
+                    return;
+                }
+                if (fechaMatricula.getValue() == null) {
+                    mostrarError("Debe seleccionar la fecha de matrícula");
+                    return;
+                }
+
+                Matricula matricula = new Matricula(
+                        comboGrados.getValue(),
+                        comboSeccion.getValue(),
+                        comboAños.getValue(),
+                        codigoAlumno.getText(),
+                        codigoResponsable.getText(),
+                        fechaMatricula.getValue(),
+                        "Pendiente"
+                );
+                daoMatricula.crear(matricula);
+                limpiarCampos();
+            }
+        });
+    }
 
     private void limpiarCampos() {
         codigoAlumno.clear();
@@ -159,7 +251,6 @@ public class fmrNuevaMatricula {
         comboGrados.getSelectionModel().clearSelection();
         comboSeccion.getSelectionModel().clearSelection();
         comboAños.getSelectionModel().clearSelection();
-        fechaMatricula.setValue(null);
         codigoResponsable.clear();
         nombresResponsable.setText("");
         apellidosResponsable.setText("");
@@ -171,5 +262,7 @@ public class fmrNuevaMatricula {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+
+
 
 }
