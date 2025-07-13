@@ -111,6 +111,63 @@ public class DAO_Trabajador {
         }
     }
 
+    //Metodo para Buscar trabajador por codigo
+    public Trabajador buscarPorCodigo(String codigoTrabajador) {
+        Trabajador trabajador = null;
+
+        String sql = """
+        SELECT
+            t.idTrabajador,
+            t.codigoTrabajador,
+            t.idpersona,
+            t.tipoTrabajo,
+            t.turnoAsignado,
+            t.cargo,
+            p.DNIpersona,
+            p.primerNombre,
+            p.segundoNombre,
+            p.apellidoPaterno,
+            p.apellidoMaterno,
+            p.fechaNacimiento,
+            p.genero
+        FROM Trabajador t
+        INNER JOIN Persona p ON t.idPersona = p.idPersona
+        WHERE t.codigoTrabajador = ? AND tipoTrabajo = "Administrativo"
+    """;
+
+        try (Connection conn = ConexionMySQL.getInstancia().getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, codigoTrabajador);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    trabajador = new Trabajador(
+                            rs.getString("DNIpersona"),
+                            rs.getString("primerNombre"),
+                            rs.getString("segundoNombre"),
+                            rs.getString("apellidoPaterno"),
+                            rs.getString("apellidoMaterno"),
+                            rs.getDate("fechaNacimiento"),
+                            rs.getString("genero"),
+                            rs.getString("tipoTrabajo"),
+                            rs.getString("turnoAsignado"),
+                            rs.getString("cargo")
+                    );
+
+                    trabajador.setIdTrabajador(rs.getInt("idTrabajador"));
+                    trabajador.setCodigoTrabajador(rs.getString("codigoTrabajador"));
+                    trabajador.setIdPersona(rs.getInt("idPersona"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return trabajador;
+    }
+
+
     //Metodo para mostrar mensaje
     private void mostrarMensaje(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

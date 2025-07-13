@@ -3,7 +3,6 @@ package Clases.ClasesGestionEscolar;
 import java.time.LocalDate;
 
 public class Matricula {
-    private int idMatricula;
     private String grado;
     private String seccion;
     private String añoE;
@@ -12,8 +11,7 @@ public class Matricula {
     private LocalDate fechaMatricula;
     private String estadoMatricula;
 
-    public Matricula(int idMatricula, String grado, String seccion, String añoE, String codigoAlumno, String trabajador, LocalDate fechaMatricula, String estadoMatricula) {
-        this.idMatricula = idMatricula;
+    public Matricula(String grado, String seccion, String añoE, String codigoAlumno, String trabajador, LocalDate fechaMatricula, String estadoMatricula) {
         this.grado = grado;
         this.seccion = seccion;
         this.añoE = añoE;
@@ -21,14 +19,6 @@ public class Matricula {
         this.trabajador = trabajador;
         this.fechaMatricula = fechaMatricula;
         this.estadoMatricula = estadoMatricula;
-    }
-
-    public int getIdMatricula() {
-        return idMatricula;
-    }
-
-    public void setIdMatricula(int idMatricula) {
-        this.idMatricula = idMatricula;
     }
 
     public String getGrado() {
@@ -90,7 +80,6 @@ public class Matricula {
     @Override
     public String toString() {
         return "Matricula{" +
-                "idMatricula=" + idMatricula +
                 ", grado='" + grado + '\'' +
                 ", seccion='" + seccion + '\'' +
                 ", añoE='" + añoE + '\'' +
