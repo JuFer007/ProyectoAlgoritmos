@@ -64,11 +64,19 @@ public class DAO_Nota {
     public ArrayList<Object[]> listarCursosDeAlumno(int idMatricula) {
         ArrayList<Object[]> notasYCursos = new ArrayList<>();
 
-        String consulta = "SELECT c.nombreCurso, n.nota, n.tipoNota "
-                + "FROM Nota n "
-                + "INNER JOIN Matricula m ON n.idMatricula = m.idMatricula "
-                + "INNER JOIN Curso c ON n.idCurso = c.idCurso "
-                + "WHERE m.idMatricula = ?";
+        String consulta = """
+                            SELECT
+                                c.nombreCurso,
+                                n.nota,
+                                n.tipoNota
+                            FROM DetalleMatricula d
+                            INNER JOIN Curso c ON d.idCurso = c.idCurso
+                            LEFT JOIN Nota n
+                                ON n.idMatricula = d.idMatricula
+                                AND n.idCurso = d.idCurso
+                            WHERE d.idMatricula = ?
+                            ORDER BY c.nombreCurso, n.tipoNota
+                        """;
 
         try (Connection cn = ConexionMySQL.getInstancia().getConexion();
              PreparedStatement ps = cn.prepareStatement(consulta)) {
@@ -88,18 +96,21 @@ public class DAO_Nota {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return notasYCursos;
     }
+
 
     //Metodo para listar cursos de un alumno
     public ArrayList<String> listarCursos(int numMatricula) {
         ArrayList<String> cursos = new ArrayList<>();
 
-        String consulta = "SELECT distinct c.nombreCurso\n" +
-                "FROM Nota n\n" +
-                "INNER JOIN Matricula m ON n.idMatricula = m.idMatricula\n" +
-                "INNER JOIN Curso c ON n.idCurso = c.idCurso\n" +
-                "WHERE m.idMatricula = ?; ";
+        String consulta = """
+                            SELECT c.nombreCurso
+                            FROM DetalleMatricula d
+                            INNER JOIN Curso c ON d.idCurso = c.idCurso
+                            WHERE d.idMatricula = ?
+                        """;
 
         try (Connection cn = ConexionMySQL.getInstancia().getConexion();
              PreparedStatement ps = cn.prepareStatement(consulta)) {
@@ -108,25 +119,31 @@ public class DAO_Nota {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    String nombreCurso = rs.getString("nombreCurso");
-                    cursos.add(nombreCurso);
+                    cursos.add(rs.getString("nombreCurso"));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return cursos;
     }
+
 
     //Metodo para listar notas de un solo curso y matricula
     public ArrayList<Object[]> listarNotasDeUnSoloCurso(int idMatricula, String nombreCurso) {
         ArrayList<Object[]> notasCursos = new ArrayList<>();
 
-        String consulta = "SELECT c.nombreCurso, n.nota, n.tipoNota " +
-                "FROM Nota n " +
-                "INNER JOIN Matricula m ON n.idMatricula = m.idMatricula " +
-                "INNER JOIN Curso c ON n.idCurso = c.idCurso " +
-                "WHERE m.idMatricula = ? AND c.nombreCurso = ?";
+        String consulta = """
+                                SELECT 
+                                    c.nombreCurso, 
+                                    n.nota, 
+                                    n.tipoNota 
+                                FROM Nota n
+                                INNER JOIN Matricula m ON n.idMatricula = m.idMatricula
+                                INNER JOIN Curso c ON n.idCurso = c.idCurso
+                                WHERE m.idMatricula = ? AND c.nombreCurso = ?
+                          """;
 
         try (Connection cn = ConexionMySQL.getInstancia().getConexion();
              PreparedStatement ps = cn.prepareStatement(consulta)) {
@@ -149,8 +166,8 @@ public class DAO_Nota {
         return notasCursos;
     }
 
+
     //Metodo para listar alumnos segun su grado y sección
-//Metodo para listar alumnos segun su grado y sección
     public ArrayList<Object[]> alumnosPorGradoYSeccion(String grado, String seccion) {
         ArrayList<Object[]> alumnos = new ArrayList<>();
         alumnos.clear();

@@ -152,7 +152,16 @@
                         </ImageView>
                      </graphic>
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#formularioPagos" text="Cobranza de Pensiones">
+                        <MenuItem mnemonicParsing="false" onAction="#formularioCuotas" text="Gestion de Cuotas">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0">
+                                 <image>
+                                    <Image url="@../../icons/retirement_11080400.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#formularioPagos" text="Gestion de Pagos">
                            <graphic>
                               <ImageView fitHeight="16" fitWidth="16">
                                  <image>

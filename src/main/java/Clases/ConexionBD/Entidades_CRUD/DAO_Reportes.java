@@ -113,12 +113,11 @@ public class DAO_Reportes {
     }
 
     //Metodo para obtener los pagos segun el mes
-    public void listarPagos(Integer mes) {
+    public void listarCuotas(Integer mes) {
         listapagos = new ArrayList<>();
         String sql = "{CALL sp_ListarCuotasPorMes(?)}";
 
-        try {
-            CallableStatement cs = ConexionMySQL.getInstancia().getConexion().prepareCall(sql);
+        try (CallableStatement cs = ConexionMySQL.getInstancia().getConexion().prepareCall(sql)) {
 
             if (mes == null) {
                 cs.setNull(1, Types.INTEGER);
@@ -126,31 +125,29 @@ public class DAO_Reportes {
                 cs.setInt(1, mes);
             }
 
-            ResultSet resultado = cs.executeQuery();
-
-            while (resultado.next()) {
-                Object[] fila = new Object[]{
-                        resultado.getInt("idPago"),
-                        resultado.getString("codigoAlumno"),
-                        resultado.getString("primerNombre"),
-                        resultado.getString("segundoNombre"),
-                        resultado.getString("apellidoPaterno"),
-                        resultado.getString("apellidoMaterno"),
-                        resultado.getDate("fechaPago"),
-                        resultado.getString("estadoPago"),
-                        resultado.getDouble("montoPago"),
-                        resultado.getString("metodoPago")
-                };
-                listapagos.add(fila);
+            try (ResultSet resultado = cs.executeQuery()) {
+                while (resultado.next()) {
+                    Object[] fila = new Object[]{
+                            resultado.getInt("idCuota"),
+                            resultado.getString("codigoAlumno"),
+                            resultado.getString("primerNombre"),
+                            resultado.getString("segundoNombre"),
+                            resultado.getString("apellidoPaterno"),
+                            resultado.getString("apellidoMaterno"),
+                            resultado.getDate("fechaVencimiento"),
+                            resultado.getString("estadoCuota"),
+                            resultado.getDouble("montoCuota"),
+                            resultado.getString("concepto")
+                    };
+                    listapagos.add(fila);
+                }
             }
-
-            resultado.close();
-            cs.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
     public ArrayList<Object[]> getListapagos() {
         return listapagos;

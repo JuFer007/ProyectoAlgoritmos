@@ -12,7 +12,6 @@
             <TableColumn fx:id="columNombreP" prefWidth="87.20001983642578" text="Nombre" />
             <TableColumn fx:id="columApellidoP" prefWidth="127.20001220703125" text="Apellido" />
             <TableColumn fx:id="columFechaP" prefWidth="106.0" text="Fecha" />
-            <TableColumn fx:id="columEstado" prefWidth="101.99996948242188" text="Estado" />
             <TableColumn fx:id="columMonto" prefWidth="80.4000244140625" text="Monto" />
             <TableColumn fx:id="columMetodo" prefWidth="89.6" text="Método" />
         </columns>
@@ -20,27 +19,22 @@
             <String fx:value="column-header-background" />
             <String fx:value="table-view" />
         </styleClass>
+      <columnResizePolicy>
+         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+      </columnResizePolicy>
     </TableView>
-    <Button fx:id="btnRegistrarPago" layoutX="124.0" layoutY="510.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="125.0" stylesheets="@../tabla.css" text="Registrar Pago" onAction="#registrarPago"/>
-    <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="93.0" layoutY="513.0" pickOnBounds="true" preserveRatio="true">
-        <image>
-            <Image url="@../../icons/caja-registradora.png" />
-        </image>
-    </ImageView>
-    <ComboBox fx:id="comboGradoB" layoutX="151.0" layoutY="14.0" prefHeight="26.0" prefWidth="100.0" />
-    <Label layoutX="107.0" layoutY="19.0" text="Grado:" />
-    <ComboBox fx:id="comboSeccionB" layoutX="315.0" layoutY="14.0" prefHeight="26.0" prefWidth="88.0" />
-    <Label layoutX="262.0" layoutY="19.0" text="Sección:" />
-   <ComboBox fx:id="comboEstado" layoutX="458.0" layoutY="14.0" prefHeight="26.0" prefWidth="144.0" />
-   <Label layoutX="413.0" layoutY="19.0" text="Estado:" />
-   <Button fx:id="btnImprimirComprobante" layoutX="301.0" layoutY="510.0" onAction="#imprimiComprobante" mnemonicParsing="false" prefHeight="30.0" prefWidth="182.0" stylesheets="@../tabla.css" text="Imprimir Comprobante" />
-   <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="270.0" layoutY="513.0" pickOnBounds="true" preserveRatio="true">
+    <ComboBox fx:id="comboGradoB" layoutX="250.0" layoutY="14.0" prefHeight="26.0" prefWidth="100.0" />
+    <Label layoutX="206.0" layoutY="19.0" text="Grado:" />
+    <ComboBox fx:id="comboSeccionB" layoutX="414.0" layoutY="14.0" prefHeight="26.0" prefWidth="88.0" />
+    <Label layoutX="361.0" layoutY="19.0" text="Sección:" />
+   <Button fx:id="btnImprimirComprobante" layoutX="198.0" layoutY="508.0" mnemonicParsing="false" onAction="#imprimiComprobante" prefHeight="30.0" prefWidth="182.0" stylesheets="@../tabla.css" text="Imprimir Comprobante" />
+   <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="167.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../../icons/cheque.png" />
       </image>
    </ImageView>
-   <Button fx:id="btnAnularPago" layoutX="528.0" layoutY="510.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="107.0" stylesheets="@../tabla.css" text="Anular Pago" onAction="#eliminarPago" />
-   <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="498.0" layoutY="513.0" pickOnBounds="true" preserveRatio="true">
+   <Button fx:id="btnAnularPago" layoutX="425.0" layoutY="508.0" mnemonicParsing="false" onAction="#eliminarPago" prefHeight="30.0" prefWidth="107.0" stylesheets="@../tabla.css" text="Anular Pago" />
+   <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="395.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../../icons/eliminar.png" />
       </image>

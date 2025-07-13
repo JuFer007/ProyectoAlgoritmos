@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="572.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrCuotas">
+   <children>
+      <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="19.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../icons/simbolo-de-interfaz-de-lupa-de-busqueda.png" />
+         </image>
+      </ImageView>
+      <ComboBox fx:id="comboGrado" layoutX="336.0" layoutY="19.0" prefHeight="26.0" prefWidth="104.0" />
+      <ComboBox fx:id="comboSeccion" layoutX="496.0" layoutY="19.0" prefHeight="26.0" prefWidth="46.0" />
+      <ComboBox fx:id="comboEstado" layoutX="602.0" layoutY="19.0" prefHeight="26.0" prefWidth="92.0" />
+      <Label layoutX="297.0" layoutY="24.0" text="Grado: " />
+      <Label layoutX="450.0" layoutY="24.0" text="Seccion: " />
+      <Label layoutX="560.0" layoutY="24.0" text="Estado:" />
+      <TableView fx:id="tablaCuotas" layoutX="13.0" layoutY="65.0" prefHeight="267.0" prefWidth="680.0">
+        <columns>
+          <TableColumn fx:id="columCodigo" prefWidth="75.0" text="Codigo" />
+          <TableColumn fx:id="columNombre" prefWidth="75.0" text="Nombre" />
+            <TableColumn fx:id="columApellido" prefWidth="75.0" text="Apellido" />
+            <TableColumn fx:id="columMonto" prefWidth="75.0" text="Monto" />
+            <TableColumn fx:id="columConcepto" text="Concepto" />
+            <TableColumn fx:id="columFechaVencimiento" prefWidth="105.5999755859375" text="Fecha Vencimiento" />
+            <TableColumn fx:id="columEstado" prefWidth="75.0" text="Estado" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <AnchorPane layoutX="14.0" layoutY="350.0" prefHeight="200.0" prefWidth="680.0" styleClass="anchor-pane" stylesheets="@../style.css">
+         <children>
+            <Button fx:id="btnRegistrarPago" layoutX="477.0" layoutY="128.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" stylesheets="@../tabla.css" text="Registrar Pago" />
+            <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="444.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/caja-registradora.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="57.0" layoutY="28.0" text="Codigo Alumno" />
+            <TextField fx:id="codigoAlumno" layoutX="157.0" layoutY="25.0" prefHeight="26.0" prefWidth="150.0" />
+            <DatePicker fx:id="fechaPago" layoutX="157.0" layoutY="80.0" prefHeight="26.0" prefWidth="150.0" />
+            <TextField fx:id="montoCuota" layoutX="157.0" layoutY="130.0" prefHeight="26.0" prefWidth="150.0" />
+            <TextField fx:id="conceptoCuota" layoutX="472.0" layoutY="81.0" prefHeight="26.0" prefWidth="150.0" />
+            <Label layoutX="83.0" layoutY="84.0" text="Fecha" />
+            <Label layoutX="81.0" layoutY="134.0" text="Monto" />
+            <Label layoutX="406.0" layoutY="30.0" text="Metodo" />
+            <Label layoutX="401.0" layoutY="85.0" text="Concepto" />
+            <ComboBox fx:id="comboMetodo" layoutX="472.0" layoutY="25.0" prefHeight="26.0" prefWidth="150.0" />
+         </children>
+      </AnchorPane>
+      <TextField fx:id="barrabusqueda" layoutX="52.0" layoutY="19.0" prefHeight="26.0" prefWidth="237.0" />
+   </children>
+</AnchorPane>

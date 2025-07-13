@@ -1,134 +1,95 @@
 package Clases.ConexionBD.Entidades_CRUD;
 import Clases.ConexionBD.ConexionMySQL;
-import javafx.scene.control.Alert;
+
 import java.sql.*;
 import java.util.ArrayList;
 
 public class DAO_Cuota {
-    ArrayList<Object[]> listaPagos;
+    ArrayList<Object[]> listaCuotas;
 
-    public void registrarPago(int idPago) {
-        String mensaje = "";
-        String sql = "{CALL sp_Pago_Actualizar(?, ?)}";
-
-        try {
-            CallableStatement consulta = ConexionMySQL.getInstancia().getConexion().prepareCall(sql);
-
-            consulta.setInt(1, idPago);
-            consulta.registerOutParameter(2, java.sql.Types.VARCHAR);
-            consulta.execute();
-            mensaje = consulta.getString(2);
-            consulta.close();
-
-            mostrarMensaje(mensaje);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public ArrayList<Object[]> getListaCuotas() {
+        return listaCuotas;
     }
 
-    private void mostrarMensaje(String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Mensaje del sistema");
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
-    }
+    public void listarCuotasConAlumno() {
+        listaCuotas = new ArrayList<>();
 
-    public void eliminarPago(int idPago) {
-        String mensaje = "";
-        String sql = "{CALL sp_Pago_Eliminar(?, ?)}";
+        String sql = """
+                        SELECT 
+                            c.idCuota,
+                            a.codigoAlumno,
+                            p.primerNombre,
+                            p.segundoNombre,
+                            p.apellidoPaterno,
+                            p.apellidoMaterno,
+                            c.concepto,
+                            c.montoCuota,
+                            c.fechaVencimiento,
+                            c.estadoCuota
+                        FROM Cuota c
+                        INNER JOIN Matricula m ON c.idMatricula = m.idMatricula
+                        INNER JOIN Alumno a ON m.idAlumno = a.idAlumno
+                        INNER JOIN Persona p ON a.idPersona = p.idPersona
+                        ORDER BY a.codigoAlumno
+                    """;
 
-        try {
-            CallableStatement cs = ConexionMySQL.getInstancia().getConexion().prepareCall(sql);
+        try (PreparedStatement ps = ConexionMySQL.getInstancia().getConexion().prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
-            cs.setInt(1, idPago);
-            cs.registerOutParameter(2, java.sql.Types.VARCHAR);
-
-            cs.execute();
-
-            mensaje = cs.getString(2);
-            cs.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        mostrarMensaje(mensaje);
-    }
-
-    //Metodo para listar todos los pagos
-    public void Listar() {
-        listaPagos = new ArrayList<>();
-        listaPagos.clear();
-
-        String consulta = "select pago.idPago, alumno.codigoAlumno, persona.primerNombre, persona.segundoNombre, persona.apellidoPaterno, persona.apellidoMaterno,\n" +
-                "pago.fechaPago, cuota.estadoCuota, pago.montoPago, pago.metodoPago \n" +
-                "from persona inner join alumno on persona.idPersona = alumno.idAlumno inner join matricula on alumno.idAlumno = matricula.idAlumno\n" +
-                "inner join cuota on cuota.idMatricula = matricula.idMatricula inner join pago on cuota.idPago = pago.idPago\n" +
-                "order by pago.idPago";
-        try {
-            PreparedStatement comando = ConexionMySQL.getInstancia().getConexion().prepareStatement(consulta);
-            ResultSet resultado = comando.executeQuery();
-
-            while (resultado.next()) {
+            while (rs.next()) {
                 Object[] fila = new Object[]{
-                        resultado.getInt("idPago"),
-                        resultado.getString("codigoAlumno"),
-                        resultado.getString("primerNombre"),
-                        resultado.getString("segundoNombre"),
-                        resultado.getString("apellidoPaterno"),
-                        resultado.getString("apellidoMaterno"),
-                        resultado.getDate("fechaPago"),
-                        resultado.getString("estadoCuota"),
-                        resultado.getDouble("montoPago"),
-                        resultado.getString("metodoPago")
+                        rs.getInt("idCuota"),
+                        rs.getString("codigoAlumno"),
+                        rs.getString("primerNombre") + " " + rs.getString("segundoNombre"),
+                        rs.getString("apellidoPaterno") + " " + rs.getString("apellidoMaterno"),
+                        rs.getString("concepto"),
+                        rs.getBigDecimal("montoCuota"),
+                        rs.getDate("fechaVencimiento"),
+                        rs.getString("estadoCuota")
                 };
-
-                listaPagos.add(fila);
+                listaCuotas.add(fila);
             }
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+
     }
 
-    public ArrayList<Object[]> getListaPagos() {
-        return listaPagos;
-    }
+    //Busqueda de Cuotas filtradas
+    public void listarCuotasFiltradas(String grado, String seccion, String estado) {
+        listaCuotas = new ArrayList<>();
 
-    public void listarPagosFiltrados(String grado, String seccion, String estado) {
-        listaPagos = new ArrayList<>();
         String sql = "{CALL sp_ListarCuotasPorGradoSeccionEstado(?, ?, ?)}";
 
-        try {
-            CallableStatement cs = ConexionMySQL.getInstancia().getConexion().prepareCall(sql);
+        try (CallableStatement cs = ConexionMySQL.getInstancia().getConexion().prepareCall(sql)) {
 
+            // Asignar parámetros
             cs.setString(1, (grado == null || grado.trim().isEmpty()) ? null : grado);
             cs.setString(2, (seccion == null || seccion.trim().isEmpty()) ? null : seccion);
             cs.setString(3, (estado == null || estado.trim().isEmpty()) ? null : estado);
 
-            ResultSet resultado = cs.executeQuery();
-
-            while (resultado.next()) {
-                Object[] fila = new Object[]{
-                        resultado.getInt("idPago"),
-                        resultado.getString("codigoAlumno"),
-                        resultado.getString("primerNombre"),
-                        resultado.getString("segundoNombre"),
-                        resultado.getString("apellidoPaterno"),
-                        resultado.getString("apellidoMaterno"),
-                        resultado.getDate("fechaPago"),
-                        resultado.getString("estadoCuota"),
-                        resultado.getDouble("montoPago"),
-                        resultado.getString("metodoPago")
-                };
-                listaPagos.add(fila);
+            // Ejecutar
+            try (ResultSet rs = cs.executeQuery()) {
+                while (rs.next()) {
+                    Object[] fila = new Object[]{
+                            rs.getInt("idCuota"),
+                            rs.getString("codigoAlumno"),
+                            rs.getString("primerNombre") + " " + rs.getString("segundoNombre"),
+                            rs.getString("apellidoPaterno") + " " + rs.getString("apellidoMaterno"),
+                            rs.getString("concepto"),
+                            rs.getBigDecimal("montoCuota"),
+                            rs.getDate("fechaVencimiento"),
+                            rs.getString("estadoCuota")
+                    };
+                    listaCuotas.add(fila);
+                }
             }
-
-            resultado.close();
-            cs.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
+
+
 }

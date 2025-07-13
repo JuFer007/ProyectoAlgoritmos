@@ -2,6 +2,8 @@ package Forms;
 import Clases.ConexionBD.Entidades_CRUD.DAO_Reportes;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -37,11 +39,12 @@ public class fmrReportePensiones {
 
     //Metodo para cargar los pagos segun el mes y año
     public void cargarPagos() {
-        dao.listarPagos(mesActual);
+        dao.listarCuotas(mesActual);
         ArrayList<Object[]> lista = dao.getListapagos();
+        ObservableList<Object[]> obs = FXCollections.observableArrayList(lista);
 
         tablaPagos.getItems().clear();
-        tablaPagos.getItems().addAll(lista);
+        tablaPagos.getItems().addAll(obs);
     }
 
     //Metodo para configurar la tabla y columnas
@@ -71,7 +74,7 @@ public class fmrReportePensiones {
 
     //Metodo para retrocedes
     public void retrocederMes() {
-        if (mesActual > 1) {
+        if (mesActual > 0) {
             mesActual--;
             cargarPagos();
         }

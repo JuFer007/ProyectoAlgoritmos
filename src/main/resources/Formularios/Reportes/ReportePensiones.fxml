@@ -26,18 +26,14 @@
          <TableColumn fx:id="columEstado" prefWidth="98.4000244140625" text="Estado" />
      </columns>
    </TableView>
-   <Button fx:id="btnAvanzar" layoutX="643.0" layoutY="520.0" mnemonicParsing="false" onAction="#avanzarMes" prefHeight="26.0" prefWidth="43.0" stylesheets="@../tabla.css" />
-   <ImageView fitHeight="18.0" fitWidth="28.0" layoutX="651.0" layoutY="526.0">
-      <image>
-         <Image url="@../../icons/proximo.png" />
-      </image>
-   </ImageView>
-   <Button fx:id="btnRetroceder" layoutX="591.0" layoutY="520.0" mnemonicParsing="false" onAction="#retrocederMes" prefHeight="26.0" prefWidth="43.0" stylesheets="@../tabla.css" />
-   <ImageView fitHeight="18.0" fitWidth="28.0" layoutX="599.0" layoutY="526.0">
-      <image>
-         <Image url="@../../icons/anterior.png" />
-      </image>
-   </ImageView>
+   <Button fx:id="btnAvanzar" layoutX="643.0" layoutY="520.0" mnemonicParsing="false" onAction="#avanzarMes" prefHeight="26.0" prefWidth="43.0" stylesheets="@../tabla.css" text="&gt;">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font></Button>
+   <Button fx:id="btnRetroceder" layoutX="591.0" layoutY="520.0" mnemonicParsing="false" onAction="#retrocederMes" prefHeight="26.0" prefWidth="43.0" stylesheets="@../tabla.css" text="&lt;">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font></Button>
 
     <Button fx:id="btnExportarExcel" layoutX="60.0" layoutY="520.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Exportar a EXCEL" />
     <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="31.0" layoutY="520.0" pickOnBounds="true" preserveRatio="true">
