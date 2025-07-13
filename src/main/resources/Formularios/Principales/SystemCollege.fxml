@@ -110,7 +110,7 @@
                         </ImageView>
                      </graphic>
                      <items>
-                        <MenuItem fx:id="menuRenovarMatricularAlumno" mnemonicParsing="false" onAction="#formularioMatricula" text="Renovar Matricula">
+                        <MenuItem fx:id="menuRenovarMatricularAlumno" mnemonicParsing="false" onAction="#formularioMatricula" text="Matricula">
                            <graphic>
                               <ImageView fitHeight="16" fitWidth="16">
                                  <image>
