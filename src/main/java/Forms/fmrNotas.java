@@ -162,10 +162,13 @@ public class fmrNotas {
 
     //Metodo para configurar los comboBox de grado y seccion
     private void configurarComboGradoYSeccion() {
-        ObservableList<String> grados = FXCollections.observableArrayList("Primer", "Segundo", "Tercer", "Cuarto", "Quinto");
-        ObservableList<String> secciones = FXCollections.observableArrayList("A", "B", "C");
+        ObservableList<String> grados = FXCollections.observableArrayList("Todos","Primer", "Segundo", "Tercer", "Cuarto", "Quinto");
+        ObservableList<String> secciones = FXCollections.observableArrayList("Todos","A", "B", "C");
         comboBoxGrado.setItems(grados);
         comboBoxSeccion.setItems(secciones);
+
+        comboBoxGrado.getSelectionModel().select(0);
+        comboBoxSeccion.getSelectionModel().select(0);
     }
 
     //Metodo para aplicar filtros de busqueda y los comboBox
@@ -179,9 +182,9 @@ public class fmrNotas {
         ObservableList<Object[]> resultados = FXCollections.observableArrayList();
         ArrayList<Object[]> lista;
 
-        if (grado != null && seccion != null) {
+        if (grado != "Todos" && seccion != "Todos") {
             lista = dao.alumnosPorGradoYSeccion(grado, seccion);
-        } else if (grado != null) {
+        } else if (grado != "Todos") {
             lista = dao.alumnosPorGrado(grado);
         } else {
             dao.listarAlumnos();

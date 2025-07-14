@@ -135,6 +135,9 @@ public class fmrAlumno {
         ObservableList<String> secciones = FXCollections.observableArrayList("Todos", "A", "B", "C");
         comboGradoB.setItems(grados);
         comboSeccionB.setItems(secciones);
+
+        comboGradoB.getSelectionModel().select(0);
+        comboSeccionB.getSelectionModel().select(0);
     }
 
     //Validar fecha de nacimiento

@@ -75,18 +75,18 @@
    </Label>
    <ComboBox fx:id="comboBoxCursos" layoutX="216.0" layoutY="216.0" prefWidth="150.0" />
    <ComboBox fx:id="comboBoxGrado" layoutX="417.0" layoutY="16.0" prefHeight="26.0" prefWidth="110.0" />
-   <ComboBox fx:id="comboBoxSeccion" layoutX="617.0" layoutY="16.0" prefHeight="26.0" prefWidth="70.0" />
+   <ComboBox fx:id="comboBoxSeccion" layoutX="599.0" layoutY="16.0" prefHeight="26.0" prefWidth="88.0" />
    <Label layoutX="366.0" layoutY="20.0" text="Grado:">
       <font>
-         <Font name="Arial Black" size="12.0" />
+         <Font name="Arial" size="12.0" />
       </font>
    </Label>
-   <Label layoutX="554.0" layoutY="20.0" text="Sección:">
+   <Label layoutX="545.0" layoutY="19.0" text="Sección:">
       <font>
-         <Font name="Arial Black" size="12.0" />
+         <Font name="Arial" size="12.0" />
       </font>
    </Label>
-   <Button fx:id="btnImprimirBoleta" layoutX="476.0" layoutY="499.0" mnemonicParsing="false" onAction="#generarLibretaDeNotas"  prefHeight="25.0" prefWidth="185.0" stylesheets="@../tabla.css" text="Imprimir Boleta de Notas" />
+   <Button fx:id="btnImprimirBoleta" layoutX="476.0" layoutY="499.0" mnemonicParsing="false" onAction="#generarLibretaDeNotas" prefHeight="25.0" prefWidth="185.0" stylesheets="@../tabla.css" text="Imprimir Boleta de Notas" />
    <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="443.0" layoutY="498.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../../icons/pdf.png" />

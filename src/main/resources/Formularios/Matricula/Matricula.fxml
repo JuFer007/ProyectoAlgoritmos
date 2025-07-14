@@ -41,16 +41,10 @@
             <Label layoutX="14.0" layoutY="475.0" prefHeight="18.0" prefWidth="118.0" text="Apellidos" />
          </children>
       </AnchorPane>
-      <Button fx:id="BtnRealizarMatricula" layoutX="478.0" layoutY="459.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Realizar Matricula" />
-      <Button fx:id="btnResumenMatricula" layoutX="478.0" layoutY="507.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Resumen de Matricula" />
-      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="442.0" layoutY="459.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="BtnRealizarMatricula" layoutX="491.0" layoutY="483.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Realizar Matricula" />
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="455.0" layoutY="483.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../icons/tesis.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="442.0" layoutY="507.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../icons/pdf.png" />
          </image>
       </ImageView>
       <AnchorPane layoutX="395.0" layoutY="14.0" prefHeight="401.0" prefWidth="298.0" styleClass="anchor-pane" stylesheets="@../style.css">

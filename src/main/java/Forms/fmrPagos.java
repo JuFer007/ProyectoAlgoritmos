@@ -75,8 +75,8 @@ public class fmrPagos {
         comboGradoB.setItems(grados);
         comboSeccionB.setItems(secciones);
 
-        comboGradoB.getSelectionModel().clearSelection();
-        comboSeccionB.getSelectionModel().clearSelection();
+        comboGradoB.getSelectionModel().select(0);
+        comboSeccionB.getSelectionModel().select(0);
     }
 
     //Metodo para filtrar los pagos
