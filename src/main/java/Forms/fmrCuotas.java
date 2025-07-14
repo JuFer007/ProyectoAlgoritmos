@@ -204,7 +204,6 @@ public class fmrCuotas {
         montoCuota.setMouseTransparent(true);
         conceptoCuota.setEditable(false);
         conceptoCuota.setMouseTransparent(true);
-
     }
 
     public void limpiar(){

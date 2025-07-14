@@ -35,7 +35,7 @@
          <Font name="System Bold" size="12.0" />
       </font></Button>
 
-    <Button fx:id="btnExportarExcel" layoutX="60.0" layoutY="520.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Exportar a EXCEL" />
+    <Button fx:id="btnExportarExcel" layoutX="60.0" layoutY="520.0" mnemonicParsing="false" stylesheets="@../tabla.css" text="Exportar a EXCEL" onAction="#exportarEXCEL"/>
     <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="31.0" layoutY="520.0" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../icons/xlsx.png" />
