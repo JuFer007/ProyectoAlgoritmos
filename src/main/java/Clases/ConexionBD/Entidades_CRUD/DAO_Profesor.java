@@ -44,33 +44,39 @@ public class DAO_Profesor {
     }
 
     //Metodo para actualizar profesores
-    public void Actualizar(Profesor profesor) {
-        String mensaje = "";
-        String consulta = "{CALL sp_Profesor_Update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+    public void Actualizar(String primerNombre, String segundoNombre, String apellidoPaterno,
+                           String apellidoMaterno, String genero, String especialidad,
+                           String gradoAcademico, int horasSemanales, String correoElectronico,
+                           String telefono, String dniPersona) {
+        String sql = "UPDATE Persona p "
+                + "LEFT JOIN Profesor pro ON p.idPersona = pro.idPersona "
+                + "SET "
+                + "p.primerNombre = ?, "
+                + "p.segundoNombre = ?, "
+                + "p.apellidoPaterno = ?, "
+                + "p.apellidoMaterno = ?, "
+                + "p.genero = ?, "
+                + "pro.especialidad = ?, "
+                + "pro.gradoAcademico = ?, "
+                + "pro.horasSemanales = ?, "
+                + "pro.correoElectronico = ?, "
+                + "pro.telefono = ? "
+                + "WHERE p.DNIpersona = ?";
 
-        try {
-            CallableStatement statement = ConexionMySQL.getInstancia().getConexion().prepareCall(consulta);
-            statement.setString(1, profesor.getDnipersona());
-            statement.setString(2, profesor.getPrimernombre());
-            statement.setString(3, profesor.getSegundonombre());
-            statement.setString(4, profesor.getApellidopaterno());
-            statement.setString(5, profesor.getApellidomaterno());
-            statement.setDate(6, (Date) profesor.getFechanacimiento());
-            statement.setString(7, profesor.getGenero());
-            statement.setString(8, profesor.getEspecialidad());
-            statement.setString(9, profesor.getGradoAcademico());
-            statement.setInt(10, profesor.getHorasSemanales());
-            statement.setString(11, profesor.getCorreoElectronico());
-            statement.setString(12, profesor.getTelefono());
+        try (Connection con = ConexionMySQL.getInstancia().getConexion();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
 
-            statement.registerOutParameter(13, Types.VARCHAR);
-            statement.executeUpdate();
-
-            mensaje = statement.getString(13);
-            statement.close();
-
-            mostrarMensaje(mensaje);
-
+            stmt.setString(1, primerNombre);
+            stmt.setString(2, segundoNombre);
+            stmt.setString(3, apellidoPaterno);
+            stmt.setString(4, apellidoMaterno);
+            stmt.setString(5, genero);
+            stmt.setString(6, especialidad);
+            stmt.setString(7, gradoAcademico);
+            stmt.setInt(8, horasSemanales);
+            stmt.setString(9, correoElectronico);
+            stmt.setString(10, telefono);
+            stmt.setString(11, dniPersona);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -147,5 +153,44 @@ public class DAO_Profesor {
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+
+    //Metodo para listar datos de un profesor
+    public String[] obtenerDatosProfesor(String DNI) {
+        String sql = "SELECT p.DNIpersona, p.primerNombre, p.segundoNombre, p.apellidoPaterno, p.apellidoMaterno, p.fechaNacimiento, p.genero,\n" +
+                "pro.especialidad, pro.gradoAcademico, pro.horasSemanales, pro.correoElectronico, pro.Telefono \n" +
+                "FROM Persona p \n" +
+                "inner JOIN Profesor as pro ON p.idPersona = pro.idPersona \n" +
+                "WHERE p.DNIpersona = ?";
+
+        String[] datosProfesor = new String[12];
+
+        try (Connection con = ConexionMySQL.getInstancia().getConexion();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setString(1, DNI);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    datosProfesor[0] = rs.getString("DNIpersona");
+                    datosProfesor[1] = rs.getString("primerNombre");
+                    datosProfesor[2] = rs.getString("segundoNombre");
+                    datosProfesor[3] = rs.getString("apellidoPaterno");
+                    datosProfesor[4] = rs.getString("apellidoMaterno");
+                    datosProfesor[5] = rs.getString("fechaNacimiento");
+                    datosProfesor[6] = rs.getString("genero");
+                    datosProfesor[7] = rs.getString("especialidad");
+                    datosProfesor[8] = rs.getString("gradoAcademico");
+                    datosProfesor[9] = rs.getString("horasSemanales");
+                    datosProfesor[10] = rs.getString("correoElectronico");
+                    datosProfesor[11] = rs.getString("Telefono");
+                } else {
+                    datosProfesor = new String[]{"No encontrado", "", "", "", "", "", "", "", "", "", ""};
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return datosProfesor;
     }
 }

@@ -6,12 +6,12 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="572.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrReportePensiones">
-    <Label layoutX="215.0" layoutY="32.0" prefHeight="24.0" prefWidth="285.0" text="Reporte de los pagos según el mes" textAlignment="CENTER">
+    <Label layoutX="211.0" layoutY="31.0" prefHeight="24.0" prefWidth="285.0" text="Reporte de cuotas según el mes" textAlignment="CENTER">
         <font>
             <Font name="Tw Cen MT Condensed Extra Bold" size="21.0" />
         </font>
     </Label>
-   <Label layoutX="28.0" layoutY="71.0" text="Tabla de Pagos:">
+   <Label layoutX="28.0" layoutY="71.0" text="Tabla de Cuotas:">
       <font>
          <Font name="Cambria Bold" size="14.0" />
       </font>
@@ -22,15 +22,15 @@
        <TableColumn fx:id="columAlumno" prefWidth="211.39998626708984" text="Alumno" />
          <TableColumn fx:id="columFecha" prefWidth="81.4000244140625" text="Fecha" />
          <TableColumn fx:id="columMonto" prefWidth="83.39996337890625" text="Monto" />
-         <TableColumn fx:id="columMetodo" prefWidth="112.39999389648438" text="Método" />
+         <TableColumn fx:id="columMetodo" prefWidth="112.39999389648438" text="Concepto" />
          <TableColumn fx:id="columEstado" prefWidth="98.4000244140625" text="Estado" />
      </columns>
    </TableView>
-   <Button fx:id="btnAvanzar" layoutX="643.0" layoutY="520.0" mnemonicParsing="false" onAction="#avanzarMes" prefHeight="26.0" prefWidth="43.0" stylesheets="@../tabla.css" text="&gt;">
+   <Button fx:id="btnAvanzar" layoutX="643.0" layoutY="520.0" mnemonicParsing="false" onAction="#avanzarMes" prefHeight="26.0" prefWidth="43.0" stylesheets="@../tabla.css">
       <font>
          <Font name="System Bold" size="12.0" />
       </font></Button>
-   <Button fx:id="btnRetroceder" layoutX="591.0" layoutY="520.0" mnemonicParsing="false" onAction="#retrocederMes" prefHeight="26.0" prefWidth="43.0" stylesheets="@../tabla.css" text="&lt;">
+   <Button fx:id="btnRetroceder" layoutX="591.0" layoutY="520.0" mnemonicParsing="false" onAction="#retrocederMes" prefHeight="26.0" prefWidth="43.0" stylesheets="@../tabla.css">
       <font>
          <Font name="System Bold" size="12.0" />
       </font></Button>
@@ -41,4 +41,14 @@
             <Image url="@../../icons/xlsx.png" />
         </image>
     </ImageView>
+   <ImageView fitHeight="18.0" fitWidth="25.0" layoutX="604.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../icons/anterior.png" />
+      </image>
+   </ImageView>
+   <ImageView fitHeight="18.0" fitWidth="25.0" layoutX="656.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../icons/proximo.png" />
+      </image>
+   </ImageView>
 </AnchorPane>

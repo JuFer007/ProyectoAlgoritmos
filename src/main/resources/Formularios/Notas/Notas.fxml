@@ -86,7 +86,7 @@
          <Font name="Arial Black" size="12.0" />
       </font>
    </Label>
-   <Button fx:id="btnImprimirBoleta" layoutX="476.0" layoutY="499.0" mnemonicParsing="false" onAction="#modificarNotas" prefHeight="25.0" prefWidth="185.0" stylesheets="@../tabla.css" text="Imprimir Boleta de Notas" />
+   <Button fx:id="btnImprimirBoleta" layoutX="476.0" layoutY="499.0" mnemonicParsing="false" onAction="#generarLibretaDeNotas"  prefHeight="25.0" prefWidth="185.0" stylesheets="@../tabla.css" text="Imprimir Boleta de Notas" />
    <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="443.0" layoutY="498.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../../icons/pdf.png" />

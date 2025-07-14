@@ -279,4 +279,45 @@ public class DAO_Nota {
         }
         return notas;
     }
+
+    //Metodo para obtener libreta de notas
+    public ArrayList<Object[]> obtenerNotasDeCursos(int idMatricula) {
+        ArrayList<Object[]> notasCursos = new ArrayList<>();
+
+        String sql = "SELECT c.nombreCurso, "
+                + "(SELECT nota FROM Nota WHERE idMatricula = ? AND idCurso = c.idCurso AND tipoNota = 'Parcial' ORDER BY idNota LIMIT 1) AS 'Primera Nota Parcial', "
+                + "(SELECT nota FROM Nota WHERE idMatricula = ? AND idCurso = c.idCurso AND tipoNota = 'Parcial' ORDER BY idNota LIMIT 1 OFFSET 1) AS 'Segunda Nota Parcial', "
+                + "(SELECT nota FROM Nota WHERE idMatricula = ? AND idCurso = c.idCurso AND tipoNota = 'Parcial' ORDER BY idNota LIMIT 1 OFFSET 2) AS 'Tercera Nota Parcial', "
+                + "(SELECT nota FROM Nota WHERE idMatricula = ? AND idCurso = c.idCurso AND tipoNota = 'Promedio' LIMIT 1) AS 'Promedio' "
+                + "FROM Curso c "
+                + "WHERE c.idGrado = (SELECT idGrado FROM Matricula WHERE idMatricula = ?) "
+                + "ORDER BY c.nombreCurso;";
+
+        try (Connection cn = ConexionMySQL.getInstancia().getConexion();
+             PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, idMatricula);
+            ps.setInt(2, idMatricula);
+            ps.setInt(3, idMatricula);
+            ps.setInt(4, idMatricula);
+            ps.setInt(5, idMatricula);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Object[] notaCurso = new Object[5];
+                    notaCurso[0] = rs.getString("nombreCurso");
+                    notaCurso[1] = rs.getInt("Primera Nota Parcial");
+                    notaCurso[2] = rs.getInt("Segunda Nota Parcial");
+                    notaCurso[3] = rs.getInt("Tercera Nota Parcial");
+                    notaCurso[4] = rs.getInt("Promedio");
+
+                    notasCursos.add(notaCurso);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return notasCursos;
+    }
 }

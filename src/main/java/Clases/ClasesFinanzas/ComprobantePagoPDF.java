@@ -233,11 +233,6 @@ public class ComprobantePagoPDF {
         documento.add(piePagina);
     }
 
-    //Metodo para cerrar el documento
-    private void cerrarDocumento() {
-        documento.close();
-    }
-
     private void agregarEspacioHorizontal() throws DocumentException {
         PdfPTable tablaEspacio = new PdfPTable(3);
         tablaEspacio.setWidthPercentage(100);
@@ -249,6 +244,11 @@ public class ComprobantePagoPDF {
             tablaEspacio.addCell(celdaVacia);
         }
         documento.add(tablaEspacio);
+    }
+
+    //Metodo para cerrar el documento
+    private void cerrarDocumento() {
+        documento.close();
     }
 
     //Metodo principal para generar el comprobante

@@ -24,6 +24,12 @@ public class fmrAlumno {
         cajaBusqueda.textProperty().addListener((obs, oldText, newText) -> aplicarFiltrosCombinados());
         comboGradoB.valueProperty().addListener((obs, oldVal, newVal) -> aplicarFiltrosCombinados());
         comboSeccionB.valueProperty().addListener((obs, oldVal, newVal) -> aplicarFiltrosCombinados());
+        tablaAlumnos.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                String dniSeleccionado = (String) tablaAlumnos.getSelectionModel().getSelectedItem()[1];
+                cargarDatosAlumno(dniSeleccionado);
+            }
+        });
     }
 
     //Columnas de la tabla
@@ -191,54 +197,61 @@ public class fmrAlumno {
         listarAlumos();
     }
 
-    //Modificar alumno
+    //Metodo para modificar alumno
     public void modificarAlumno() {
-        //Obtener fila seleccionada
-        Object[] filaSeleccionada = tablaAlumnos.getSelectionModel().getSelectedItem();
-
-        if (filaSeleccionada == null) {
+        if (tablaAlumnos.getSelectionModel().getSelectedItem() == null) {
             Alert alerta = new Alert(Alert.AlertType.WARNING);
-            alerta.setTitle("Selección Requerida");
-            alerta.setHeaderText("No se ha seleccionado ningún alumno");
-            alerta.setContentText("Por favor, seleccione un alumno para modificar.");
+            alerta.setTitle("Advertencia");
+            alerta.setHeaderText("No se ha seleccionado ninguna fila");
+            alerta.setContentText("Por favor, selecciona un alumno de la tabla para poder modificar.");
             alerta.showAndWait();
             return;
         }
-
-        String dniAlumno = filaSeleccionada[1].toString();
-        cajaDNI.setText(dniAlumno);
-        cajaDNI.setEditable(false);
 
         if (!validarCamposDeIngreso()) {
             return;
         }
 
-        Date fechaNacimiento = valorFechaNacimiento();
-        if (fechaNacimiento == null) {
-            return;
-        }
+        String dniPersona = cajaDNI.getText();
+        String primerNombre = cajaPrimerNombre.getText();
+        String segundoNombre = cajaSegundoNombre.getText();
+        String apellidoPaterno = cajaApellidoPaterno.getText();
+        String apellidoMaterno = cajaApellidoMaterno.getText();
+        String genero = cajaGenero.getText();
 
-        String DNI = cajaDNI.getText();
-        String PrimerNombre = cajaPrimerNombre.getText();
-        String SegundoNombre = cajaSegundoNombre.getText();
-        String ApellidoPaterno = cajaApellidoPaterno.getText();
-        String ApellidoMaterno = cajaApellidoMaterno.getText();
-        String Genero = cajaGenero.getText();
-        Date FechaNacimiento = Date.valueOf(cajaFechaNacimiento.getValue().toString());
-        String dniApoderado = DNIapoderado.getText();
-
-        Alumno alumno = new Alumno(DNI, PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero);
         DAO_Alumno daoAlumno = new DAO_Alumno();
-
-        daoAlumno.Actualizar(alumno, dniApoderado);
+        daoAlumno.Actualizar(primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno, genero, dniPersona);
 
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle("Información");
-        alerta.setHeaderText("Datos actualizados correctamente");
+        alerta.setHeaderText("Datos de alumno modificados correctamente");
         alerta.showAndWait();
 
         LimpiarCampos();
         listarAlumos();
+    }
+
+    //Metodo para cargar los datos del alumno
+    private void cargarDatosAlumno(String dni) {
+        LimpiarCampos();
+        DAO_Alumno daoAlumno = new DAO_Alumno();
+        String[] datos = daoAlumno.obtenerDatosDeAlumno(dni);
+        if (datos[0] != null && !datos[0].equals("No encontrado")) {
+            cajaDNI.setText(datos[1]);
+            cajaPrimerNombre.setText(datos[2].split(" ")[0]);
+            cajaSegundoNombre.setText(datos[2].split(" ").length > 1 ? datos[2].split(" ")[1] : "");
+            cajaApellidoPaterno.setText(datos[3].split(" ")[0]);
+            cajaApellidoMaterno.setText(datos[3].split(" ").length > 1 ? datos[3].split(" ")[1] : "");
+            cajaGenero.setText(datos[5]);
+
+            if (datos[4] != null) {
+                cajaFechaNacimiento.setValue(java.time.LocalDate.parse(datos[4]));
+            }
+            DNIapoderado.setText(datos[8]);
+        }
+        cajaDNI.setEditable(false);
+        cajaFechaNacimiento.setEditable(false);
+        DNIapoderado.setEditable(false);
     }
 
     //Metodo para configurar la tabla

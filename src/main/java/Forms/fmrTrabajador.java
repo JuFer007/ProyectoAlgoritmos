@@ -17,6 +17,12 @@ public class fmrTrabajador {
         ConfigurarTabla();
         listarTrabajadores();
         cajaBusqueda.textProperty().addListener((observable, oldValue, newValue) -> {buscarProfesor(newValue);});
+        tablaTrabajador.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                String dniTrabajadorSeleccionado = (String) tablaTrabajador.getSelectionModel().getSelectedItem()[1];
+                cargarDatosTrabajador(dniTrabajadorSeleccionado);
+            }
+        });
     }
 
     //Campo de búsqueda
@@ -160,7 +166,31 @@ public class fmrTrabajador {
         cajaTipoTrabajo.getSelectionModel().clearSelection();
         cajaTurnoAsignado.getSelectionModel().clearSelection();
         cargoAsignado.getSelectionModel().clearSelection();
+    }
 
+    //Metodo para cargar datos del trabajador
+    private void cargarDatosTrabajador(String DNItrabajador) {
+        LimpiarCampos();
+        DAO_Trabajador daoTrabajador = new DAO_Trabajador();
+
+        String[] datos = daoTrabajador.obtenerDatosTrabajador(DNItrabajador);
+
+        cajaDNI.setText(datos[0]);
+        cajaPrimerNombre.setText(datos[1]);
+        cajaSegundoNombre.setText(datos[2]);
+        cajaApellidoPaterno.setText(datos[3]);
+        cajaApellidoMaterno.setText(datos[4]);
+        cajaGenero.setText(datos[6]);
+        cajaTipoTrabajo.setValue(datos[8]);
+        cajaTurnoAsignado.setValue(datos[9]);
+        cargoAsignado.setValue(datos[10]);
+
+        if (datos[5] != null) {
+            cajaFechaNacimiento.setValue(java.time.LocalDate.parse(datos[5]));
+        }
+
+        cajaDNI.setEditable(false);
+        cajaFechaNacimiento.setEditable(false);
     }
 
     //Modificar trabajador
@@ -200,14 +230,13 @@ public class fmrTrabajador {
         String TurnoAsignado = cajaTurnoAsignado.getValue();
         String Cargo = cargoAsignado.getValue();
 
-        Trabajador trabajador = new Trabajador(DNI, PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero, TipoTrabajo, TurnoAsignado, Cargo);
-
         DAO_Trabajador daoTrabajador = new DAO_Trabajador();
-        daoTrabajador.Actualizar(trabajador);
+        daoTrabajador.actualizarDatosTrabajador(DNI, PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno,
+        FechaNacimiento, Genero, TipoTrabajo, TurnoAsignado, Cargo);
 
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle("Información");
-        alerta.setHeaderText("Datos actualizados correctamente");
+        alerta.setHeaderText("Datos del trabajador modificados correctamente");
         alerta.showAndWait();
 
         LimpiarCampos();

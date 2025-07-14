@@ -16,6 +16,12 @@ public class fmrApoderado {
         configurarTabla();
         listarApoderados();
         busqueda.textProperty().addListener((observable, oldValue, newValue) -> {buscarApoderado();});
+        tablaApoderados.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                String dniSeleccionado = (String) tablaApoderados.getSelectionModel().getSelectedItem()[0];
+                cargarDatosApoderado(dniSeleccionado);
+            }
+        });
     }
 
     //Columnas de la tabla
@@ -122,6 +128,30 @@ public class fmrApoderado {
         }
     }
 
+    //Metodo para cargar datos en las cajas de texto
+    private void cargarDatosApoderado(String dniApoderado) {
+        DAO_Apoderado daoApoderado = new DAO_Apoderado();
+
+        String[] datos = daoApoderado.obtenerDatosApoderado(dniApoderado);
+
+        cajaDNI.setText(datos[0]);
+        cajaPrimerNombre.setText(datos[1]);
+        cajaSegundoNombre.setText(datos[2]);
+        cajaApellidoP.setText(datos[3]);
+        cajaApellidoM.setText(datos[4]);
+        cajaGenero.setText(datos[6]);
+
+        cajaTelefono.setText(datos[7]);
+        cajaCorreoE.setText(datos[8]);
+        cajaParentesco.setValue(datos[9]);
+
+        if (datos[5] != null) {
+            cajaFechaNac.setValue(java.time.LocalDate.parse(datos[5]));
+        }
+        cajaDNI.setEditable(false);
+        cajaFechaNac.setEditable(false);
+    }
+
     private void LimpiarCampos() {
         cajaDNI.clear();
         cajaPrimerNombre.clear();
@@ -172,7 +202,18 @@ public class fmrApoderado {
 
     //Actualizar datos del apoderado
     public void actualizarApoderado() {
-        if(!validarCamposDeIngreso()) {
+        Object[] filaSeleccionada = tablaApoderados.getSelectionModel().getSelectedItem();
+
+        if (filaSeleccionada == null) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Selección Requerida");
+            alerta.setHeaderText("No se ha seleccionado ningún apoderado");
+            alerta.setContentText("Por favor, seleccione un apoderado para modificar.");
+            alerta.showAndWait();
+            return;
+        }
+
+        if (!validarCamposDeIngreso()) {
             return;
         }
 
@@ -181,24 +222,23 @@ public class fmrApoderado {
             return;
         }
 
-        String dni = cajaDNI.getText();
-        String primerNombre = cajaPrimerNombre.getText();
-        String segundoNombre = cajaSegundoNombre.getText();
-        String apellidoM = cajaApellidoM.getText();
-        String apellidoP = cajaApellidoP.getText();
-        String genero = cajaGenero.getText();
-        Date fecha = fechaNacimiento;
-        String parentesco = cajaParentesco.getSelectionModel().getSelectedItem();
-        String telefono = cajaTelefono.getText();
-        String correoE = cajaCorreoE.getText();
+        String DNI = cajaDNI.getText();
+        String PrimerNombre = cajaPrimerNombre.getText();
+        String SegundoNombre = cajaSegundoNombre.getText();
+        String ApellidoPaterno = cajaApellidoP.getText();
+        String ApellidoMaterno = cajaApellidoM.getText();
+        String Genero = cajaGenero.getText();
+        Date FechaNacimiento = Date.valueOf(cajaFechaNac.getValue().toString());
+        String Parentesco = cajaParentesco.getValue();
+        String Telefono = cajaTelefono.getText();
+        String CorreoE = cajaCorreoE.getText();
 
-        Apoderado apoderado = new Apoderado(dni, primerNombre, segundoNombre, apellidoP, apellidoM, fecha, genero, correoE, telefono, parentesco);
         DAO_Apoderado daoApoderado = new DAO_Apoderado();
-        daoApoderado.Actualizar(apoderado);
+        daoApoderado.actualizarApoderado(DNI, PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero, CorreoE, Telefono, Parentesco);
 
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle("Información");
-        alerta.setHeaderText("Datos acutalizadors correctamente");
+        alerta.setHeaderText("Datos actualizados correctamente");
         alerta.showAndWait();
 
         LimpiarCampos();

@@ -52,27 +52,26 @@ public class fmrIncioSesion {
         boolean esValido = usuarioDAO.verificarUsuarioYContraseña(usuario, contraseña);
 
         if (esValido) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Éxito");
-            alert.setHeaderText("¡Bienvenido!");
-            alert.setContentText("Usuario y contraseña correctos.");
-            alert.showAndWait();
+           Alert alert = new Alert(Alert.AlertType.INFORMATION);
+           alert.setTitle("Éxito");
+           alert.setHeaderText("¡Bienvenido!");
+           alert.setContentText("Usuario y contraseña correctos.");
+           alert.showAndWait();
 
-            Stage stageAactual = (Stage) BtnIniciarSesion.getScene().getWindow();
-            stageAactual.close();
+           Stage stageAactual = (Stage) BtnIniciarSesion.getScene().getWindow();
+           stageAactual.close();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Formularios/Principales/SystemCollege.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            stageAactual.setScene(scene);
-            stageAactual.show();
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("/Formularios/Principales/SystemCollege.fxml"));
+           Parent root = loader.load();
+           Scene scene = new Scene(root);
+           stageAactual.setScene(scene);
+           stageAactual.show();
         } else {
-            // Si las credenciales son incorrectas, mostrar una alerta de error
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("¡Credenciales incorrectas!");
-            alert.setContentText("El nombre de usuario o la contraseña no son correctos.");
-            alert.showAndWait();
+           Alert alert = new Alert(Alert.AlertType.ERROR);
+           alert.setTitle("Error");
+           alert.setHeaderText("¡Credenciales incorrectas!");
+           alert.setContentText("El nombre de usuario o la contraseña no son correctos.");
+           alert.showAndWait();
         }
     }
 }

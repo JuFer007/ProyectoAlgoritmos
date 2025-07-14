@@ -39,29 +39,29 @@ public class DAO_Alumno {
     }
 
     //Metodo para actualizar datos de un alumno
-    public void Actualizar(Alumno alumno, String DNIApoderado) {
-        String mensaje = "";
-        String consulta = "{CALL sp_Alumno_Update(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+    public void Actualizar(String primerNombre, String segundoNombre, String apellidoPaterno,
+                           String apellidoMaterno, String genero, String dniPersona) {
+        String sql = "UPDATE Persona p "
+                + "LEFT JOIN Alumno a ON p.idPersona = a.idPersona "
+                + "INNER JOIN Apoderado ap ON a.idApoderado = ap.idApoderado "
+                + "INNER JOIN Persona pA ON ap.idPersona = pA.idPersona "
+                + "SET "
+                + "p.primerNombre = ?, "
+                + "p.segundoNombre = ?, "
+                + "p.apellidoPaterno = ?, "
+                + "p.apellidoMaterno = ?, "
+                + "p.genero = ? "
+                + "WHERE p.DNIpersona = ?";
 
-        try {
-            CallableStatement statement = ConexionMySQL.getInstancia().getConexion().prepareCall(consulta);
-            statement.setString(1, alumno.getDnipersona());
-            statement.setString(2, alumno.getPrimernombre());
-            statement.setString(3, alumno.getSegundonombre());
-            statement.setString(4, alumno.getApellidopaterno());
-            statement.setString(5, alumno.getApellidomaterno());
-            statement.setDate(6, (Date) alumno.getFechanacimiento());
-            statement.setString(7, alumno.getGenero());
-            statement.setString(8, DNIApoderado);
+        try (Connection con = ConexionMySQL.getInstancia().getConexion();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
 
-            statement.registerOutParameter(9, Types.VARCHAR);
-            statement.executeUpdate();
-
-            mensaje = statement.getString(9);
-            statement.close();
-
-            mostrarMensaje(mensaje);
-
+            stmt.setString(1, primerNombre);
+            stmt.setString(2, segundoNombre);
+            stmt.setString(3, apellidoPaterno);
+            stmt.setString(4, apellidoMaterno);
+            stmt.setString(5, genero);
+            stmt.setString(6, dniPersona);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -242,14 +242,12 @@ public class DAO_Alumno {
                 + "JOIN Seccion seccion ON matricula.idSeccion = seccion.idSeccion "
                 + "JOIN AñoEscolar añoEscolar ON matricula.idAñoE = añoEscolar.idAñoE "
                 + "WHERE alumno.codigoAlumno = ?";
-
-        // Crear un array para almacenar los datos
         String[] datosAlumno = new String[5];
 
         try {
             Connection con = ConexionMySQL.getInstancia().getConexion();
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, codigoAlumno);  // Se asume que este valor es proporcionado de manera correcta
+            stmt.setString(1, codigoAlumno);
 
             ResultSet rs = stmt.executeQuery();
 
@@ -266,5 +264,45 @@ public class DAO_Alumno {
             e.printStackTrace();
         }
         return datosAlumno;
+    }
+
+    //Metodo para listar los datos del alumno en el formulario
+    public String[] obtenerDatosDeAlumno(String dniPersona) {
+        String sql = "SELECT "
+                + "p.idPersona, p.DNIpersona, p.primerNombre, p.segundoNombre, p.apellidoPaterno, p.apellidoMaterno, p.fechaNacimiento, p.genero, "
+                + "pA.DNIpersona AS ApoderadoDNI, a.codigoAlumno, a.idApoderado "
+                + "FROM Persona p "
+                + "LEFT JOIN Alumno a ON p.idPersona = a.idPersona "
+                + "INNER JOIN Apoderado ap ON a.idApoderado = ap.idApoderado "
+                + "INNER JOIN Persona pA ON ap.idPersona = pA.idPersona "
+                + "WHERE p.DNIpersona = ?";
+        String[] datosPersonaAlumnoApoderado = new String[9];
+
+        try {
+            Connection con = ConexionMySQL.getInstancia().getConexion();
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, dniPersona);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                datosPersonaAlumnoApoderado[0] = rs.getString("idPersona");
+                datosPersonaAlumnoApoderado[1] = rs.getString("DNIpersona");
+                datosPersonaAlumnoApoderado[2] = rs.getString("primerNombre") + " " + rs.getString("segundoNombre");
+                datosPersonaAlumnoApoderado[3] = rs.getString("apellidoPaterno") + " " + rs.getString("apellidoMaterno");
+                datosPersonaAlumnoApoderado[4] = rs.getString("fechaNacimiento");
+                datosPersonaAlumnoApoderado[5] = rs.getString("genero");
+
+                datosPersonaAlumnoApoderado[6] = rs.getString("codigoAlumno") != null ? rs.getString("codigoAlumno") : "No disponible";
+                datosPersonaAlumnoApoderado[7] = rs.getString("idApoderado") != null ? rs.getString("idApoderado") : "No disponible";
+
+                datosPersonaAlumnoApoderado[8] = rs.getString("ApoderadoDNI") != null ? rs.getString("ApoderadoDNI") : "No disponible";
+            } else {
+                datosPersonaAlumnoApoderado = new String[]{"No encontrado", "", "", "", "", "", "", "", ""};
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return datosPersonaAlumnoApoderado;
     }
 }

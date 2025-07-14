@@ -41,31 +41,37 @@ public class DAO_Trabajador {
     }
 
     //Metodo para actualizar trabajador
-    public void Actualizar(Trabajador trabajador) {
-        String mensaje = "";
-        String consulta = "{CALL sp_Trabajador_Update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+    public void actualizarDatosTrabajador(String DNI, String primerNombre, String segundoNombre,
+                                          String apellidoPaterno, String apellidoMaterno, Date fechaNacimiento,
+                                          String genero, String tipoTrabajo, String turnoAsignado, String cargo) {
 
-        try {
-            CallableStatement statement = ConexionMySQL.getInstancia().getConexion().prepareCall(consulta);
-            statement.setString(1, trabajador.getDnipersona());
-            statement.setString(2, trabajador.getPrimernombre());
-            statement.setString(3, trabajador.getSegundonombre());
-            statement.setString(4, trabajador.getApellidopaterno());
-            statement.setString(5, trabajador.getApellidomaterno());
-            statement.setDate(6, (Date) trabajador.getFechanacimiento() );
-            statement.setString(7, trabajador.getGenero());
-            statement.setString(8, trabajador.getTipoTrabajador());
-            statement.setString(9, trabajador.getTurnoAsignado());
-            statement.setString(10, trabajador.getCargo());
+        String sql = "UPDATE Persona p "
+                + "LEFT JOIN Trabajador t ON p.idPersona = t.idPersona "
+                + "SET "
+                + "p.primerNombre = ?, "
+                + "p.segundoNombre = ?, "
+                + "p.apellidoPaterno = ?, "
+                + "p.apellidoMaterno = ?, "
+                + "p.fechaNacimiento = ?, "
+                + "p.genero = ?, "
+                + "t.tipoTrabajo = ?, "
+                + "t.turnoAsignado = ?, "
+                + "t.Cargo = ? "
+                + "WHERE p.DNIpersona = ?";
 
-            statement.registerOutParameter(11, Types.VARCHAR);
-            statement.executeUpdate();
+        try (Connection con = ConexionMySQL.getInstancia().getConexion();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
 
-            mensaje = statement.getString(11);
-            statement.close();
-
-            mostrarMensaje(mensaje);
-
+            stmt.setString(1, primerNombre);
+            stmt.setString(2, segundoNombre);
+            stmt.setString(3, apellidoPaterno);
+            stmt.setString(4, apellidoMaterno);
+            stmt.setDate(5, fechaNacimiento);
+            stmt.setString(6, genero);
+            stmt.setString(7, tipoTrabajo);
+            stmt.setString(8, turnoAsignado);
+            stmt.setString(9, cargo);
+            stmt.setString(10, DNI);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -180,5 +186,44 @@ public class DAO_Trabajador {
     //Retornar los trabajadores
     public ArrayList<Trabajador> getTrabajadores() {
         return trabajadores;
+    }
+
+    //Obtener los datos del trabajador
+    public String[] obtenerDatosTrabajador(String dniPersona) {
+        String sql = "SELECT "
+                + "p.DNIpersona, p.primerNombre, p.segundoNombre, p.apellidoPaterno, p.apellidoMaterno, p.fechaNacimiento, p.genero, "
+                + "t.codigoTrabajador, t.tipoTrabajo, t.turnoAsignado, t.Cargo "
+                + "FROM Persona p "
+                + "LEFT JOIN Trabajador t ON p.idPersona = t.idPersona "
+                + "WHERE p.DNIpersona = ?";
+
+        String[] datosPersonaTrabajador = new String[11];
+
+        try (Connection con = ConexionMySQL.getInstancia().getConexion();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setString(1, dniPersona);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    datosPersonaTrabajador[0] = rs.getString("DNIpersona");
+                    datosPersonaTrabajador[1] = rs.getString("primerNombre");
+                    datosPersonaTrabajador[2] = rs.getString("segundoNombre");
+                    datosPersonaTrabajador[3] = rs.getString("apellidoPaterno");
+                    datosPersonaTrabajador[4] = rs.getString("apellidoMaterno");
+                    datosPersonaTrabajador[5] = rs.getString("fechaNacimiento");
+                    datosPersonaTrabajador[6] = rs.getString("genero");
+                    datosPersonaTrabajador[7] = rs.getString("codigoTrabajador");
+                    datosPersonaTrabajador[8] = rs.getString("tipoTrabajo");
+                    datosPersonaTrabajador[9] = rs.getString("turnoAsignado");
+                    datosPersonaTrabajador[10] = rs.getString("Cargo");
+                } else {
+                    datosPersonaTrabajador = new String[]{"No encontrado", "", "", "", "", "", "", "", "", "", ""};
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return datosPersonaTrabajador;
     }
 }

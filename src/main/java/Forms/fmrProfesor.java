@@ -20,6 +20,12 @@ public class fmrProfesor {
         configurarTablaProfesores();
         listarProfesores();
         cajaBusqueda.textProperty().addListener((obs, oldText, newText) -> buscarProfesor(newText));
+        tablaProfesores.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                String dniProfesorSeleccionado = (String) tablaProfesores.getSelectionModel().getSelectedItem()[1];
+                cargarDatosProfesor(dniProfesorSeleccionado);
+            }
+        });
     }
 
     //Columnas de la tabla
@@ -211,6 +217,39 @@ public class fmrProfesor {
         tablaProfesores.setItems(datos);
     }
 
+    //Mwtodo para cargar los datos del profesor seleccionado en las cajas de texto
+    private void cargarDatosProfesor(String dniProfesor) {
+        LimpiarCampos();
+        DAO_Profesor daoProfesor = new DAO_Profesor();
+
+        String[] datos = daoProfesor.obtenerDatosProfesor(dniProfesor);
+
+        if (datos[0] != null && !datos[0].equals("No encontrado")) {
+            cajaDNI.setText(datos[0]);
+            cajaPrimerNombre.setText(datos[1]);
+            cajaSegundoNombre.setText(datos[2]);
+            cajaApellidoPaterno.setText(datos[3]);
+            cajaApellidoMaterno.setText(datos[4]);
+            cajaGenero.setText(datos[6]);
+
+            if (datos[6] != null) {
+                cajaFechaNacimiento.setValue(java.time.LocalDate.parse(datos[5]));
+            }
+
+            comboEpecialidad.setValue(datos[7]);
+            comboGradoAcademico.setValue(datos[8]);
+
+            cajaHorasSem.setText(datos[9]);
+            cajaTelefono.setText(datos[11]);
+            cajaCorreoE.setText(datos[10]);
+
+            cajaDNI.setEditable(false);
+            cajaFechaNacimiento.setEditable(false);
+            cajaTelefono.setEditable(false);
+            cajaCorreoE.setEditable(false);
+        }
+    }
+
     //Nuevo profesor
     public void nuevoProfesor() {
         if (!validarCampos()) {
@@ -250,49 +289,35 @@ public class fmrProfesor {
 
     //MOodificar profesor
     public void actualizarProfesor() {
-        //Obtener fila seleccionada
-        Object[] filaSeleccionada = tablaProfesores.getSelectionModel().getSelectedItem();
-
-        if (filaSeleccionada == null) {
+        if (tablaProfesores.getSelectionModel().getSelectedItem() == null) {
             Alert alerta = new Alert(Alert.AlertType.WARNING);
             alerta.setTitle("Selección Requerida");
-            alerta.setHeaderText("No se ha seleccionado ningún alumno");
-            alerta.setContentText("Por favor, seleccione un alumno para modificar.");
+            alerta.setHeaderText("No se ha seleccionado ningún profesor");
+            alerta.setContentText("Por favor, seleccione un profesor para modificar.");
             alerta.showAndWait();
             return;
         }
 
-        if (!validarCampos()) {
-            return;
-        }
-
-        Date fechaNacimiento = valorFechaNacimiento();
-        if (fechaNacimiento == null) {
-            return;
-        }
-
-        String DNI = cajaDNI.getText();
-        String PrimerNombre = cajaPrimerNombre.getText();
-        String SegundoNombre = cajaSegundoNombre.getText();
-        String ApellidoPaterno = cajaApellidoPaterno.getText();
-        String ApellidoMaterno = cajaApellidoMaterno.getText();
-        String Genero = cajaGenero.getText();
-        Date FechaNacimiento = Date.valueOf(cajaFechaNacimiento.getValue().toString());
+        String dniProfesor = cajaDNI.getText();
+        String primerNombre = cajaPrimerNombre.getText();
+        String segundoNombre = cajaSegundoNombre.getText();
+        String apellidoPaterno = cajaApellidoPaterno.getText();
+        String apellidoMaterno = cajaApellidoMaterno.getText();
+        String genero = cajaGenero.getText();
         String especialidad = comboEpecialidad.getValue();
         String gradoAcademico = comboGradoAcademico.getValue();
         int horasSemanales = Integer.parseInt(cajaHorasSem.getText());
-        String telefono  = cajaTelefono.getText();
-        String correoE = cajaCorreoE.getText();
+        String telefono = cajaTelefono.getText();
+        String correoElectronico = cajaCorreoE.getText();
 
-        Profesor profesor = new Profesor(DNI, PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero, especialidad, gradoAcademico, horasSemanales, telefono, correoE);
-        DAO_Profesor dao = new DAO_Profesor();
-        dao.Actualizar(profesor);
+        DAO_Profesor daoProfesor = new DAO_Profesor();
+        daoProfesor.Actualizar(primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno, genero, especialidad,
+                gradoAcademico, horasSemanales, correoElectronico, telefono, dniProfesor);
 
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle("Información");
-        alerta.setHeaderText("Datos actualizados correctamente");
+        alerta.setHeaderText("Datos de profesor actualizados correctamente");
         alerta.showAndWait();
-
         LimpiarCampos();
         listarProfesores();
     }

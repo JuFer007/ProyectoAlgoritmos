@@ -1,4 +1,5 @@
 package Forms;
+import Clases.ClasesGestionEscolar.LibretaNotasPDF;
 import Clases.ConexionBD.Entidades_CRUD.DAO_Nota;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -34,6 +35,7 @@ public class fmrNotas {
             listarNotasEnLosCampos(idMatricula, cursoSeleccionado);
         });
         btnRegistrar.setOnAction(event -> modificarNotas());
+        btnImprimirBoleta.setOnAction(event -> generarLibretaDeNotas());
     }
 
     //ComboBox
@@ -67,11 +69,7 @@ public class fmrNotas {
 
     //Botones
     @FXML private Button btnRegistrar;
-
-    //Metodo para listar a los estudiantes
-    private void listarDatosEstudiantes() {
-
-    }
+    @FXML private Button btnImprimirBoleta;
 
     //Metodo para configurar la tabla de alumno
     private void configurarTablaAlumno() {
@@ -230,6 +228,16 @@ public class fmrNotas {
 
     //Metodo para registrar notas
     public void modificarNotas() {
+        if (nota1.getText().isEmpty() || nota2.getText().isEmpty() || nota3.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Campos Vacíos");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor, complete todos los campos de notas antes de continuar.");
+            alert.showAndWait();
+            return;
+        }
+
+
         int idMatricula = numeroMatricula();
 
         String nombreCurso = (String) comboBoxCursos.getValue();
@@ -244,6 +252,35 @@ public class fmrNotas {
 
             listarNotasDeUnSoloCurso(idMatricula, nombreCurso);
             listarNotasEnLosCampos(idMatricula, nombreCurso);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Metodo para generar la libreta de notas de un alumno
+    public void generarLibretaDeNotas() {
+        Object[] filaSeleccionada = tablaAlumno.getSelectionModel().getSelectedItem();
+
+        if (filaSeleccionada == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Selección de Fila");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor, seleccione una fila de la tabla.");
+            alert.showAndWait();
+            return;
+        }
+        try {
+            int idMatricula = Integer.parseInt(filaSeleccionada[6].toString());
+            String codigoAlumno = (String) filaSeleccionada[0];
+
+            LibretaNotasPDF libretaNotasPDF = new LibretaNotasPDF(codigoAlumno, idMatricula);
+            libretaNotasPDF.generarLibretaPDF(codigoAlumno, idMatricula);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Confirmación de libreta de notas");
+            alert.setHeaderText(null);
+            alert.setContentText("La libreta de notas se ha generado de manera exitosa");
+            alert.showAndWait();
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
