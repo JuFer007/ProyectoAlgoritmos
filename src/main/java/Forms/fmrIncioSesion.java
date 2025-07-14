@@ -9,10 +9,29 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
 
 public class fmrIncioSesion {
+    @FXML
+    private void initialize() {
+        txtNombreUsuario.setOnKeyPressed(event -> {
+            try {
+                handleEnter(event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        txtContraseña.setOnKeyPressed(event -> {
+            try {
+                handleEnter(event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
     @FXML
     private Button btnCerrarVentana;
 
@@ -72,6 +91,14 @@ public class fmrIncioSesion {
            alert.setHeaderText("¡Credenciales incorrectas!");
            alert.setContentText("El nombre de usuario o la contraseña no son correctos.");
            alert.showAndWait();
+        }
+    }
+
+    //Metodo para activar el inicio de sesion por enter
+    @FXML
+    private void handleEnter(KeyEvent event) throws IOException {
+        if (event.getCode().toString().equals("ENTER")) {
+            iniciarSesion(new ActionEvent());
         }
     }
 }

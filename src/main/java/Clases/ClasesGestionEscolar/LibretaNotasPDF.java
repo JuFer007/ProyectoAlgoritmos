@@ -44,8 +44,8 @@ public class LibretaNotasPDF {
         float width = 850 * 72 / 96;
         float height = 650 * 72 / 96;
 
-        documento = new Document(new Rectangle(width, height), 85, 40, 30, 30);
-        String rutaArchivo = "libretasDeNotas";
+        documento = new Document(new Rectangle(width, height), 95, 40, 20, 30);
+        String rutaArchivo = "libretasNotas";
         java.io.File directorio = new java.io.File(rutaArchivo);
         if (!directorio.exists()) {
             directorio.mkdirs();

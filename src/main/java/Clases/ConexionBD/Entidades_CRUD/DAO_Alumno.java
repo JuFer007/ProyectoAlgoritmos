@@ -41,27 +41,19 @@ public class DAO_Alumno {
     //Metodo para actualizar datos de un alumno
     public void Actualizar(String primerNombre, String segundoNombre, String apellidoPaterno,
                            String apellidoMaterno, String genero, String dniPersona) {
-        String sql = "UPDATE Persona p "
-                + "LEFT JOIN Alumno a ON p.idPersona = a.idPersona "
-                + "INNER JOIN Apoderado ap ON a.idApoderado = ap.idApoderado "
-                + "INNER JOIN Persona pA ON ap.idPersona = pA.idPersona "
-                + "SET "
-                + "p.primerNombre = ?, "
-                + "p.segundoNombre = ?, "
-                + "p.apellidoPaterno = ?, "
-                + "p.apellidoMaterno = ?, "
-                + "p.genero = ? "
-                + "WHERE p.DNIpersona = ?";
-
+        String sql = "{CALL ActualizarPersona(?, ?, ?, ?, ?, ?)}";
         try (Connection con = ConexionMySQL.getInstancia().getConexion();
-             PreparedStatement stmt = con.prepareStatement(sql)) {
+             CallableStatement stmt = con.prepareCall(sql)) {
 
-            stmt.setString(1, primerNombre);
-            stmt.setString(2, segundoNombre);
-            stmt.setString(3, apellidoPaterno);
-            stmt.setString(4, apellidoMaterno);
-            stmt.setString(5, genero);
-            stmt.setString(6, dniPersona);
+            stmt.setString(1, dniPersona);
+            stmt.setString(2, primerNombre);
+            stmt.setString(3, segundoNombre);
+            stmt.setString(4, apellidoPaterno);
+            stmt.setString(5, apellidoMaterno);
+            stmt.setString(6, genero);
+
+            stmt.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -216,7 +208,6 @@ public class DAO_Alumno {
 
         return alumno;
     }
-
 
     //Metodo para mostrar mensaje
     private void mostrarMensaje(String mensaje) {

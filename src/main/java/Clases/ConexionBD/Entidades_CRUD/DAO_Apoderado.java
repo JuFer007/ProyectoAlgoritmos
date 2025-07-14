@@ -41,36 +41,27 @@ public class DAO_Apoderado {
 
     //Metodo para actualizar apoderado
     public void actualizarApoderado(String dniPersona, String primerNombre, String segundoNombre,
-     String apellidoPaterno, String apellidoMaterno, Date fechaNacimiento,
-     String genero, String telefono, String correoElectronico,
-     String parentesco) {
-        String sql = "UPDATE Persona p "
-                + "LEFT JOIN Apoderado a ON p.idPersona = a.idPersona "
-                + "SET "
-                + "p.primerNombre = ?, "
-                + "p.segundoNombre = ?, "
-                + "p.apellidoPaterno = ?, "
-                + "p.apellidoMaterno = ?, "
-                + "p.fechaNacimiento = ?, "
-                + "p.genero = ?, "
-                + "a.numeroTelefono = ?, "
-                + "a.correoElectronico = ?, "
-                + "a.parentesco_relacion = ? "
-                + "WHERE p.DNIpersona = ?";
+                                    String apellidoPaterno, String apellidoMaterno, Date fechaNacimiento,
+                                    String genero, String telefono, String correoElectronico,
+                                    String parentesco) {
+        String sql = "{CALL ActualizarDatosPersonaYApoderado(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 
         try (Connection con = ConexionMySQL.getInstancia().getConexion();
-             PreparedStatement stmt = con.prepareStatement(sql)) {
+             CallableStatement stmt = con.prepareCall(sql)) {
 
-            stmt.setString(1, primerNombre);
-            stmt.setString(2, segundoNombre);
-            stmt.setString(3, apellidoPaterno);
-            stmt.setString(4, apellidoMaterno);
-            stmt.setDate(5, fechaNacimiento);
-            stmt.setString(6, genero);
-            stmt.setString(7, telefono);
-            stmt.setString(8, correoElectronico);
-            stmt.setString(9, parentesco);
-            stmt.setString(10, dniPersona);
+            stmt.setString(1, dniPersona);
+            stmt.setString(2, primerNombre);
+            stmt.setString(3, segundoNombre);
+            stmt.setString(4, apellidoPaterno);
+            stmt.setString(5, apellidoMaterno);
+            stmt.setDate(6, fechaNacimiento);
+            stmt.setString(7, genero);
+            stmt.setString(8, telefono);
+            stmt.setString(9, correoElectronico);
+            stmt.setString(10, parentesco);
+
+            stmt.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

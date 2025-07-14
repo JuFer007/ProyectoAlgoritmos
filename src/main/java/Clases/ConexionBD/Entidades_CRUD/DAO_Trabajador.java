@@ -45,33 +45,24 @@ public class DAO_Trabajador {
                                           String apellidoPaterno, String apellidoMaterno, Date fechaNacimiento,
                                           String genero, String tipoTrabajo, String turnoAsignado, String cargo) {
 
-        String sql = "UPDATE Persona p "
-                + "LEFT JOIN Trabajador t ON p.idPersona = t.idPersona "
-                + "SET "
-                + "p.primerNombre = ?, "
-                + "p.segundoNombre = ?, "
-                + "p.apellidoPaterno = ?, "
-                + "p.apellidoMaterno = ?, "
-                + "p.fechaNacimiento = ?, "
-                + "p.genero = ?, "
-                + "t.tipoTrabajo = ?, "
-                + "t.turnoAsignado = ?, "
-                + "t.Cargo = ? "
-                + "WHERE p.DNIpersona = ?";
+        String sql = "{CALL ActualizarPersonaTrabajador(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 
         try (Connection con = ConexionMySQL.getInstancia().getConexion();
-             PreparedStatement stmt = con.prepareStatement(sql)) {
+             CallableStatement stmt = con.prepareCall(sql)) {
 
-            stmt.setString(1, primerNombre);
-            stmt.setString(2, segundoNombre);
-            stmt.setString(3, apellidoPaterno);
-            stmt.setString(4, apellidoMaterno);
-            stmt.setDate(5, fechaNacimiento);
-            stmt.setString(6, genero);
-            stmt.setString(7, tipoTrabajo);
-            stmt.setString(8, turnoAsignado);
-            stmt.setString(9, cargo);
-            stmt.setString(10, DNI);
+            stmt.setString(1, DNI);
+            stmt.setString(2, primerNombre);
+            stmt.setString(3, segundoNombre);
+            stmt.setString(4, apellidoPaterno);
+            stmt.setString(5, apellidoMaterno);
+            stmt.setDate(6, fechaNacimiento);
+            stmt.setString(7, genero);
+            stmt.setString(8, tipoTrabajo);
+            stmt.setString(9, turnoAsignado);
+            stmt.setString(10, cargo);
+
+            stmt.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

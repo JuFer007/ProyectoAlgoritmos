@@ -48,56 +48,24 @@ public class DAO_Profesor {
                            String apellidoMaterno, String genero, String especialidad,
                            String gradoAcademico, int horasSemanales, String correoElectronico,
                            String telefono, String dniPersona) {
-        String sql = "UPDATE Persona p "
-                + "LEFT JOIN Profesor pro ON p.idPersona = pro.idPersona "
-                + "SET "
-                + "p.primerNombre = ?, "
-                + "p.segundoNombre = ?, "
-                + "p.apellidoPaterno = ?, "
-                + "p.apellidoMaterno = ?, "
-                + "p.genero = ?, "
-                + "pro.especialidad = ?, "
-                + "pro.gradoAcademico = ?, "
-                + "pro.horasSemanales = ?, "
-                + "pro.correoElectronico = ?, "
-                + "pro.telefono = ? "
-                + "WHERE p.DNIpersona = ?";
+        String sql = "{CALL ActualizarProfesor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 
         try (Connection con = ConexionMySQL.getInstancia().getConexion();
-             PreparedStatement stmt = con.prepareStatement(sql)) {
+             CallableStatement stmt = con.prepareCall(sql)) {
 
-            stmt.setString(1, primerNombre);
-            stmt.setString(2, segundoNombre);
-            stmt.setString(3, apellidoPaterno);
-            stmt.setString(4, apellidoMaterno);
-            stmt.setString(5, genero);
-            stmt.setString(6, especialidad);
-            stmt.setString(7, gradoAcademico);
-            stmt.setInt(8, horasSemanales);
-            stmt.setString(9, correoElectronico);
-            stmt.setString(10, telefono);
-            stmt.setString(11, dniPersona);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+            stmt.setString(1, dniPersona);
+            stmt.setString(2, primerNombre);
+            stmt.setString(3, segundoNombre);
+            stmt.setString(4, apellidoPaterno);
+            stmt.setString(5, apellidoMaterno);
+            stmt.setString(6, genero);
+            stmt.setString(7, especialidad);
+            stmt.setString(8, gradoAcademico);
+            stmt.setInt(9, horasSemanales);
+            stmt.setString(10, correoElectronico);
+            stmt.setString(11, telefono);
 
-    //Metodo para eliminar profesor
-    public void Eliminar(String DNIprofesor) {
-        String mensaje = "";
-        String consulta = "{CALL sp_Profesor_Delete(?, ?)}";
-
-        try {
-            CallableStatement statement = ConexionMySQL.getInstancia().getConexion().prepareCall(consulta);
-            statement.setString(1, DNIprofesor);
-
-            statement.registerOutParameter(2, Types.VARCHAR);
-            statement.executeUpdate();
-
-            mensaje = statement.getString(2);
-            statement.close();
-
-            mostrarMensaje(mensaje);
+            stmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
