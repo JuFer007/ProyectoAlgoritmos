@@ -16,7 +16,7 @@
          <Font name="Cambria Bold" size="14.0" />
       </font>
    </Label>
-   <TableView fx:id="tablaPagos" layoutX="28.0" layoutY="103.0" prefHeight="408.0" prefWidth="659.0">
+   <TableView fx:id="tablaPagos" layoutX="28.0" layoutY="103.0" prefHeight="403.0" prefWidth="659.0">
      <columns>
        <TableColumn fx:id="columCodigo" prefWidth="75.0" text="Código" />
        <TableColumn fx:id="columAlumno" prefWidth="211.39998626708984" text="Alumno" />
@@ -27,8 +27,8 @@
      </columns>
    </TableView>
 
-    <Button fx:id="btnExportarExcel" layoutX="60.0" layoutY="520.0" mnemonicParsing="false" onAction="#exportarEXCEL" stylesheets="@../tabla.css" text="Exportar a EXCEL" />
-    <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="31.0" layoutY="520.0" pickOnBounds="true" preserveRatio="true">
+    <Button fx:id="btnExportarExcel" layoutX="413.0" layoutY="520.0" mnemonicParsing="false" onAction="#exportarEXCEL" stylesheets="@../tabla.css" text="Exportar a EXCEL" />
+    <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="384.0" layoutY="523.0" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../icons/xlsx.png" />
         </image>
@@ -47,6 +47,12 @@
          </Button>
       </children>
    </AnchorPane>
+   <Label layoutX="39.0" layoutY="526.0" text="Total:  ">
+      <font>
+         <Font name="Cambria Bold" size="14.0" />
+      </font>
+   </Label>
+   <TextField fx:id="totalRecaudado" layoutX="89.0" layoutY="522.0" />
     <!---
    <ImageView fitHeight="18.0" fitWidth="25.0" layoutX="604.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true">
       <image>

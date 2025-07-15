@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class fmrReportePensiones {
@@ -25,6 +26,9 @@ public class fmrReportePensiones {
 
     //Botones
     @FXML private Button btnExportarExcel;
+
+    //Caja para mostrar el total
+    @FXML JTextArea totalRecaudado;
 
     //Variables
     private int mesActual = 1;
