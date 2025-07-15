@@ -49,6 +49,11 @@ public class fmrSystemCollege {
     }
 
     @FXML
+    private void formularioInformacionMatriculados() throws IOException {
+        cargarFormulario("/Formularios/Matricula/InformeMatriculados.fxml");
+    }
+
+    @FXML
     private void formularioProfesor() throws IOException {
         cargarFormulario("/Formularios/GestionPersonas/Profesor.fxml");
     }

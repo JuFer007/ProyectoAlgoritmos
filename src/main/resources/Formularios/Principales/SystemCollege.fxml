@@ -119,6 +119,15 @@
                               </ImageView>
                            </graphic>
                         </MenuItem>
+                        <MenuItem fx:id="menuInformacionMatriculados" mnemonicParsing="false" text="Informe Matriculados" onAction="#formularioInformacionMatriculados">
+                           <graphic>
+                              <ImageView fitHeight="16" fitWidth="16">
+                                 <image>
+                                    <Image url="@../../icons/informacion.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
                      </items>
                   </Menu>
 

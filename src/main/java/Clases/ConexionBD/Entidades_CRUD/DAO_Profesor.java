@@ -126,12 +126,12 @@ public class DAO_Profesor {
     //Metodo para listar datos de un profesor
     public String[] obtenerDatosProfesor(String DNI) {
         String sql = "SELECT p.DNIpersona, p.primerNombre, p.segundoNombre, p.apellidoPaterno, p.apellidoMaterno, p.fechaNacimiento, p.genero,\n" +
-                "pro.especialidad, pro.gradoAcademico, pro.horasSemanales, pro.correoElectronico, pro.Telefono \n" +
+                "pro.especialidad, pro.gradoAcademico, pro.horasSemanales, pro.correoElectronico, pro.Telefono, pro.codigoProfesor \n" +
                 "FROM Persona p \n" +
                 "inner JOIN Profesor as pro ON p.idPersona = pro.idPersona \n" +
                 "WHERE p.DNIpersona = ?";
 
-        String[] datosProfesor = new String[12];
+        String[] datosProfesor = new String[13];
 
         try (Connection con = ConexionMySQL.getInstancia().getConexion();
              PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -152,6 +152,7 @@ public class DAO_Profesor {
                     datosProfesor[9] = rs.getString("horasSemanales");
                     datosProfesor[10] = rs.getString("correoElectronico");
                     datosProfesor[11] = rs.getString("Telefono");
+                    datosProfesor[12] = rs.getString("codigoProfesor");
                 } else {
                     datosProfesor = new String[]{"No encontrado", "", "", "", "", "", "", "", "", "", ""};
                 }
@@ -160,5 +161,25 @@ public class DAO_Profesor {
             e.printStackTrace();
         }
         return datosProfesor;
+    }
+
+    //Metodo para verificar el DNI del profesor
+    public boolean validarDniProfesor(String dni) {
+        String sql = "SELECT p.DNIpersona " +
+                "FROM Persona p " +
+                "INNER JOIN Profesor prof ON p.idPersona = prof.idPersona " +
+                "WHERE p.DNIpersona = ?";
+
+        try (Connection con = ConexionMySQL.getInstancia().getConexion();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setString(1, dni);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

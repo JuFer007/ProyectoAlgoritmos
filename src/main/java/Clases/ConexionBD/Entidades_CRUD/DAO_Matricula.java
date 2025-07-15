@@ -4,9 +4,9 @@ import Clases.ClasesGestionEscolar.Matricula;
 import Clases.ConexionBD.ConexionMySQL;
 import javafx.scene.control.Alert;
 
-import java.sql.CallableStatement;
-import java.sql.Types;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DAO_Matricula {
     private ArrayList<Matricula> listaMatricula = new ArrayList<Matricula>();
@@ -68,4 +68,56 @@ public class DAO_Matricula {
         alert.showAndWait();
     }
 
+    //Metodo para listar la informacion de los matriculados
+    public String[][] obtenerDatosAlumnos(String DNI) {
+        String sql = "SELECT a.codigoAlumno, " +
+                "perAlumno.primerNombre AS alumnoNombre, " +
+                "perAlumno.segundoNombre AS alumnoSegundoNombre, " +
+                "perAlumno.apellidoPaterno AS alumnoApellidoPaterno, " +
+                "perAlumno.apellidoMaterno AS alumnoApellidoMaterno, " +
+                "g.grado, " +
+                "s.seccion, " +
+                "c.nombreCurso, perAlumno.DNIpersona as DNIAlumno " +
+                "FROM Profesor p " +
+                "INNER JOIN Persona perProfesor ON p.idPersona = perProfesor.idPersona " +
+                "INNER JOIN ProfesorCurso pc ON p.idProfesor = pc.idProfesor " +
+                "INNER JOIN Curso c ON pc.idCurso = c.idCurso " +
+                "INNER JOIN Grado g ON c.idGrado = g.idGrado " +
+                "INNER JOIN Matricula m ON m.idGrado = g.idGrado " +
+                "INNER JOIN Seccion s ON m.idSeccion = s.idSeccion " +
+                "INNER JOIN Alumno a ON m.idAlumno = a.idAlumno " +
+                "INNER JOIN Persona perAlumno ON a.idPersona = perAlumno.idPersona " +
+                "WHERE perProfesor.DNIpersona = ? " +
+                "ORDER BY g.grado, s.seccion, c.nombreCurso, perAlumno.apellidoPaterno";
+
+        List<String[]> listaAlumnos = new ArrayList<>();
+
+        try (Connection con = ConexionMySQL.getInstancia().getConexion();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, DNI);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String[] datosAlumno = new String[9];
+                    datosAlumno[0] = rs.getString("codigoAlumno");
+                    datosAlumno[1] = rs.getString("alumnoNombre");
+                    datosAlumno[2] = rs.getString("alumnoSegundoNombre");
+                    datosAlumno[3] = rs.getString("alumnoApellidoPaterno");
+                    datosAlumno[4] = rs.getString("alumnoApellidoMaterno");
+                    datosAlumno[5] = rs.getString("grado");
+                    datosAlumno[6] = rs.getString("seccion");
+                    datosAlumno[7] = rs.getString("nombreCurso");
+                    datosAlumno[8] = rs.getString("DNIAlumno");
+                    listaAlumnos.add(datosAlumno);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String[][] datosAlumnos = new String[listaAlumnos.size()][9];
+        for (int i = 0; i < listaAlumnos.size(); i++) {
+            datosAlumnos[i] = listaAlumnos.get(i);
+        }
+        return datosAlumnos;
+    }
 }

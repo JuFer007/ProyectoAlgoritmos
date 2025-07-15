@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class AppColegio extends Application {
-
     private double x = 0;
     private double y = 0;
 

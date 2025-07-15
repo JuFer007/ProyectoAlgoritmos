@@ -10,7 +10,7 @@
    <children>
       <AnchorPane layoutX="20.0" layoutY="14.0" prefHeight="97.0" prefWidth="160.0" styleClass="layout" stylesheets="@../InicioSesion.css">
          <children>
-            <ImageView fitHeight="50.0" fitWidth="48.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="50.0" fitWidth="48.0" layoutX="26.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../icons/varios-usuarios.png" />
                </image>
@@ -20,7 +20,7 @@
                   <Font name="Britannic Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lblTotalAlumnos" alignment="TOP_LEFT" layoutX="67.0" layoutY="22.0" prefHeight="32.0" prefWidth="65.0" text="0" textAlignment="CENTER">
+            <Label fx:id="lblTotalAlumnos" alignment="TOP_LEFT" layoutX="80.0" layoutY="22.0" prefHeight="32.0" prefWidth="65.0" text="0" textAlignment="CENTER">
                <font>
                   <Font name="Britannic Bold" size="30.0" />
                </font>
@@ -28,9 +28,9 @@
          </children></AnchorPane>
       <AnchorPane layoutX="188.0" layoutY="14.0" prefHeight="98.0" prefWidth="160.0" styleClass="layout" stylesheets="@../InicioSesion.css">
          <children>
-            <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="20.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="20.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../icons/profesor.png" />
+                  <Image url="@../../icons/chalkboard-user-solid.png" />
                </image>
             </ImageView>
             <Label layoutX="20.0" layoutY="76.0" text="Total de Profesores">
@@ -38,7 +38,7 @@
                   <Font name="Britannic Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lblTotalProfesores" alignment="TOP_LEFT" layoutX="74.0" layoutY="22.0" prefHeight="32.0" prefWidth="66.0" text="0" textAlignment="CENTER">
+            <Label fx:id="lblTotalProfesores" alignment="TOP_LEFT" layoutX="80.0" layoutY="22.0" prefHeight="32.0" prefWidth="66.0" text="0" textAlignment="CENTER">
                <font>
                   <Font name="Britannic Bold" size="30.0" />
                </font>
