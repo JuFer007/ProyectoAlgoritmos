@@ -9,6 +9,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -50,6 +51,8 @@ public class fmrCuotas {
     @FXML private DatePicker fechaPago;
     @FXML private TextField montoCuota;
     @FXML private TextField conceptoCuota;
+    @FXML private TextField totalPago;
+    @FXML private TextField totalDeuda;
 
     //Boton registro Pago
     @FXML private Button btnRegistrarPago;
@@ -82,7 +85,7 @@ public class fmrCuotas {
         ObservableList<String> Grados = FXCollections.observableArrayList("Todos", "Primer", "Segundo", "Tercer", "Cuarto", "Quinto");
         ObservableList<String> Secciones = FXCollections.observableArrayList("Todos", "A", "B", "C");
         ObservableList<String> Estados = FXCollections.observableArrayList("Todos", "Pendiente", "Vencido", "Pagado");
-        ObservableList<String> Metodos = FXCollections.observableArrayList("Efectivo","Targeta","Transferencia","Yape","Plin");
+        ObservableList<String> Metodos = FXCollections.observableArrayList("Efectivo","Tarjeta","Transferencia","Yape","Plin");
 
         comboGrado.setItems(Grados);
         comboSeccion.setItems(Secciones);
@@ -120,11 +123,11 @@ public class fmrCuotas {
         });
 
         tablaCuotas.setItems(filtrados);
+        calcularTotales();
     }
 
     //Creacion de pago de la cuota
     public void colocarDatos(){
-        DAO_Pagos daoPagos = new DAO_Pagos();
         Object[] fila = tablaCuotas.getSelectionModel().getSelectedItem();
 
         if (fila == null) {
@@ -204,6 +207,10 @@ public class fmrCuotas {
         montoCuota.setMouseTransparent(true);
         conceptoCuota.setEditable(false);
         conceptoCuota.setMouseTransparent(true);
+        totalPago.setEditable(false);
+        totalPago.setMouseTransparent(true);
+        totalDeuda.setEditable(false);
+        totalDeuda.setMouseTransparent(true);
     }
 
     public void limpiar(){
@@ -212,5 +219,23 @@ public class fmrCuotas {
         montoCuota.setText("");
         conceptoCuota.setText("");
         comboMetodo.setValue(null);
+    }
+
+    public void calcularTotales(){
+        double pagado=0.0;
+        double deuda = 0.0;
+        String estado;
+
+        for (Object[] fila : tablaCuotas.getItems()) {
+            Double monto = ((BigDecimal)fila[5]).doubleValue();
+            estado = (String) fila[7];
+            if (monto != null && estado.equals("Pagado")) {
+                pagado += monto;
+            }else {
+                deuda += monto;
+            }
+        }
+        totalPago.setText(String.valueOf(pagado));
+        totalDeuda.setText(String.valueOf(deuda));
     }
 }

@@ -1,4 +1,5 @@
 package Forms;
+import Clases.ClasesPersonas.SesionUsuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,6 +33,7 @@ public class fmrSystemCollege {
     //Metodo cerrar sesion y volver al form de inicio
     @FXML
     private void cerrarSesion(ActionEvent event) throws IOException {
+        SesionUsuario.getInstancia().cerrarSesion();
         Stage stageAactual = (Stage) btnCerrarSesion.getScene().getWindow();
         stageAactual.close();
 

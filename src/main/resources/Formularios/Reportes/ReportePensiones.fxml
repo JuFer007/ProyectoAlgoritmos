@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="572.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrReportePensiones">
-    <Label layoutX="211.0" layoutY="31.0" prefHeight="24.0" prefWidth="285.0" text="Reporte de cuotas según el mes" textAlignment="CENTER">
+    <Label layoutX="175.0" layoutY="31.0" prefHeight="24.0" prefWidth="257.0" text="Reporte de cuotas según el mes:">
         <font>
             <Font name="Tw Cen MT Condensed Extra Bold" size="21.0" />
         </font>
@@ -53,6 +53,11 @@
       </font>
    </Label>
    <TextField fx:id="totalRecaudado" layoutX="89.0" layoutY="522.0" />
+   <Label fx:id="mesConsulta" layoutX="433.0" layoutY="31.0">
+      <font>
+         <Font name="Tw Cen MT Condensed Extra Bold" size="21.0" />
+      </font>
+   </Label>
     <!---
    <ImageView fitHeight="18.0" fitWidth="25.0" layoutX="604.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true">
       <image>

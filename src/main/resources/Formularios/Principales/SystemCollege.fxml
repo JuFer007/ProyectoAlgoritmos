@@ -110,7 +110,7 @@
                         </ImageView>
                      </graphic>
                      <items>
-                        <MenuItem fx:id="menuRenovarMatricularAlumno" mnemonicParsing="false" onAction="#formularioMatricula" text="Matricula">
+                        <MenuItem fx:id="menuRenovarMatricularAlumno" mnemonicParsing="false" onAction="#formularioMatricula" text="Realizar Matricula">
                            <graphic>
                               <ImageView fitHeight="16" fitWidth="16">
                                  <image>
@@ -119,7 +119,7 @@
                               </ImageView>
                            </graphic>
                         </MenuItem>
-                        <MenuItem fx:id="menuInformacionMatriculados" mnemonicParsing="false" text="Informe Matriculados" onAction="#formularioInformacionMatriculados">
+                        <MenuItem fx:id="menuInformacionMatriculados" mnemonicParsing="false" onAction="#formularioInformacionMatriculados" text="Listado de Alumnos">
                            <graphic>
                               <ImageView fitHeight="16" fitWidth="16">
                                  <image>

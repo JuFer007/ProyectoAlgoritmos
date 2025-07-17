@@ -13,6 +13,7 @@ public class fmrInformeMatriculados {
     @FXML
     public void initialize() {
         configurarTabla();
+        configurarComboBox();
         btnCargarDatos.setOnAction(event -> cargarDatos());
     }
 
@@ -37,8 +38,23 @@ public class fmrInformeMatriculados {
     @FXML private TableColumn<Object[], String> columnaAsignatura;
     @FXML private TableColumn<Object[], String> columnaGradoYSeccion;
 
+    //Combo Box de filtros
+    @FXML private ComboBox comboGrado;
+    @FXML private ComboBox comboSeccion;
+
     //Boton para realizar una nueva consulta
     @FXML private Button btnCargarDatos;
+
+    //Carga de los comboBox
+    private void configurarComboBox(){
+        ObservableList<String> Grados = FXCollections.observableArrayList("Todos", "Primer", "Segundo", "Tercer", "Cuarto", "Quinto");
+        ObservableList<String> Secciones = FXCollections.observableArrayList("Todos", "A", "B", "C");
+
+        comboGrado.setItems(Grados);
+        comboSeccion.setItems(Secciones);
+        comboGrado.getSelectionModel().select(0);
+        comboSeccion.getSelectionModel().select(0);
+    }
 
     //Metodo para validad DNI
     private boolean validarDNIdocente(String dni){
@@ -100,6 +116,8 @@ public class fmrInformeMatriculados {
         } else {
             listarDatos(dniDocente);
             cargarDatosAlumnos(dniDocente);
+            comboGrado.setOnAction(event -> cargarDatosFiltrados(dniDocente));
+            comboSeccion.setOnAction(event ->  cargarDatosFiltrados(dniDocente));
         }
     }
 
@@ -168,5 +186,56 @@ public class fmrInformeMatriculados {
         cajaDNIdocente.clear();
         tablaAlumnosMatriculados.getItems().clear();
         imagenProfesor.setImage(null);
+    }
+
+    //Cargar Datos Filtrados
+    private void cargarDatosFiltrados(String DNIdocente) {
+        // Obtener filtros seleccionados
+        String gradoSeleccionado = comboGrado.getValue() != null ? comboGrado.getValue().toString() : "Todos";
+        String seccionSeleccionada = comboSeccion.getValue() != null ? comboSeccion.getValue().toString() : "Todos";
+
+        // Lógica para "Todos"
+        String gradoFiltro = gradoSeleccionado.equalsIgnoreCase("Todos") ? "" : gradoSeleccionado;
+        String seccionFiltro = seccionSeleccionada.equalsIgnoreCase("Todos") ? "" : seccionSeleccionada;
+
+        // Cargar los datos del DAO
+        DAO_Matricula daoMatricula = new DAO_Matricula();
+        String[][] listaAlumnos = daoMatricula.obtenerDatosAlumnos(DNIdocente);
+
+        ObservableList<Object[]> alumnos = FXCollections.observableArrayList();
+
+        for (String[] datosAlumno : listaAlumnos) {
+            String alumnoNombre = datosAlumno[1] + " " + datosAlumno[2];
+            String alumnoApellido = datosAlumno[3] + " " + datosAlumno[4];
+            String grado = datosAlumno[5];
+            String seccion = datosAlumno[6];
+            String gradoSeccion = grado + " " + seccion;
+            String nombreCurso = datosAlumno[7];
+            String codigoAlumno = datosAlumno[0];
+            String dniAlumno = datosAlumno[8];
+
+            boolean cumpleFiltro = true;
+
+            if (!gradoFiltro.isEmpty() && !grado.equalsIgnoreCase(gradoFiltro)) {
+                cumpleFiltro = false;
+            }
+
+            if (!seccionFiltro.isEmpty() && !seccion.equalsIgnoreCase(seccionFiltro)) {
+                cumpleFiltro = false;
+            }
+
+            if (cumpleFiltro) {
+                alumnos.add(new Object[]{
+                        codigoAlumno,
+                        dniAlumno,
+                        alumnoNombre,
+                        alumnoApellido,
+                        nombreCurso,
+                        gradoSeccion
+                });
+            }
+        }
+
+        tablaAlumnosMatriculados.setItems(alumnos);
     }
 }

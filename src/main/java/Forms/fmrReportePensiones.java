@@ -8,8 +8,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class fmrReportePensiones {
@@ -28,7 +26,10 @@ public class fmrReportePensiones {
     @FXML private Button btnExportarExcel;
 
     //Caja para mostrar el total
-    @FXML JTextArea totalRecaudado;
+    @FXML private TextField totalRecaudado;
+
+    //Label del mes de reporte
+    @FXML private Label mesConsulta;
 
     //Variables
     private int mesActual = 1;
@@ -66,6 +67,8 @@ public class fmrReportePensiones {
         columEstado.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue()[7]));
         columMonto.setCellValueFactory(data -> new SimpleObjectProperty<>((Double) data.getValue()[8]));
         columMetodo.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue()[9]));
+
+        calcularTotal();
     }
 
     //Metodo para exportar en excel
@@ -133,11 +136,31 @@ public class fmrReportePensiones {
         }
     }
 
+    private String getNumberMonth(int month) {
+        switch (month) {
+            case 1: return  "Enero";
+            case 2: return  "Febrero";
+            case 3: return  "Marzo";
+            case 4: return  "Abril";
+            case 5: return  "Mayo";
+            case 6: return  "Junio";
+            case 7: return  "Julio";
+            case 8: return  "Agosto";
+            case 9: return  "Septiembre";
+            case  10: return  "Octubre";
+            case 11: return  "Noviembre";
+            case  12: return  "Diciembre";
+            default: return "";
+        }
+    }
+
     //Metodo para avanzar
     public void avanzarMes() {
         if (mesActual < 12) {
             mesActual++;
+            mesConsulta.setText(getNumberMonth(mesActual));
             cargarPagos();
+            calcularTotal();
         }
     }
 
@@ -145,7 +168,22 @@ public class fmrReportePensiones {
     public void retrocederMes() {
         if (mesActual > 0) {
             mesActual--;
+            mesConsulta.setText(getNumberMonth(mesActual));
             cargarPagos();
+            calcularTotal();
         }
+    }
+
+    public void calcularTotal(){
+        double total = 0.0;
+        String estado;
+        for (Object[] fila : tablaPagos.getItems()) {
+            Double monto = (Double) fila[8];
+            estado = (String) fila[7];
+            if (monto != null && estado.equals("Pagado")) {
+                total += monto;
+            }
+        }
+        totalRecaudado.setText(String.valueOf(total));
     }
 }

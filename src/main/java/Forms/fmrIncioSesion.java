@@ -71,6 +71,7 @@ public class fmrIncioSesion {
         boolean esValido = usuarioDAO.verificarUsuarioYContraseña(usuario, contraseña);
 
         if (esValido) {
+            usuarioDAO.cargarDatosSesion(usuario);
            Alert alert = new Alert(Alert.AlertType.INFORMATION);
            alert.setTitle("Éxito");
            alert.setHeaderText("¡Bienvenido!");

@@ -3,6 +3,7 @@ package Forms;
 import Clases.ClasesGestionEscolar.Matricula;
 import Clases.ClasesPersonas.Alumno;
 import Clases.ClasesPersonas.Apoderado;
+import Clases.ClasesPersonas.SesionUsuario;
 import Clases.ClasesPersonas.Trabajador;
 import Clases.ConexionBD.Entidades_CRUD.DAO_Alumno;
 import Clases.ConexionBD.Entidades_CRUD.DAO_Apoderado;
@@ -26,7 +27,7 @@ public class fmrNuevaMatricula {
         soloLectura();
         deshabilitarCamposRenovacion();
         buscarAlumno();
-        buscarTrabajador();
+        mostrarDatosTrabajador();
         realizarMatricula();
     }
 
@@ -86,6 +87,8 @@ public class fmrNuevaMatricula {
         nombresApoderado.setMouseTransparent(true);
         apellidosApoderado.setEditable(false);
         apellidosApoderado.setMouseTransparent(true);
+        codigoResponsable.setEditable(false);
+        codigoResponsable.setMouseTransparent(true);
         nombresResponsable.setEditable(false);
         nombresResponsable.setMouseTransparent(true);
         apellidosResponsable.setEditable(false);
@@ -158,34 +161,15 @@ public class fmrNuevaMatricula {
     }
 
     private void mostrarDatosTrabajador(){
-        String codigo = codigoResponsable.getText().trim();
+        String codigo = SesionUsuario.getInstancia().getCodigoTrabajador();
         DAO_Trabajador daoTrabajador = new DAO_Trabajador();
-
-        if (codigo.isEmpty()){
-            mostrarError("Debe ingresar el codigo de trabajador");
-            codigoResponsable.setText("");
-            return;
-        }
 
         Trabajador trabajador = daoTrabajador.buscarPorCodigo(codigo);
 
-        if (trabajador == null){
-            mostrarError("No se encontro el trabajador valido");
-            codigoResponsable.setText("");
-            return;
-        }
-
+        codigoResponsable.setText(codigo);
         nombresResponsable.setText(trabajador.getPrimernombre()+" "+trabajador.getSegundonombre());
         apellidosResponsable.setText(trabajador.getApellidopaterno()+" "+trabajador.getApellidomaterno());
 
-    }
-
-    private void buscarTrabajador(){
-        codigoResponsable.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                mostrarDatosTrabajador();
-            }
-        });
     }
 
     private void realizarMatricula(){
@@ -251,9 +235,6 @@ public class fmrNuevaMatricula {
         comboGrados.getSelectionModel().clearSelection();
         comboSeccion.getSelectionModel().clearSelection();
         comboAños.getSelectionModel().clearSelection();
-        codigoResponsable.clear();
-        nombresResponsable.setText("");
-        apellidosResponsable.setText("");
     }
 
     private void mostrarError(String mensaje) {
@@ -262,7 +243,5 @@ public class fmrNuevaMatricula {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
-
-
 
 }

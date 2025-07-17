@@ -44,7 +44,8 @@ public class ExportarEXCEL {
             String fileName = "ReporteDelMesDe_" + nombreMes + "_" +
                     java.time.LocalDate.now().getYear() + ".xls";
 
-            WritableWorkbook workbook = Workbook.createWorkbook(new File(fileName));
+            File destino = new File(folder, fileName);
+            WritableWorkbook workbook = Workbook.createWorkbook(destino);
             WritableSheet sheet = workbook.createSheet("Pagos_" + nombreMes, 0);
 
             WritableFont headerFont = new WritableFont(WritableFont.ARIAL, 10, WritableFont.BOLD);
