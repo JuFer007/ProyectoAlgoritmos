@@ -73,24 +73,19 @@ public class fmrReportePensiones {
 
     //Metodo para exportar en excel
     public void exportarEXCEL() {
-        // Crear un ComboBox con los meses del año
         ComboBox<String> comboBoxMes = new ComboBox<>();
         comboBoxMes.getItems().addAll("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
                 "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
 
-        // Crear un VBox para contener el ComboBox
         VBox vbox = new VBox(comboBoxMes);
 
-        // Crear el Alert
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Seleccionar Mes");
         alert.setHeaderText("Selecciona el mes que deseas exportar:");
         alert.getDialogPane().setContent(vbox);
 
-        // Botón OK para confirmar la selección
         alert.getButtonTypes().setAll(ButtonType.OK, ButtonType.CANCEL);
 
-        // Mostrar el alert y esperar la selección del usuario
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
                 String selectedMonth = comboBoxMes.getSelectionModel().getSelectedItem();
@@ -175,7 +170,7 @@ public class fmrReportePensiones {
     }
 
     public void calcularTotal(){
-        double total = 0.0;
+        double total = 0.00;
         String estado;
         for (Object[] fila : tablaPagos.getItems()) {
             Double monto = (Double) fila[8];

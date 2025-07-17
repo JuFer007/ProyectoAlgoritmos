@@ -190,15 +190,12 @@ public class fmrInformeMatriculados {
 
     //Cargar Datos Filtrados
     private void cargarDatosFiltrados(String DNIdocente) {
-        // Obtener filtros seleccionados
         String gradoSeleccionado = comboGrado.getValue() != null ? comboGrado.getValue().toString() : "Todos";
         String seccionSeleccionada = comboSeccion.getValue() != null ? comboSeccion.getValue().toString() : "Todos";
 
-        // Lógica para "Todos"
         String gradoFiltro = gradoSeleccionado.equalsIgnoreCase("Todos") ? "" : gradoSeleccionado;
         String seccionFiltro = seccionSeleccionada.equalsIgnoreCase("Todos") ? "" : seccionSeleccionada;
 
-        // Cargar los datos del DAO
         DAO_Matricula daoMatricula = new DAO_Matricula();
         String[][] listaAlumnos = daoMatricula.obtenerDatosAlumnos(DNIdocente);
 

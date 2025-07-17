@@ -1,9 +1,7 @@
 package Clases.ConexionBD.Entidades_CRUD;
-
 import Clases.ClasesGestionEscolar.Matricula;
 import Clases.ConexionBD.ConexionMySQL;
 import javafx.scene.control.Alert;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +56,6 @@ public class DAO_Matricula {
         }
     }
 
-
     //Metodo para mostrar mensaje
     private void mostrarMensaje(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -80,7 +77,7 @@ public class DAO_Matricula {
                 "c.nombreCurso, perAlumno.DNIpersona as DNIAlumno " +
                 "FROM Profesor p " +
                 "INNER JOIN Persona perProfesor ON p.idPersona = perProfesor.idPersona " +
-                "INNER JOIN ProfesorCurso pc ON p.idProfesor = pc.idProfesor " +
+                "INNER JOIN AsignacionProfesor pc ON p.idProfesor = pc.idProfesor " +
                 "INNER JOIN Curso c ON pc.idCurso = c.idCurso " +
                 "INNER JOIN Grado g ON c.idGrado = g.idGrado " +
                 "INNER JOIN Matricula m ON m.idGrado = g.idGrado " +
