@@ -1,6 +1,8 @@
 package Forms;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Matricula;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Profesor;
+import Clases.ClasesPersonas.SesionUsuario;
+import Clases.ConexionBD.Entidades_DAO.DAO_Matricula;
+import Clases.ConexionBD.Entidades_DAO.DAO_Profesor;
+import Clases.ConexionBD.Entidades_DAO.DAO_Trabajador;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

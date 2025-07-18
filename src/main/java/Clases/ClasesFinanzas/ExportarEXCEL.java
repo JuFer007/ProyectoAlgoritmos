@@ -1,5 +1,5 @@
 package Clases.ClasesFinanzas;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Reportes;
+import Clases.ConexionBD.Entidades_DAO.DAO_Reportes;
 import jxl.Workbook;
 import jxl.format.Colour;
 import jxl.write.*;

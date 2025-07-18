@@ -1,5 +1,5 @@
 package Clases.ClasesFinanzas;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Alumno;
+import Clases.ConexionBD.Entidades_DAO.DAO_Alumno;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import com.itextpdf.text.pdf.draw.LineSeparator;

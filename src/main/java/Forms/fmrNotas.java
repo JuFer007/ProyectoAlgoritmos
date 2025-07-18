@@ -1,6 +1,6 @@
 package Forms;
 import Clases.ClasesGestionEscolar.LibretaNotasPDF;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Nota;
+import Clases.ConexionBD.Entidades_DAO.DAO_Nota;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

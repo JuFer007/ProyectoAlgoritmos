@@ -1,6 +1,6 @@
 package Forms;
 import Clases.ClasesFinanzas.ExportarEXCEL;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Reportes;
+import Clases.ConexionBD.Entidades_DAO.DAO_Reportes;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

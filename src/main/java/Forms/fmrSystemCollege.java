@@ -6,11 +6,25 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 
 public class fmrSystemCollege {
+    //Menus principales
+    @FXML private Menu MenuGestionPersonas;
+    @FXML private Menu menuMatricula;
+    @FXML private Menu menuNotas;
+    @FXML private Menu menuPagos;
+    @FXML private Menu menuReportes;
+
+    //Submenus
+    @FXML private MenuItem menuInformacionMatriculados;
+    @FXML private MenuItem menuReporteGeneral;
+    @FXML private MenuItem menuRenovarMatricularAlumno;
+
     @FXML
     private void initialize() throws IOException {
         formularioBienvenida();
@@ -114,5 +128,27 @@ public class fmrSystemCollege {
         AnchorPanePrincipal.setBottomAnchor(root, 0.0);
         AnchorPanePrincipal.setLeftAnchor(root, 0.0);
         AnchorPanePrincipal.setRightAnchor(root, 0.0);
+    }
+
+    //Metodo para mostrar menus segun el rol de usuario
+    public void mostrarMenuPorUsuario(String rolUsuario) {
+        switch (rolUsuario.toLowerCase()) {
+            case "administrador":
+            break;
+            case "profesor":
+                MenuGestionPersonas.setDisable(true);
+                menuRenovarMatricularAlumno.setDisable(true);
+            break;
+            case "secretario":
+                menuInformacionMatriculados.setDisable(true);
+            break;
+            default:
+                MenuGestionPersonas.setDisable(true);
+                menuMatricula.setDisable(true);
+                menuNotas.setDisable(true);
+                menuPagos.setDisable(true);
+                menuReportes.setDisable(true);
+            break;
+        }
     }
 }

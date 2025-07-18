@@ -1,9 +1,6 @@
 package Forms;
-import Clases.ClasesPersonas.Alumno;
-import Clases.ClasesPersonas.Persona;
 import Clases.ClasesPersonas.Profesor;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Alumno;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Profesor;
+import Clases.ConexionBD.Entidades_DAO.DAO_Profesor;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.ZoneId;
 
 public class fmrProfesor {
     @FXML

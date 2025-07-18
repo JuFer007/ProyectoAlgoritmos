@@ -1,6 +1,6 @@
 package Forms;
 import Clases.ClasesPersonas.Alumno;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Alumno;
+import Clases.ConexionBD.Entidades_DAO.DAO_Alumno;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

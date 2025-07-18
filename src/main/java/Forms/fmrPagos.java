@@ -1,7 +1,6 @@
 package Forms;
 import Clases.ClasesFinanzas.ComprobantePagoPDF;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Cuota;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Pagos;
+import Clases.ConexionBD.Entidades_DAO.DAO_Pagos;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

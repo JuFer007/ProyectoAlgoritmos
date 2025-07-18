@@ -1,4 +1,4 @@
-package Clases.ConexionBD.Entidades_CRUD;
+package Clases.ConexionBD.Entidades_DAO;
 import Clases.ConexionBD.ConexionMySQL;
 
 import java.sql.*;

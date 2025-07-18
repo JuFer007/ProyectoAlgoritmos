@@ -1,13 +1,12 @@
 package Forms;
 import Clases.ClasesPersonas.Apoderado;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Apoderado;
+import Clases.ConexionBD.Entidades_DAO.DAO_Apoderado;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.ZoneId;
 
 public class fmrApoderado {
     @FXML

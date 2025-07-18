@@ -1,6 +1,6 @@
 package Clases.ClasesGestionEscolar;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Alumno;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Nota;
+import Clases.ConexionBD.Entidades_DAO.DAO_Alumno;
+import Clases.ConexionBD.Entidades_DAO.DAO_Nota;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import java.io.*;

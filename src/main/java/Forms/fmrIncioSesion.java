@@ -1,5 +1,5 @@
 package Forms;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Usuario;
+import Clases.ConexionBD.Entidades_DAO.DAO_Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -71,7 +71,7 @@ public class fmrIncioSesion {
         boolean esValido = usuarioDAO.verificarUsuarioYContraseña(usuario, contraseña);
 
         if (esValido) {
-            usuarioDAO.cargarDatosSesion(usuario);
+           usuarioDAO.cargarDatosSesion(usuario);
            Alert alert = new Alert(Alert.AlertType.INFORMATION);
            alert.setTitle("Éxito");
            alert.setHeaderText("¡Bienvenido!");
@@ -86,6 +86,18 @@ public class fmrIncioSesion {
            Scene scene = new Scene(root);
            stageAactual.setScene(scene);
            stageAactual.show();
+
+           String rolUsuario = usuarioDAO.obtenerRolUsuario(usuario);
+           if (rolUsuario != null) {
+               fmrSystemCollege fmrSystemCollege = loader.getController();
+               fmrSystemCollege.mostrarMenuPorUsuario(rolUsuario);
+           } else {
+               Alert alerta = new Alert(Alert.AlertType.ERROR);
+               alerta.setTitle("Error");
+               alerta.setHeaderText("¡Rol se usuario no encontrado!");
+               alerta.setContentText("Vuelva a iniciar sesión");
+               alerta.showAndWait();
+           }
         } else {
            Alert alert = new Alert(Alert.AlertType.ERROR);
            alert.setTitle("Error");

@@ -1,4 +1,4 @@
-package Clases.ConexionBD.Entidades_CRUD;
+package Clases.ConexionBD.Entidades_DAO;
 import Clases.ClasesPersonas.SesionUsuario;
 import Clases.ConexionBD.ConexionMySQL;
 import java.sql.*;
@@ -10,7 +10,6 @@ public class DAO_Usuario {
                         FROM Usuario 
                         WHERE nombreUsuario = ? 
                         AND contraseñaUsuario = ?
-                        AND rolUsuario = 'Administrador' 
                         """;
 
         try (Connection conn = ConexionMySQL.getInstancia().getConexion();
@@ -25,7 +24,6 @@ public class DAO_Usuario {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 
@@ -60,4 +58,29 @@ public class DAO_Usuario {
         }
     }
 
+    public String obtenerRolUsuario(String usuario) {
+        String consulta = """
+            SELECT u.rolUsuario
+            FROM Usuario u
+            LEFT JOIN Trabajador t ON u.idPersona = t.idPersona
+            WHERE u.nombreUsuario = ?
+        """;
+
+        try (Connection conn = ConexionMySQL.getInstancia().getConexion();
+             PreparedStatement stmt = conn.prepareStatement(consulta)) {
+
+            stmt.setString(1, usuario);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    SesionUsuario sesion = SesionUsuario.getInstancia();
+                    sesion.setRolUsuario(rs.getString("rolUsuario"));
+                }
+                return rs.getString("rolUsuario");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

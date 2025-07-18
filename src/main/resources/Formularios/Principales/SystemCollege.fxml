@@ -131,7 +131,7 @@
                      </items>
                   </Menu>
 
-                  <Menu mnemonicParsing="false" text="Notas">
+                  <Menu fx:id="menuNotas" mnemonicParsing="false" text="Notas">
                      <graphic>
                         <ImageView fitHeight="16" fitWidth="16">
                            <image>
@@ -140,7 +140,7 @@
                         </ImageView>
                      </graphic>
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#formularioNotas" text="Gestionar Notas">
+                        <MenuItem mnemonicParsing="false" onAction="#formularioNotas" text="Gestionar Notas" fx:id="menuGestionarNotas">
                            <graphic>
                               <ImageView fitHeight="16" fitWidth="16">
                                  <image>
@@ -152,7 +152,7 @@
                      </items>
                   </Menu>
 
-                  <Menu mnemonicParsing="false" text="Pagos">
+                  <Menu fx:id="menuPagos" mnemonicParsing="false" text="Pagos">
                      <graphic>
                         <ImageView fitHeight="16" fitWidth="16">
                            <image>
@@ -161,7 +161,7 @@
                         </ImageView>
                      </graphic>
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#formularioCuotas" text="Gestion de Cuotas">
+                        <MenuItem mnemonicParsing="false" onAction="#formularioCuotas" text="Gestion de Cuotas" fx:id="menuGestionCuotas">
                            <graphic>
                               <ImageView fitHeight="16.0" fitWidth="16.0">
                                  <image>
@@ -170,7 +170,7 @@
                               </ImageView>
                            </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#formularioPagos" text="Gestion de Pagos">
+                        <MenuItem mnemonicParsing="false" onAction="#formularioPagos" text="Gestion de Pagos" fx:id="menuGestionPagos">
                            <graphic>
                               <ImageView fitHeight="16" fitWidth="16">
                                  <image>
@@ -182,7 +182,7 @@
                      </items>
                   </Menu>
 
-                  <Menu mnemonicParsing="false" text="Reportes">
+                  <Menu fx:id="menuReportes" mnemonicParsing="false" text="Reportes">
                      <graphic>
                         <ImageView fitHeight="16" fitWidth="16">
                            <image>
@@ -191,7 +191,7 @@
                         </ImageView>
                      </graphic>
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#formularioReporteGeneral" text="Reporte del Colegio">
+                        <MenuItem mnemonicParsing="false" onAction="#formularioReporteGeneral" text="Reporte del Colegio" fx:id="menuReporteGeneral">
                            <graphic>
                               <ImageView fitHeight="16" fitWidth="16">
                                  <image>
@@ -200,7 +200,7 @@
                               </ImageView>
                            </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#formularioReportePensiones" text="Reporte de Pensiones">
+                        <MenuItem mnemonicParsing="false" onAction="#formularioReportePensiones" text="Reporte de Pensiones" fx:id="menuReportePensiones">
                            <graphic>
                               <ImageView fitHeight="16" fitWidth="16">
                                  <image>

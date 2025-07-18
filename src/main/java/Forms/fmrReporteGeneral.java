@@ -1,14 +1,11 @@
 package Forms;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Reportes;
+import Clases.ConexionBD.Entidades_DAO.DAO_Reportes;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 import java.util.Map;
 

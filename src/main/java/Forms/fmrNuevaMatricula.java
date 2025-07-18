@@ -1,14 +1,13 @@
 package Forms;
-
 import Clases.ClasesGestionEscolar.Matricula;
 import Clases.ClasesPersonas.Alumno;
 import Clases.ClasesPersonas.Apoderado;
 import Clases.ClasesPersonas.SesionUsuario;
 import Clases.ClasesPersonas.Trabajador;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Alumno;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Apoderado;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Matricula;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Trabajador;
+import Clases.ConexionBD.Entidades_DAO.DAO_Alumno;
+import Clases.ConexionBD.Entidades_DAO.DAO_Apoderado;
+import Clases.ConexionBD.Entidades_DAO.DAO_Matricula;
+import Clases.ConexionBD.Entidades_DAO.DAO_Trabajador;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,7 +16,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 
 
 public class fmrNuevaMatricula {
@@ -130,7 +128,6 @@ public class fmrNuevaMatricula {
             limpiarCampos();
             return;
         }
-
 
         //mostrar los datos Alumno
         primerNombreAlumno.setText(alumno.getPrimernombre());

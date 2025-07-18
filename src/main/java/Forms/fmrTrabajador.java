@@ -1,6 +1,6 @@
 package Forms;
 import Clases.ClasesPersonas.Trabajador;
-import Clases.ConexionBD.Entidades_CRUD.DAO_Trabajador;
+import Clases.ConexionBD.Entidades_DAO.DAO_Trabajador;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.ZoneId;
 
 public class fmrTrabajador {
     @FXML
