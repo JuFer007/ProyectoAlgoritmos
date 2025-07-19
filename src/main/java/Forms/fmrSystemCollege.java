@@ -139,6 +139,7 @@ public class fmrSystemCollege {
                 MenuGestionPersonas.setDisable(true);
                 menuRenovarMatricularAlumno.setDisable(true);
                 menuPagos.setDisable(true);
+                menuReportes.setDisable(true);
             break;
             case "secretario":
                 menuInformacionMatriculados.setDisable(true);

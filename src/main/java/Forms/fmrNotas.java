@@ -9,6 +9,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class fmrNotas {
     public void initialize() {
@@ -149,12 +152,21 @@ public class fmrNotas {
     //Metodo para configurar el comboBox
     private void listarCursosEnComboBox(int idMatricula) {
         DAO_Nota dao = new DAO_Nota();
-        ArrayList<String> cursos = dao.listarCursos(idMatricula);
+        String dni = SesionUsuario.getInstancia().getDNIusuario();
+        String rol = SesionUsuario.getInstancia().getRolUsuario();
 
         ObservableList<String> observableCursos = FXCollections.observableArrayList("Todos");
-        observableCursos.addAll(cursos);
+
+        if (rol.equals("Profesor")) {
+            ArrayList<String> cursos = dao.listarCursosPorProfesor(dni);
+            observableCursos.addAll(cursos);
+        } else {
+            ArrayList<String> cursos = dao.listarCursos(idMatricula);
+            observableCursos.addAll(cursos);
+        }
 
         comboBoxCursos.setItems(observableCursos);
+        comboBoxCursos.getSelectionModel().select(0);
     }
 
     private void listarNotasDeUnSoloCurso(int idMatricula, String nombreCurso) {
@@ -173,8 +185,23 @@ public class fmrNotas {
 
     //Metodo para configurar los comboBox de grado y seccion
     private void configurarComboGradoYSeccion() {
-        ObservableList<String> grados = FXCollections.observableArrayList("Todos","Primer", "Segundo", "Tercer", "Cuarto", "Quinto");
-        ObservableList<String> secciones = FXCollections.observableArrayList("Todos","A", "B", "C");
+        DAO_Nota daoNota = new DAO_Nota();
+        String dni = SesionUsuario.getInstancia().getDNIusuario();
+        String rol = SesionUsuario.getInstancia().getRolUsuario();
+
+        ObservableList<String> grados;
+        ObservableList<String> secciones;
+
+        if (rol.equals("Profesor")) {
+            Map<String, Set<String>> resultado = daoNota.obtenerGradosYSeccionesPorDNI(dni);
+            grados = FXCollections.observableArrayList(resultado.get("grados"));
+            secciones = FXCollections.observableArrayList(resultado.get("secciones"));
+
+        } else {
+            grados = FXCollections.observableArrayList("Todos", "Primer", "Segundo", "Tercer", "Cuarto", "Quinto");
+            secciones = FXCollections.observableArrayList("Todos", "A", "B", "C");
+        }
+
         comboBoxGrado.setItems(grados);
         comboBoxSeccion.setItems(secciones);
 
@@ -203,9 +230,9 @@ public class fmrNotas {
             String dniprofesor = SesionUsuario.getInstancia().getDNIusuario();
 
             if (rolUsuario.equals("Profesor")) {
-                dao.listarAlumnosParaUnProfesor(dniprofesor);
+                lista = dao.listarAlumnosParaUnProfesor(dniprofesor);
             } else {
-                dao.listarAlumnos();
+                lista = dao.listarAlumnos();
             }
         }
 

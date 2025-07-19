@@ -1,7 +1,7 @@
 package Clases.ConexionBD.Entidades_DAO;
 import Clases.ConexionBD.ConexionMySQL;
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
 
 public class DAO_Nota {
     ArrayList<Object[]> notasPorEstudiante;
@@ -50,7 +50,7 @@ public class DAO_Nota {
             INNER JOIN Alumno a ON m.idAlumno = a.idAlumno
             INNER JOIN Persona perAlumno ON a.idPersona = perAlumno.idPersona
             WHERE perProfesor.DNIpersona = ?
-            ORDER BY g.grado, s.seccion, c.nombreCurso, perAlumno.apellidoPaterno
+            ORDER BY a.codigoAlumno
     """;
 
         try (Connection cn = ConexionMySQL.getInstancia().getConexion();
@@ -85,7 +85,7 @@ public class DAO_Nota {
         notasPorEstudiante.clear();
 
         String sql = """
-            SELECT 
+            SELECT DISTINCT
             a.codigoAlumno,
             perAlumno.DNIpersona,
             perAlumno.primerNombre AS alumnoNombre,
@@ -102,7 +102,7 @@ public class DAO_Nota {
             INNER JOIN Seccion s ON m.idSeccion = s.idSeccion
             INNER JOIN Alumno a ON m.idAlumno = a.idAlumno
             INNER JOIN Persona perAlumno ON a.idPersona = perAlumno.idPersona
-            ORDER BY g.grado, s.seccion, c.nombreCurso, perAlumno.apellidoPaterno
+            ORDER BY a.codigoAlumno
     """;
 
         try (Connection cn = ConexionMySQL.getInstancia().getConexion();
@@ -389,4 +389,75 @@ public class DAO_Nota {
 
         return notasCursos;
     }
+
+    //Metodo para obtener los grados y secciones de un docente
+    public Map<String, Set<String>> obtenerGradosYSeccionesPorDNI(String dniProfesor) {
+        Map<String, Set<String>> resultado = new HashMap<>();
+        Set<String> grados = new TreeSet<>();
+        Set<String> secciones = new TreeSet<>();
+
+        String sql = """
+                        SELECT DISTINCT 
+                            g.grado,
+                            s.seccion
+                        FROM asignacionprofesor pc
+                        JOIN Profesor pr ON pc.idProfesor = pr.idProfesor
+                        JOIN Persona pe ON pr.idPersona = pe.idPersona
+                        JOIN Curso c ON pc.idCurso = c.idCurso
+                        JOIN Grado g ON c.idGrado = g.idGrado
+                        JOIN Seccion s ON g.idGrado = s.idGrado
+                        WHERE pe.DNIpersona = ?
+                        ORDER BY g.grado, s.seccion
+                    """;
+
+        try (Connection conn = ConexionMySQL.getInstancia().getConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, dniProfesor);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                grados.add(rs.getString("grado"));
+                secciones.add(rs.getString("seccion"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        resultado.put("grados", grados);
+        resultado.put("secciones", secciones);
+        return resultado;
+    }
+
+    //Metodo para listar curso de profesor
+    public ArrayList<String> listarCursosPorProfesor(String dniProfesor) {
+        ArrayList<String> cursos = new ArrayList<>();
+
+        String sql = """
+                        SELECT DISTINCT c.nombreCurso
+                        FROM Profesor p
+                        INNER JOIN Persona per ON p.idPersona = per.idPersona
+                        INNER JOIN asignacionprofesor pc ON pc.idProfesor = p.idProfesor
+                        INNER JOIN Curso c ON c.idCurso = pc.idCurso
+                        WHERE per.DNIpersona = ?
+                    """;
+
+        try (Connection conn = ConexionMySQL.getInstancia().getConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, dniProfesor);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                cursos.add(rs.getString("nombreCurso"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cursos;
+    }
+
 }

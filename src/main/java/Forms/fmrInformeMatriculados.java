@@ -1,6 +1,7 @@
 package Forms;
 import Clases.ClasesPersonas.SesionUsuario;
 import Clases.ConexionBD.Entidades_DAO.DAO_Matricula;
+import Clases.ConexionBD.Entidades_DAO.DAO_Nota;
 import Clases.ConexionBD.Entidades_DAO.DAO_Profesor;
 import Clases.ConexionBD.Entidades_DAO.DAO_Trabajador;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,6 +11,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.util.Map;
+import java.util.Set;
 
 public class fmrInformeMatriculados {
     String rolUsuario = SesionUsuario.getInstancia().getRolUsuario();
@@ -58,11 +62,26 @@ public class fmrInformeMatriculados {
 
     //Carga de los comboBox
     private void configurarComboBox(){
-        ObservableList<String> Grados = FXCollections.observableArrayList("Todos", "Primer", "Segundo", "Tercer", "Cuarto", "Quinto");
-        ObservableList<String> Secciones = FXCollections.observableArrayList("Todos", "A", "B", "C");
+        DAO_Nota daoNota = new DAO_Nota();
+        String dni = SesionUsuario.getInstancia().getDNIusuario();
+        String rol = SesionUsuario.getInstancia().getRolUsuario();
 
-        comboGrado.setItems(Grados);
-        comboSeccion.setItems(Secciones);
+        ObservableList<String> grados;
+        ObservableList<String> secciones;
+
+        if (rol.equals("Profesor")) {
+            Map<String, Set<String>> resultado = daoNota.obtenerGradosYSeccionesPorDNI(dni);
+            grados = FXCollections.observableArrayList(resultado.get("grados"));
+            secciones = FXCollections.observableArrayList(resultado.get("secciones"));
+
+        } else {
+            grados = FXCollections.observableArrayList("Todos", "Primer", "Segundo", "Tercer", "Cuarto", "Quinto");
+            secciones = FXCollections.observableArrayList("Todos", "A", "B", "C");
+        }
+
+        comboGrado.setItems(grados);
+        comboSeccion.setItems(secciones);
+
         comboGrado.getSelectionModel().select(0);
         comboSeccion.getSelectionModel().select(0);
     }
@@ -131,6 +150,10 @@ public class fmrInformeMatriculados {
                 alert.setContentText("Por favor, ingrese el DNI del docente para continuar.");
                 alert.showAndWait();
             }
+            listarDatos(dniDocente);
+            cargarDatosAlumnos(dniDocente);
+            comboGrado.setOnAction(event -> cargarDatosFiltrados(dniDocente));
+            comboSeccion.setOnAction(event -> cargarDatosFiltrados(dniDocente));
         }
     }
 
