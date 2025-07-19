@@ -26,39 +26,108 @@ public class DAO_Nota {
         }
     }
 
-    //Metodo para listar a todos los alumnos
+    //Metodo para listar a todos los alumnos por dni profesor
+    public ArrayList<Object[]> listarAlumnosParaUnProfesor(String DNIprofesor) {
+        notasPorEstudiante = new ArrayList<>();
+        notasPorEstudiante.clear();
+
+        String sql = """
+            SELECT 
+            a.codigoAlumno,
+            perAlumno.DNIpersona,
+            perAlumno.primerNombre AS alumnoNombre,
+            perAlumno.segundoNombre AS alumnoSegundoNombre,
+            perAlumno.apellidoPaterno AS alumnoApellidoPaterno,
+            perAlumno.apellidoMaterno AS alumnoApellidoMaterno,
+            m.idMatricula
+            FROM Profesor p
+            INNER JOIN Persona perProfesor ON p.idPersona = perProfesor.idPersona
+            INNER JOIN AsignacionProfesor pc ON p.idProfesor = pc.idProfesor
+            INNER JOIN Curso c ON pc.idCurso = c.idCurso
+            INNER JOIN Grado g ON c.idGrado = g.idGrado
+            INNER JOIN Matricula m ON m.idGrado = g.idGrado
+            INNER JOIN Seccion s ON m.idSeccion = s.idSeccion
+            INNER JOIN Alumno a ON m.idAlumno = a.idAlumno
+            INNER JOIN Persona perAlumno ON a.idPersona = perAlumno.idPersona
+            WHERE perProfesor.DNIpersona = ?
+            ORDER BY g.grado, s.seccion, c.nombreCurso, perAlumno.apellidoPaterno
+    """;
+
+        try (Connection cn = ConexionMySQL.getInstancia().getConexion();
+             PreparedStatement ps = cn.prepareStatement(sql)) {
+
+            ps.setString(1, DNIprofesor);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Object[] fila = new Object[7];
+                    fila[0] = rs.getString("codigoAlumno");
+                    fila[1] = rs.getString("DNIpersona");
+                    fila[2] = rs.getString("alumnoNombre");
+                    fila[3] = rs.getString("alumnoSegundoNombre");
+                    fila[4] = rs.getString("alumnoApellidoPaterno");
+                    fila[5] = rs.getString("alumnoApellidoMaterno");
+                    fila[6] = rs.getInt("idMatricula");
+
+                    notasPorEstudiante.add(fila);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return notasPorEstudiante;
+    }
+
+    //Metodo para listar los alumnos
     public ArrayList<Object[]> listarAlumnos() {
         notasPorEstudiante = new ArrayList<>();
         notasPorEstudiante.clear();
 
-        String sql = "SELECT alumno.codigoAlumno, persona.DNIpersona, persona.primerNombre, persona.segundoNombre, "
-                + "persona.apellidoPaterno, persona.apellidoMaterno, matricula.idMatricula "
-                + "FROM alumno "
-                + "INNER JOIN persona ON alumno.idPersona = persona.idPersona "
-                + "INNER JOIN matricula ON matricula.idAlumno = alumno.idAlumno "
-                + "ORDER BY alumno.codigoAlumno";
+        String sql = """
+            SELECT 
+            a.codigoAlumno,
+            perAlumno.DNIpersona,
+            perAlumno.primerNombre AS alumnoNombre,
+            perAlumno.segundoNombre AS alumnoSegundoNombre,
+            perAlumno.apellidoPaterno AS alumnoApellidoPaterno,
+            perAlumno.apellidoMaterno AS alumnoApellidoMaterno,
+            m.idMatricula
+            FROM Profesor p
+            INNER JOIN Persona perProfesor ON p.idPersona = perProfesor.idPersona
+            INNER JOIN AsignacionProfesor pc ON p.idProfesor = pc.idProfesor
+            INNER JOIN Curso c ON pc.idCurso = c.idCurso
+            INNER JOIN Grado g ON c.idGrado = g.idGrado
+            INNER JOIN Matricula m ON m.idGrado = g.idGrado
+            INNER JOIN Seccion s ON m.idSeccion = s.idSeccion
+            INNER JOIN Alumno a ON m.idAlumno = a.idAlumno
+            INNER JOIN Persona perAlumno ON a.idPersona = perAlumno.idPersona
+            ORDER BY g.grado, s.seccion, c.nombreCurso, perAlumno.apellidoPaterno
+    """;
 
         try (Connection cn = ConexionMySQL.getInstancia().getConexion();
-             PreparedStatement ps = cn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+             PreparedStatement ps = cn.prepareStatement(sql)) {
 
-            while (rs.next()) {
-                Object[] fila = new Object[7];
-                fila[0] = rs.getString("codigoAlumno");
-                fila[1] = rs.getString("DNIpersona");
-                fila[2] = rs.getString("primerNombre");
-                fila[3] = rs.getString("segundoNombre");
-                fila[4] = rs.getString("apellidoPaterno");
-                fila[5] = rs.getString("apellidoMaterno");
-                fila[6] = rs.getInt("idMatricula");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Object[] fila = new Object[7];
+                    fila[0] = rs.getString("codigoAlumno");
+                    fila[1] = rs.getString("DNIpersona");
+                    fila[2] = rs.getString("alumnoNombre");
+                    fila[3] = rs.getString("alumnoSegundoNombre");
+                    fila[4] = rs.getString("alumnoApellidoPaterno");
+                    fila[5] = rs.getString("alumnoApellidoMaterno");
+                    fila[6] = rs.getInt("idMatricula");
 
-                notasPorEstudiante.add(fila);
+                    notasPorEstudiante.add(fila);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return notasPorEstudiante;
     }
+
 
     //Metodo para listar los cursos y notas por alumno
     public ArrayList<Object[]> listarCursosDeAlumno(int idMatricula) {

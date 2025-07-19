@@ -1,5 +1,6 @@
 package Forms;
 import Clases.ClasesGestionEscolar.LibretaNotasPDF;
+import Clases.ClasesPersonas.SesionUsuario;
 import Clases.ConexionBD.Entidades_DAO.DAO_Nota;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -93,11 +94,21 @@ public class fmrNotas {
 
     //Metodo para listar alumnos
     private void listarAlumnos() {
-        DAO_Nota dao = new DAO_Nota();
-        ArrayList<Object[]> alumnos = dao.listarAlumnos();
-        ObservableList<Object[]> observableList = FXCollections.observableArrayList(alumnos);
+        String rolUsuario = SesionUsuario.getInstancia().getRolUsuario();
+        String dniprofesor = SesionUsuario.getInstancia().getDNIusuario();
 
-        tablaAlumno.setItems(observableList);
+        if (rolUsuario.equals("Profesor")) {
+            DAO_Nota daoNota = new DAO_Nota();
+            ArrayList<Object[]> alumnos = daoNota.listarAlumnosParaUnProfesor(dniprofesor);
+            ObservableList<Object[]> observableList = FXCollections.observableArrayList(alumnos);
+            tablaAlumno.setItems(observableList);
+        } else {
+            DAO_Nota daoNota2 = new DAO_Nota();
+            ArrayList<Object[]> alumnos = daoNota2.listarAlumnos();
+            ObservableList<Object[]> observableList = FXCollections.observableArrayList(alumnos);
+
+            tablaAlumno.setItems(observableList);
+        }
     }
 
     //Metodo par configurar la tabla de cursos
@@ -180,15 +191,22 @@ public class fmrNotas {
         DAO_Nota dao = new DAO_Nota();
 
         ObservableList<Object[]> resultados = FXCollections.observableArrayList();
-        ArrayList<Object[]> lista;
+        ArrayList<Object[]> lista = new ArrayList<>();
 
         if (grado != "Todos" && seccion != "Todos") {
             lista = dao.alumnosPorGradoYSeccion(grado, seccion);
         } else if (grado != "Todos") {
             lista = dao.alumnosPorGrado(grado);
         } else {
-            dao.listarAlumnos();
-            lista = dao.listarAlumnos();
+            fmrIncioSesion iniciosesion = new fmrIncioSesion();
+            String rolUsuario = SesionUsuario.getInstancia().getRolUsuario();
+            String dniprofesor = SesionUsuario.getInstancia().getDNIusuario();
+
+            if (rolUsuario.equals("Profesor")) {
+                dao.listarAlumnosParaUnProfesor(dniprofesor);
+            } else {
+                dao.listarAlumnos();
+            }
         }
 
         for (Object[] alumnoData : lista) {

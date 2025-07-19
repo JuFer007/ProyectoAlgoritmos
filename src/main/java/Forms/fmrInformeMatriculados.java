@@ -12,11 +12,20 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class fmrInformeMatriculados {
+    String rolUsuario = SesionUsuario.getInstancia().getRolUsuario();
+    String dniprofesor = SesionUsuario.getInstancia().getDNIusuario();
+
     @FXML
     public void initialize() {
         configurarTabla();
         configurarComboBox();
-        btnCargarDatos.setOnAction(event -> cargarDatos());
+
+        if (rolUsuario.equals("Profesor")) {
+            cargarDatos();
+            cajaDNIdocente.setEditable(false);
+        } else {
+            btnCargarDatos.setOnAction(event -> cargarDatos());
+        }
     }
 
     //Variables de campos
@@ -107,19 +116,21 @@ public class fmrInformeMatriculados {
 
     //Carga de datos
     public void cargarDatos() {
-        String dniDocente = cajaDNIdocente.getText();
-
-        if (dniDocente.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Advertencia");
-            alert.setHeaderText("DNI del docente vacío");
-            alert.setContentText("Por favor, ingrese el DNI del docente para continuar.");
-            alert.showAndWait();
+        if (rolUsuario.equals("Profesor")) {
+            listarDatos(dniprofesor);
+            cargarDatosAlumnos(dniprofesor);
+            comboGrado.setOnAction(event -> cargarDatosFiltrados(dniprofesor));
+            comboSeccion.setOnAction(event ->  cargarDatosFiltrados(dniprofesor));
         } else {
-            listarDatos(dniDocente);
-            cargarDatosAlumnos(dniDocente);
-            comboGrado.setOnAction(event -> cargarDatosFiltrados(dniDocente));
-            comboSeccion.setOnAction(event ->  cargarDatosFiltrados(dniDocente));
+            String dniDocente = cajaDNIdocente.getText();
+
+            if (dniDocente.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Advertencia");
+                alert.setHeaderText("DNI del docente vacío");
+                alert.setContentText("Por favor, ingrese el DNI del docente para continuar.");
+                alert.showAndWait();
+            }
         }
     }
 
@@ -147,6 +158,7 @@ public class fmrInformeMatriculados {
         } else {
             imagenRuta = "https://i.imgur.com/dq30HLu.png";
         }
+
         Image imagen = new Image(imagenRuta);
         imagenProfesor.setImage(imagen);
     }

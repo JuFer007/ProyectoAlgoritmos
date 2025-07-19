@@ -2,7 +2,7 @@ package Clases.ClasesPersonas;
 
 public class SesionUsuario {
     private static SesionUsuario instancia;
-
+    private String DNIusuario;
     private int idUsuario;
     private String nombreUsuario;
     private String rolUsuario;
@@ -36,6 +36,18 @@ public class SesionUsuario {
 
     public String getCodigoTrabajador() {
         return codigoTrabajador;
+    }
+
+    public String getDNIusuario() {
+        return DNIusuario;
+    }
+
+    public void setDNIusuario(String DNIusuario) {
+        this.DNIusuario = DNIusuario;
+    }
+
+    public String getRolUsuario() {
+        return rolUsuario;
     }
 
     public void cerrarSesion() {

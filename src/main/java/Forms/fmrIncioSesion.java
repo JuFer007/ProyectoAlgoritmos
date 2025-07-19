@@ -1,4 +1,7 @@
 package Forms;
+import Clases.ClasesPersonas.SesionUsuario;
+import Clases.ClasesPersonas.Usuarios;
+import Clases.ConexionBD.Entidades_DAO.DAO_Profesor;
 import Clases.ConexionBD.Entidades_DAO.DAO_Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -88,6 +91,12 @@ public class fmrIncioSesion {
            stageAactual.show();
 
            String rolUsuario = usuarioDAO.obtenerRolUsuario(usuario);
+           String DNIusuario = new DAO_Profesor().obtenerDNIprofesor(contraseña, usuario);
+
+           SesionUsuario sesion = SesionUsuario.getInstancia();
+           sesion.setRolUsuario(rolUsuario);
+           sesion.setDNIusuario(DNIusuario);
+
            if (rolUsuario != null) {
                fmrSystemCollege fmrSystemCollege = loader.getController();
                fmrSystemCollege.mostrarMenuPorUsuario(rolUsuario);

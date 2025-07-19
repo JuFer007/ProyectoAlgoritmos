@@ -182,4 +182,30 @@ public class DAO_Profesor {
             return false;
         }
     }
+
+    //Metodo para obtener el DNI del profesor
+    public String obtenerDNIprofesor(String contraseña, String usuario) {
+        String DNIprofesor = "";
+
+        String consulta = """
+                select persona.DNIpersona
+                from persona
+                inner join usuario on persona.idPersona = usuario.idPersona
+                where usuario.contraseñaUsuario = ?
+                and usuario.nombreUsuario = ?
+                """;
+        try (Connection conexion = ConexionMySQL.getInstancia().getConexion();
+             PreparedStatement stmt = conexion.prepareStatement(consulta)) {
+            stmt.setString(1, contraseña);
+            stmt.setString(2, usuario);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    DNIprofesor = rs.getString("DNIpersona");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return DNIprofesor;
+    }
 }
