@@ -149,7 +149,13 @@ public class fmrInformeMatriculados {
                 alert.setHeaderText("DNI del docente vacío");
                 alert.setContentText("Por favor, ingrese el DNI del docente para continuar.");
                 alert.showAndWait();
+                return;
             }
+
+            if (!validarDNIdocente(dniDocente)) {
+                return;
+            }
+
             listarDatos(dniDocente);
             cargarDatosAlumnos(dniDocente);
             comboGrado.setOnAction(event -> cargarDatosFiltrados(dniDocente));
