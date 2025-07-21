@@ -32,7 +32,7 @@
 
         <AnchorPane layoutX="14.0" layoutY="246.0" prefHeight="274.0" prefWidth="680.0" styleClass="anchor-pane" stylesheets="@../style.css">
             <children>
-                <Label layoutX="18.0" layoutY="14.0" text="Agregar o modificar alumno:">
+                <Label layoutX="18.0" layoutY="14.0" text="Agregar o modificar Profesor:">
                     <font>
                         <Font name="Cambria Bold" size="15.0" />
                     </font>

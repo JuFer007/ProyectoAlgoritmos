@@ -315,8 +315,7 @@ public class fmrTrabajador {
         ObservableList<Object[]> resultadoFiltrados = FXCollections.observableArrayList();
 
         for (Trabajador trabajador : daoTrabajador.getTrabajadores()) {
-            Object[] datos = trabajador.Convertir();
-
+            Object[] datos = {trabajador.getCodigoTrabajador(), trabajador.getDnipersona(),trabajador.getPrimernombre()+" "+trabajador.getSegundonombre(),trabajador.getApellidopaterno(),trabajador.getApellidomaterno(),trabajador.getTipoTrabajador(),trabajador.getTurnoAsignado(),trabajador.getCargo()};
             String nombreCompleto = (trabajador.getPrimernombre() + " " + trabajador.getSegundonombre() + " " + trabajador.getApellidopaterno() + " " + trabajador.getApellidomaterno()).toLowerCase();
 
             if (textoIngresado == null || textoIngresado.isEmpty() || nombreCompleto.contains(textoIngresado.toLowerCase())) {

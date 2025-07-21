@@ -5,8 +5,7 @@ public class Usuarios {
     private int idUsuario;
     private int idPersona;
     private String nombreUsuario;
-    private String contraseñaUsuario;
-    private String rolUsuario ;
+    private String contraseñaUsuario;    private String rolUsuario ;
 
     public Usuarios(int idUsuario, int idPersona, String nombreUsuario, String contraseñaUsuario, String rolUsuario) {
         this.idUsuario = idUsuario;
